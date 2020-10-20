@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home">
     <!-- 侧边栏 -->
     <el-menu class="sideBar" :collapse="true">
       <div class="logo"></div>
@@ -11,7 +11,7 @@
         <i class="el-icon-setting"></i>
         <span slot="title">设置</span>
       </el-menu-item>
-      <el-menu-item class="sideBarItem" index="3">
+      <el-menu-item class="sideBarItem switch" index="3" @click="controlMenu">
         <i class="el-icon-s-operation"></i>
         <span slot="title">收起/展开</span>
       </el-menu-item>
@@ -30,7 +30,14 @@
 export default {
   name: "name",
   data() {
-    return {};
+    return {
+      showMenu: true,
+    };
+  },
+  methods: {
+    controlMenu() {
+      this.showMenu = !this.showMenu;
+    },
   },
 };
 </script>
@@ -53,12 +60,17 @@ export default {
   background-position: center center;
 }
 .sideBarItem {
-  padding: 0;
+  padding: 0 !important;
 }
 .sideBarItem /deep/ .el-tooltip {
   outline: none;
   text-align: center;
   padding: 0 !important;
+}
+.switch {
+  width: 50px;
+  position: fixed;
+  bottom: 0;
 }
 .topBar {
   margin-left: 51px;
@@ -67,5 +79,6 @@ export default {
 .menuItem {
   height: 50px;
   line-height: 50px;
+  user-select: none;
 }
 </style>

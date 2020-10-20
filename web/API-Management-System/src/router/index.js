@@ -7,15 +7,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect:'/home'
+      redirect: '/login'
+    }, {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/login/login')
     }, {
       path: '/home',
       name: 'home',
       component: () => import('@/views/home/home'),
-      children:[{
-        path:'overview',
-        name:'overview',
-        component: () => import('@/views/overview/overview'),
+      children: [{
+        path: 'overview',
+        name: 'overview',
+        component: () => import('@/views/overview/overview')
       }]
     }
   ]
