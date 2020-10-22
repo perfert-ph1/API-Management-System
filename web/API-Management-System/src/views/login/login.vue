@@ -76,6 +76,7 @@ export default {
      */
     login() {
       console.log("登录");
+      this.$router.push("home/overview")
     },
     /**
      * 注册

@@ -20,6 +20,18 @@ export default new Router({
         path: 'overview',
         name: 'overview',
         component: () => import('@/views/overview/overview')
+      }, {
+        path: 'APImanagement',
+        name: 'APImanagement',
+        component: () => import('@/views/APImanagement/APImanagement')
+      }, {
+        path: 'APItest',
+        name: 'APItest',
+        component: () => import('@/views/APItest/APItest')
+      }, {
+        path: 'analysisReport',
+        name: 'analysisReport',
+        component: () => import('@/views/analysisReport/analysisReport')
       }]
     }
   ]

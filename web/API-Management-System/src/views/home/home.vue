@@ -1,84 +1,77 @@
 <template>
   <div class="home">
     <!-- 侧边栏 -->
-    <el-menu class="sideBar" :collapse="true">
-      <div class="logo"></div>
-      <el-menu-item class="sideBarItem" index="1">
-        <i class="el-icon-menu"></i>
-        <span slot="title">主题颜色</span>
-      </el-menu-item>
-      <el-menu-item class="sideBarItem" index="2">
-        <i class="el-icon-setting"></i>
-        <span slot="title">设置</span>
-      </el-menu-item>
-      <el-menu-item class="sideBarItem switch" index="3" @click="controlMenu">
-        <i class="el-icon-s-operation"></i>
-        <span slot="title">收起/展开</span>
-      </el-menu-item>
-    </el-menu>
+    <side-bar @controlMenu="controlMenu"></side-bar>
+    <!-- 功能菜单 -->
+    <fun-menu :hideFunMenu="hideFunMenu" :userInfo="userInfo"></fun-menu>
     <!-- 顶部栏 -->
-    <el-menu class="topBar" mode="horizontal">
-      <div class="userBox"></div>
-      <el-menu-item class="menuItem" index="1">概要</el-menu-item>
-      <el-menu-item class="menuItem" index="2">API 管理</el-menu-item>
-      <el-menu-item class="menuItem" index="3">API 测试</el-menu-item>
-    </el-menu>
+    <top-bar
+      :hideFunMenu="hideFunMenu"
+      @changeFunModule="changeFunModule"
+    ></top-bar>
+    <!-- 内容 -->
+    <div class="content" :class="{ content_actived: !hideFunMenu }">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
+import funMenu from "./components/funMenu.vue";
+import sideBar from "./components/sideBar.vue";
+import topBar from "./components/topBar.vue";
+
 export default {
   name: "name",
+  components: {
+    topBar,
+    sideBar,
+    funMenu,
+  },
   data() {
     return {
-      showMenu: true,
+      userInfo: {
+        userName: "Lee",
+        profilePhoto: require("@/assets/images/profilePhoto.png"),
+      },
+      hideFunMenu: true,
     };
   },
   methods: {
+    /**
+     * 控制功能列表的显示与隐藏
+     */
     controlMenu() {
-      this.showMenu = !this.showMenu;
+      this.hideFunMenu = !this.hideFunMenu;
+    },
+    /**
+     * 改变功能模块
+     * @param {String} key 模块名称
+     */
+    changeFunModule(key) {
+      if (this.$route.name != key) {
+        this.hideFunMenu = key == "overview" ? true : false; // 统计总览页面不显示功能列表
+        this.$router.replace(key);
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-.sideBar {
-  height: 100%;
-  width: 50px;
-  position: fixed;
-  left: 0;
-  z-index: 10;
+.home{
+  min-width: 1000px;
 }
-.logo {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  background-image: url(~@/assets/images/logo.png);
-  background-size: 50% 50%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-.sideBarItem {
-  padding: 0 !important;
-}
-.sideBarItem /deep/ .el-tooltip {
-  outline: none;
-  text-align: center;
-  padding: 0 !important;
-}
-.switch {
-  width: 50px;
-  position: fixed;
-  bottom: 0;
-}
-.topBar {
+.content {
+  min-height: 100vh;
+  margin-right: 0;
   margin-left: 51px;
-  height: 50px;
+  padding-top: 51px;
+  box-sizing: border-box;
+  transition: all 0.5s;
+  background-color: #f0f2f5;
 }
-.menuItem {
-  height: 50px;
-  line-height: 50px;
-  user-select: none;
+.content_actived {
+  margin-left: 251px;
 }
 </style>
