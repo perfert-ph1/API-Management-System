@@ -11,7 +11,12 @@
         <span class="userName">{{ userInfo.userName }}</span>
       </div>
       <!-- 菜单 -->
-      <el-menu class="meun" @select="changeFunModule">
+      <el-menu
+        class="meun"
+        @select="changeFunModule"
+        :default-openeds="['function', 'dataAnalysis']"
+        :default-active="this.$route.name"
+      >
         <el-submenu index="function">
           <template slot="title">功能</template>
           <el-menu-item index="APImanagement">
@@ -51,7 +56,9 @@ export default {
      * @param {String} key 模块名称
      */
     changeFunModule(key) {
-      this.$router.replace(key);
+      if (this.$route.name != key) {
+        this.$router.replace(key);
+      }
     },
   },
 };
@@ -60,6 +67,7 @@ export default {
 <style scoped>
 .funMenu {
   background: white;
+  user-select: none;
 }
 .funMenuBox {
   height: 100%;
@@ -70,11 +78,9 @@ export default {
   top: 0;
   box-sizing: border-box;
   border-right: 1px solid #e6e6e6;
-  /* transform-origin: 0% center; */
   transition: all 0.5s;
 }
 .funMenuBox_close {
-  /* transform: scaleX(0); */
   width: 0;
 }
 .funMenu {

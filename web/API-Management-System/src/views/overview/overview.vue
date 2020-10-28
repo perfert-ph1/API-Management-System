@@ -69,11 +69,11 @@ export default {
       } else if (time > 5 && time <= 9) {
         msg = "早上好，开始新的一天吧！";
       } else if (time > 9 && time <= 11) {
-        msg = "上午好，记得适当休息哦~";
+        msg = "上午好，记得适当休息哦";
       } else if (time > 11 && time <= 14) {
         msg = "中午好，休息一会儿吧";
       } else if (time > 14 && time <= 19) {
-        msg = "下午好，欢迎回来";
+        msg = "下午好，欢迎回来，一起努力吧";
       } else {
         msg = "晚上好，记得适当休息哦~";
       }

@@ -35,8 +35,10 @@ export default {
         profilePhoto: require("@/assets/images/profilePhoto.png"),
       },
       hideFunMenu: true,
+      fullWidth: document.body.clientWidth,
     };
   },
+  mounted() {},
   methods: {
     /**
      * 控制功能列表的显示与隐藏
@@ -44,6 +46,7 @@ export default {
     controlMenu() {
       this.hideFunMenu = !this.hideFunMenu;
     },
+
     /**
      * 改变功能模块
      * @param {String} key 模块名称
@@ -55,12 +58,29 @@ export default {
       }
     },
   },
+
+  // 进入导航之前判断是否需要收起侧边栏
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.hideFunMenu = to.name == "overview" ? true : false;
+    });
+  },
+
+  // 导航更新之前判断是否需要收起侧边栏
+  beforeRouteUpdate(to, from, next) {
+    this.hideFunMenu = to.name == "overview" ? true : false;
+    next();
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize);
+  },
 };
 </script>
 
 <style scoped>
-.home{
-  min-width: 1000px;
+.home {
+  min-width: 1080px;
 }
 .content {
   min-height: 100vh;
@@ -68,7 +88,7 @@ export default {
   margin-left: 51px;
   padding-top: 51px;
   box-sizing: border-box;
-  transition: all 0.5s;
+  transition: margin-left 0.5s;
   background-color: #f0f2f5;
 }
 .content_actived {

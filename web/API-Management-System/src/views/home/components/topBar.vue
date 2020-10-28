@@ -10,7 +10,9 @@
     <el-menu-item class="menuItem" index="overview">总览</el-menu-item>
     <el-menu-item class="menuItem" index="APImanagement">API 管理</el-menu-item>
     <el-menu-item class="menuItem" index="APItest">API 测试</el-menu-item>
-    <el-menu-item class="menuItem" index="analysisReport">分析报表</el-menu-item>
+    <el-menu-item class="menuItem" index="analysisReport"
+      >分析报表</el-menu-item
+    >
   </el-menu>
 </template>
 
@@ -23,9 +25,7 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    console.log();
-  },
+  mounted() {},
   methods: {
     /**
      * 通知父组件改变功能模块
