@@ -23,6 +23,7 @@
           class="projectBox"
           v-for="project in projectList"
           :key="project.name"
+          @click="intoProjectDetail(project.id, project.name)"
         >
           <div class="point"></div>
           <div class="projectName">{{ project.name }}</div>
@@ -42,12 +43,15 @@ export default {
       activeNames: ["fun", "project"],
       projectList: [
         {
+          id: 0,
           name: "API-management-system",
         },
         {
+          id: 1,
           name: "wishingWall",
         },
         {
+          id: 2,
           name: "homework",
         },
       ],
@@ -58,6 +62,18 @@ export default {
     this.getMassage();
   },
   methods: {
+    /**
+     * 进入项目详情页面
+     * @param {Number} projectId 项目的 id
+     * @param {String} projectName 项目的名称
+     */
+    intoProjectDetail(projectId, projectName) {
+      console.log(projectId);
+      this.$router.push({
+        path: "APImanagement/project",
+        query: { projectId: projectId, projectName: projectName },
+      });
+    },
     /**
      * 根据当前时间展示不同的欢迎语
      */

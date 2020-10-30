@@ -3,11 +3,21 @@
     <!-- 侧边栏 -->
     <side-bar @controlMenu="controlMenu"></side-bar>
     <!-- 功能菜单 -->
-    <fun-menu :hideFunMenu="hideFunMenu" :userInfo="userInfo"></fun-menu>
+    <fun-menu
+      :hideFunMenu="hideFunMenu"
+      :userInfo="userInfo"
+      :isProjectList="isProjectList"
+      @changeFunModule="changeFunModule"
+      @changeProjectFunModule="changeProjectFunModule"
+      style="z-index: 10"
+    ></fun-menu>
     <!-- 顶部栏 -->
     <top-bar
       :hideFunMenu="hideFunMenu"
+      :isProjectList="isProjectList"
       @changeFunModule="changeFunModule"
+      @changeProjectFunModule="changeProjectFunModule"
+      style="z-index: 10"
     ></top-bar>
     <!-- 内容 -->
     <div class="content" :class="{ content_actived: !hideFunMenu }">
@@ -36,6 +46,7 @@ export default {
       },
       hideFunMenu: true,
       fullWidth: document.body.clientWidth,
+      isProjectList: true,
     };
   },
   mounted() {},
@@ -54,7 +65,20 @@ export default {
     changeFunModule(key) {
       if (this.$route.name != key) {
         this.hideFunMenu = key == "overview" ? true : false; // 统计总览页面不显示功能列表
-        this.$router.replace(key);
+        this.$router.replace(`/home/${key}`);
+      }
+    },
+
+    /**
+     * 改变项目内功能模块
+     * @param {String} key 模块名称
+     */
+    changeProjectFunModule(key) {
+      if (this.$route.name != key) {
+        this.$router.push({
+          path: `/home/APImanagement/project/${key}`,
+          query: this.$route.query,
+        });
       }
     },
   },
@@ -63,17 +87,15 @@ export default {
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       vm.hideFunMenu = to.name == "overview" ? true : false;
+      vm.isProjectList = to.path.split("/")[3] == "project" ? false : true;
     });
   },
 
   // 导航更新之前判断是否需要收起侧边栏
   beforeRouteUpdate(to, from, next) {
+    this.isProjectList = to.path.split("/")[3] == "project" ? false : true;
     this.hideFunMenu = to.name == "overview" ? true : false;
     next();
-  },
-
-  beforeDestroy() {
-    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>

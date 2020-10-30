@@ -37,6 +37,18 @@ export default new Router({
         path: 'analysisReport',
         name: 'analysisReport',
         component: () => import('@/views/analysisReport/analysisReport')
+      }, {
+        path: 'APImanagement/project',
+        redirect: 'APImanagement/project/projectOverview',
+      }, {
+        path: 'APImanagement/project',
+        name: 'project',
+        component: () => import('@/views/project/project'),
+        children: [{
+          path: 'projectOverview',
+          name: 'projectOverview',
+          component: () => import('@/views/projectOverview/projectOverview')
+        }]
       }]
     }
   ]

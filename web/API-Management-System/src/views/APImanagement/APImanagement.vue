@@ -2,13 +2,13 @@
   <div class="APImanagement">
     <div class="topBar">
       <div class="funName">API 研发管理</div>
-      <div class="createBox" @click="dialogFormVisible = true">
+      <div class="createBox" @click="showNewProjectDialog">
         <div class="createButton">
           <div class="createProject">
             <i class="el-icon-plus"></i>
             <span>新建 API 项目</span>
           </div>
-          <div class="createOption" @click="controlTypeCard">
+          <div class="createOption" @click.stop="controlTypeCard">
             <i class="el-icon-caret-bottom"></i>
             <ul class="selectList" v-show="showTypeCard">
               <li @click.stop="controlTypeCard">新建项目</li>
@@ -18,72 +18,11 @@
         </div>
       </div>
       <!-- 新建项目的弹出框 -->
-      <el-dialog title="新建项目" :visible.sync="dialogFormVisible">
-        <el-form :model="newProjectInfo" :hide-required-asterisk="true">
-          <el-form-item label="项目名称">
-            <el-input
-              v-model="newProjectInfo.name"
-              :clearable="true"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="项目类型">
-            <el-select
-              v-model="newProjectInfo.region"
-              placeholder="请选择项目类型"
-              style="width: 100%"
-            >
-              <el-option value="Web">Web</el-option>
-              <el-option value="App">App</el-option>
-              <el-option value="PC">PC</el-option>
-              <el-option value="硬件互联网">硬件互联网</el-option>
-              <el-option value="其他">其他</el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="版本号">
-            <el-input
-              v-model="newProjectInfo.version"
-              :clearable="true"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="备注">
-            <el-input
-              v-model="newProjectInfo.remarks"
-              :clearable="true"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="项目成员">
-            <el-select
-              style="width: 100%"
-              v-model="newProjectInfo.members"
-              multiple
-              remote
-              :remote-method="searchUser"
-              filterable
-              allow-create
-              default-first-option
-              placeholder="请输入其他成员的用户名"
-              :loading="isSearchingUser"
-              loading-text="正在搜索"
-              no-match-text="请检查用户名是否存在"
-            >
-              <el-option
-                v-for="user in searchResult"
-                :key="user.userName"
-                :value="user.userName"
-              >
-                <img :src="user.profilePhoto" alt="用户头像" />
-                <span>{{ user.userName }}</span>
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">
-            确 定
-          </el-button>
-        </div>
-      </el-dialog>
+      <new-project-card
+        ref="newProjectCard"
+        title="新建项目"
+        @refreshPage="refreshPage"
+      ></new-project-card>
     </div>
 
     <project-list :projectInfoList="projectInfoList"></project-list>
@@ -91,12 +30,14 @@
 </template>
 
 <script>
+import newProjectCard from "../../components/newProjectCard.vue";
 import projectList from "./components/projectList.vue";
 
 export default {
   name: "APImanagement",
   components: {
     projectList,
+    newProjectCard,
   },
   data() {
     return {
@@ -120,21 +61,6 @@ export default {
           lastUpdateTime: "2020.10.23 08:43",
         },
       ],
-      dialogFormVisible: false,
-      newProjectInfo: {
-        name: "",
-        type: "",
-        version: "",
-        remarks: "",
-        members: [],
-      },
-      isSearchingUser: false, // 选择成员时，搜索内容时展示加载动画
-      searchResult: [
-        {
-          userName: "Psychic",
-          profilePhoto: "~@/assets/iamges/profilePhoto.png",
-        },
-      ], // 搜索成员时返回的结果
     };
   },
   methods: {
@@ -145,10 +71,16 @@ export default {
       this.showTypeCard = !this.showTypeCard;
     },
     /**
-     * 搜索用户
+     * 关闭新建项目的弹窗
      */
-    searchUser() {
-      this.isSearchingUser = true;
+    showNewProjectDialog() {
+      this.$refs.newProjectCard.showNewProjectCard();
+    },
+    /**
+     * 重新获取数据
+     */
+    refreshPage() {
+      // todo
     },
   },
 };

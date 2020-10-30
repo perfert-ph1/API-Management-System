@@ -15,7 +15,10 @@
       v-for="projectInfo in projectInfoList"
       :key="projectInfo.id"
     >
-      <div class="name" @click="intoProjectDetail(projectInfo.id)">
+      <div
+        class="name"
+        @click="intoProjectDetail(projectInfo.id, projectInfo.name)"
+      >
         {{ projectInfo.name }}
       </div>
       <div class="moreInfo">
@@ -87,10 +90,13 @@ export default {
     /**
      * 进入项目详情页面
      * @param {Number} projectId 项目的 id
+     * @param {String} projectName 项目的名称
      */
-    intoProjectDetail(projectId) {
-      console.log(projectId);
-      // todo
+    intoProjectDetail(projectId, projectName) {
+      this.$router.push({
+        path: "APImanagement/project",
+        query: { projectId: projectId, projectName: projectName },
+      });
     },
     /**
      * 对项目进行操作

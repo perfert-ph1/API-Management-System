@@ -19,7 +19,13 @@ import {
   Form,
   FormItem,
   Select,
-  Option
+  Option,
+  Breadcrumb,
+  BreadcrumbItem,
+  Row,
+  Table,
+  TableColumn,
+  Pagination,
 } from 'element-ui';
 
 Vue.config.productionTip = false
@@ -41,6 +47,12 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(Row)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Pagination)
 
 new Vue({
   el: '#app',

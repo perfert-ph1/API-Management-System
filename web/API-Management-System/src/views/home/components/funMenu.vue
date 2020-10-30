@@ -10,12 +10,13 @@
         ></el-avatar>
         <span class="userName">{{ userInfo.userName }}</span>
       </div>
-      <!-- 菜单 -->
+      <!-- 项目列表的菜单 -->
       <el-menu
         class="meun"
+        :style="{ display: isProjectList ? 'block' : 'none' }"
         @select="changeFunModule"
         :default-openeds="['function', 'dataAnalysis']"
-        :default-active="this.$route.name"
+        :default-active="nowModule"
       >
         <el-submenu index="function">
           <template slot="title">功能</template>
@@ -36,6 +37,49 @@
           </el-menu-item>
         </el-submenu>
       </el-menu>
+      <!-- 项目详情的菜单 -->
+      <el-menu
+        class="meun"
+        :style="{ display: isProjectList ? 'none' : 'block' }"
+        @select="changeProjectFunModule"
+        :default-openeds="['project', 'management']"
+        :default-active="nowProjectModule"
+      >
+        <el-submenu index="project">
+          <template slot="title">项目</template>
+          <el-menu-item index="projectOverview">
+            <i class="el-icon-s-marketing"></i>
+            <span>项目概况</span></el-menu-item
+          >
+          <el-menu-item index="API">
+            <i class="el-icon-s-ticket"></i>
+            <span>API</span></el-menu-item
+          >
+          <el-menu-item index="statusCode">
+            <i class="el-icon-s-order"></i>
+            <span>状态码文档</span></el-menu-item
+          >
+          <el-menu-item index="projectDocument">
+            <i class="el-icon-s-claim"></i>
+            <span>项目文档</span></el-menu-item
+          >
+        </el-submenu>
+        <el-submenu index="management">
+          <template slot="title">管理</template>
+          <el-menu-item index="authorityManagement">
+            <i class="el-icon-s-custom"></i>
+            <span>权限管理</span>
+          </el-menu-item>
+          <el-menu-item index="projectSetting">
+            <i class="el-icon-s-tools"></i>
+            <span>项目设置</span>
+          </el-menu-item>
+          <el-menu-item index="journal">
+            <i class="el-icon-s-platform"></i>
+            <span>日志</span>
+          </el-menu-item>
+        </el-submenu>
+      </el-menu>
     </div>
   </div>
 </template>
@@ -46,19 +90,35 @@ export default {
   props: {
     hideFunMenu: Boolean,
     userInfo: Object,
+    isProjectList: Boolean,
   },
   data() {
     return {};
   },
   methods: {
     /**
-     * 改变功能模块，跳转到对应页面
+     * 通知父组件改变功能模块，跳转到对应页面
      * @param {String} key 模块名称
      */
     changeFunModule(key) {
-      if (this.$route.name != key) {
-        this.$router.replace(key);
-      }
+      this.$emit("changeFunModule", key);
+    },
+
+    /**
+     * 通知父组件改变项目内功能模块
+     * @param {String} key 模块名称
+     */
+    changeProjectFunModule(key) {
+      this.$emit("changeProjectFunModule", key);
+    },
+  },
+
+  computed: {
+    nowModule() {
+      return this.$route.path.split("/")[2];
+    },
+    nowProjectModule() {
+      return this.$route.name;
     },
   },
 };
@@ -103,5 +163,8 @@ export default {
   font-size: 30px;
   vertical-align: middle;
   margin-left: 5px;
+}
+.menu {
+  /* width: auto !important; */
 }
 </style>

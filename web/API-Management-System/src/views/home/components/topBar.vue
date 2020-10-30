@@ -2,7 +2,7 @@
   <el-menu
     class="topBar"
     :class="{ topBar_actived: !hideFunMenu }"
-    :default-active="this.$route.name"
+    :default-active="nowModule"
     @select="changeFunModule"
     mode="horizontal"
   >
@@ -33,6 +33,11 @@ export default {
      */
     changeFunModule(key) {
       this.$emit("changeFunModule", key);
+    },
+  },
+  computed: {
+    nowModule() {
+      return this.$route.path.split("/")[2];
     },
   },
 };
