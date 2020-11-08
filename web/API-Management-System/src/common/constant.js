@@ -6,7 +6,7 @@
 const statusList = [
   {
     status: "已发布",
-    color: "#046d53"
+    color: "#58a942"
   },
   {
     status: "设计",
@@ -46,6 +46,39 @@ const statusList = [
   },
 ]
 
+const requestMethodList = [
+  {
+    method: "POST",
+    abbreviation: "POST",
+    color: "#58a942"
+  }, {
+    method: "GET",
+    abbreviation: "GET",
+    color: "#1890ff"
+  }, {
+    method: "PUT",
+    abbreviation: "PUT",
+    color: "#6d4c41"
+  }, {
+    method: "DELETE",
+    abbreviation: "DEL",
+    color: "#ea0707"
+  }, {
+    method: "HEAD",
+    abbreviation: "HEAD",
+    color: "#ff8f00"
+  }, {
+    method: "OPTIONS",
+    abbreviation: "OPTS",
+    color: "#546e7a"
+  }, {
+    method: "PATCH",
+    abbreviation: "PATCH",
+    color: "#f18f00"
+  }
+]
+
 module.exports = {
-  statusList
+  statusList,
+  requestMethodList
 }

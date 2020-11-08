@@ -118,4 +118,7 @@ export default {
 </script>
 
 <style scoped>
+.el-form-item{
+margin-bottom: 5px;
+}
 </style>

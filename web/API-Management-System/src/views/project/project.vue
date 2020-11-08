@@ -1,5 +1,5 @@
 <template>
-  <div class="projectOverview">
+  <div class="project">
     <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home/overview' }"
         >首页</el-breadcrumb-item
@@ -31,9 +31,20 @@ export default {
 </script>
 
 <style scoped>
+.project {
+  margin-top: 34px;
+}
+.project:before {
+  content: "";
+  display: table;
+}
 .breadcrumb {
+  top: 51px;
+  width: 100%;
   padding: 10px 15px;
   background: white;
   border-bottom: 1px solid #e5e5e5;
+  position: fixed;
+  z-index: 10;
 }
 </style>

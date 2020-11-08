@@ -55,7 +55,7 @@
 <script>
 import statisticalCard from "./components/statisticalCard.vue";
 import statisticalChart from "./components/statisticalChart.vue";
-import newProjectCard from "../../components/newProjectCard.vue";
+import newProjectCard from "@/components/newProjectCard.vue";
 
 export default {
   name: "project",
