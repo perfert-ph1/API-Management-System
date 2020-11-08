@@ -81,6 +81,12 @@ public class UserController {
         return ResultEntity.successWithData(user);
     }
 
+    @GetMapping("/user/logout")
+    public ResultEntity<String> logout(HttpServletRequest request){
+        String token = request.getHeader("token");
+        userService.logout(token);
+        return ResultEntity.successWithoutData();
+    }
 
 
 }

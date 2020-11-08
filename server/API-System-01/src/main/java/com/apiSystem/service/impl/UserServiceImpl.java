@@ -62,6 +62,13 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * 登录，获取token
+     * @param username
+     * @param password
+     * @param expiredSeconds
+     * @return
+     */
     @Override
     public Map<String, Object> login(String username, String password, int expiredSeconds){
         Map<String,Object> map = new HashMap<>();
@@ -95,6 +102,10 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
+    /**
+     * 退出
+     * @param token
+     */
     @Override
     public void logout(String token) {
         LoginTokenPO loginTokenPO = new LoginTokenPO();
@@ -102,6 +113,11 @@ public class UserServiceImpl implements UserService {
         loginTokenPOMapper.insertSelective(loginTokenPO);
     }
 
+    /**
+     * 通过token过去凭证
+     * @param token
+     * @return
+     */
     @Override
     public LoginTokenPO findLoginToken(String token) {
         LoginTokenPOExample example = new LoginTokenPOExample();
@@ -114,6 +130,11 @@ public class UserServiceImpl implements UserService {
         return loginTokenPOS.get(0);
     }
 
+    /**
+     * token过期，刷新token
+     * @param token
+     * @return
+     */
     @Override
     public LoginTokenPO refreshToken(String token) {
         LoginTokenPOExample example = new LoginTokenPOExample();
@@ -131,6 +152,11 @@ public class UserServiceImpl implements UserService {
         return newloginTokenPO;
     }
 
+    /**
+     * 通过token获取用户信息
+     * @param token
+     * @return
+     */
     @Override
     public UserVo findUserByToken(String token) {
         LoginTokenPOExample example = new LoginTokenPOExample();
