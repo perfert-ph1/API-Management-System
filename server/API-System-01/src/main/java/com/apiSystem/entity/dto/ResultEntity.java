@@ -2,8 +2,9 @@ package com.apiSystem.entity.dto;
 
 public class ResultEntity<T> {
 
-    public static final String SUCCESS = "SUCCESS";
-    public static final String FAILED = "FAILED";
+    public static final String SUCCESS = "200";
+    public static final String FAILED = "400";
+    public static final String TOKEN_INVALID_CODE = "401";
     public static final String NO_MESSAGE = "NO_MESSAGE";
     public static final String NO_DATA = "NO_DATA";
 

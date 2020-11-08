@@ -1,9 +1,12 @@
 package com.apiSystem.service.impl;
 
+import com.apiSystem.Constant.UserConstant;
+import com.apiSystem.entity.bo.UserBo;
 import com.apiSystem.entity.po.LoginTokenPO;
+import com.apiSystem.entity.po.LoginTokenPOExample;
 import com.apiSystem.entity.po.UserPO;
 import com.apiSystem.entity.po.UserPOExample;
-import com.apiSystem.entity.vo.User;
+import com.apiSystem.entity.vo.UserVo;
 import com.apiSystem.mapper.LoginTokenPOMapper;
 import com.apiSystem.mapper.UserPOMapper;
 import com.apiSystem.service.api.UserService;
@@ -28,7 +31,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Map<String,Object> regist(User user) {
+    public Map<String,Object> regist(UserBo user) {
 
         Map<String,Object> map = new HashMap<>();
 
@@ -90,5 +93,57 @@ public class UserServiceImpl implements UserService {
         map.put("token",loginTokenPO.getToken());
 
         return map;
+    }
+
+    @Override
+    public void logout(String token) {
+        LoginTokenPO loginTokenPO = new LoginTokenPO();
+        loginTokenPO.setStatus(1);
+        loginTokenPOMapper.insertSelective(loginTokenPO);
+    }
+
+    @Override
+    public LoginTokenPO findLoginToken(String token) {
+        LoginTokenPOExample example = new LoginTokenPOExample();
+        example.createCriteria().andTokenEqualTo(token);
+        List<LoginTokenPO> loginTokenPOS = loginTokenPOMapper.selectByExample(example);
+        //如果未查询到结果
+        if(loginTokenPOS.size() == 0){
+            return null;
+        }
+        return loginTokenPOS.get(0);
+    }
+
+    @Override
+    public LoginTokenPO refreshToken(String token) {
+        LoginTokenPOExample example = new LoginTokenPOExample();
+        example.createCriteria().andTokenEqualTo(token);
+        List<LoginTokenPO> loginTokenPOS = loginTokenPOMapper.selectByExample(example);
+        LoginTokenPO loginTokenPO = loginTokenPOS.get(0);
+        //为用户创建新凭证
+        LoginTokenPO newloginTokenPO = new LoginTokenPO();
+        newloginTokenPO.setUserId(loginTokenPO.getUserId());
+        newloginTokenPO.setToken(CommonUtil.generateUUID());
+        newloginTokenPO.setStatus(0);
+        newloginTokenPO.setExpired(new Date(System.currentTimeMillis()+ UserConstant.expiredTime));
+        //将token插入到数据库表中
+        loginTokenPOMapper.insert(newloginTokenPO);
+        return newloginTokenPO;
+    }
+
+    @Override
+    public UserVo findUserByToken(String token) {
+        LoginTokenPOExample example = new LoginTokenPOExample();
+        example.createCriteria().andTokenEqualTo(token);
+        List<LoginTokenPO> loginTokenPOS = loginTokenPOMapper.selectByExample(example);
+        LoginTokenPO loginTokenPO = loginTokenPOS.get(0);
+        Integer userId = loginTokenPO.getUserId();
+        UserPO userPO = userPOMapper.selectByPrimaryKey(userId);
+        UserVo user = new UserVo();
+        user.setId(userPO.getId());
+        user.setCreateTime(userPO.getCreateTime());
+        user.setHeaderUrl(userPO.getHeaderUrl());
+        user.setUsername(userPO.getUsername());
+        return user;
     }
 }

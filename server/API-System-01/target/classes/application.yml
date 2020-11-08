@@ -39,8 +39,8 @@ logging:
   file:
     path: E:\IDEAWorkplace\API-System-01\systemlog
   level:
-    com.liman.community.mapper: debug
-    com.liman.cimmunity.test: debug
+    com.apiSystem.mapper: debug
+    com.apiSystem.test: debug
 
 
 

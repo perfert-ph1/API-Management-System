@@ -1,9 +1,10 @@
 package com.apiSystem.service.api;
 
 
-import com.apiSystem.entity.vo.User;
+import com.apiSystem.entity.bo.UserBo;
+import com.apiSystem.entity.po.LoginTokenPO;
+import com.apiSystem.entity.vo.UserVo;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public interface UserService {
@@ -12,7 +13,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    public Map<String,Object> regist(User user);
+    public Map<String,Object> regist(UserBo user);
 
     /**
      * 登陆业务，颁发token
@@ -22,4 +23,31 @@ public interface UserService {
      * @return
      */
     public Map<String,Object> login(String username,String password,int expiredSeconds);
+
+    /**
+     * 退出
+     * @param token
+     */
+    public void logout(String token);
+
+    /**
+     * 通过token查找凭证
+     * @param token
+     * @return
+     */
+    public LoginTokenPO findLoginToken(String token);
+
+    /**
+     * 刷新token
+     * @param token
+     * @return
+     */
+    public LoginTokenPO refreshToken(String token);
+
+    /**
+     * 根据Token查询User
+     * @param token
+     * @return
+     */
+    UserVo findUserByToken(String token);
 }

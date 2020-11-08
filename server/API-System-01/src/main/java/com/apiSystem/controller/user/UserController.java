@@ -1,17 +1,20 @@
 package com.apiSystem.controller.user;
 
 import com.apiSystem.Constant.UserConstant;
+import com.apiSystem.entity.bo.UserBo;
 import com.apiSystem.entity.dto.ResultEntity;
-import com.apiSystem.entity.vo.User;
+import com.apiSystem.entity.vo.UserVo;
 import com.apiSystem.service.api.UserService;
 import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
@@ -25,8 +28,8 @@ public class UserController {
     private String contextPath;
 
     @ResponseBody
-    @PostMapping("/regist")
-    public ResultEntity<String> regist(User user){
+    @PostMapping("/register")
+    public ResultEntity<String> regist(UserBo user){
         if(user == null){
             return ResultEntity.failed(null,"服务器内部出错");
         }
@@ -48,7 +51,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/login")
-    public ResultEntity<String> login(User user, HttpServletResponse response){
+    public ResultEntity<String> login(UserBo user, HttpServletResponse response){
         if(user == null){
             return ResultEntity.failed(null,"服务器内部出错");
         }
@@ -69,5 +72,15 @@ public class UserController {
         response.addCookie(cookie);
         return ResultEntity.successWithoutData();
     }
+
+    @GetMapping("/user/getUserInfo")
+    @ResponseBody
+    public ResultEntity<UserVo> getUserInfo(HttpServletRequest request){
+        String token = request.getHeader("token");
+        UserVo user = userService.findUserByToken(token);
+        return ResultEntity.successWithData(user);
+    }
+
+
 
 }
