@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import newProjectCard from "../../components/newProjectCard.vue";
+import newProjectCard from "@/components/newProjectCard.vue";
 import projectList from "./components/projectList.vue";
 
 export default {

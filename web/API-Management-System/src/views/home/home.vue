@@ -16,7 +16,6 @@
       :hideFunMenu="hideFunMenu"
       :isProjectList="isProjectList"
       @changeFunModule="changeFunModule"
-      @changeProjectFunModule="changeProjectFunModule"
       style="z-index: 10"
     ></top-bar>
     <!-- 内容 -->
