@@ -1,6 +1,7 @@
 package com.apiSystem.service.api;
 
 
+import com.apiSystem.entity.po.UserPO;
 import com.apiSystem.entity.vo.User;
 
 import java.util.HashMap;
@@ -22,4 +23,6 @@ public interface UserService {
      * @return
      */
     public Map<String,Object> login(String username,String password,int expiredSeconds);
+
+    UserPO queryById(Integer id);
 }

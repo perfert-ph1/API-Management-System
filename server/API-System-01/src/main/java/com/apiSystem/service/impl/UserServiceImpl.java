@@ -91,4 +91,9 @@ public class UserServiceImpl implements UserService {
 
         return map;
     }
+
+    @Override
+    public UserPO queryById(Integer id) {
+        return userPOMapper.selectByPrimaryKey(id);
+    }
 }
