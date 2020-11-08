@@ -4,6 +4,8 @@ package com.apiSystem.service.api;
 import com.apiSystem.entity.bo.UserBo;
 import com.apiSystem.entity.po.LoginTokenPO;
 import com.apiSystem.entity.vo.UserVo;
+import com.apiSystem.entity.po.UserPO;
+import com.apiSystem.entity.vo.User;
 
 import java.util.Map;
 
@@ -50,4 +52,7 @@ public interface UserService {
      * @return
      */
     UserVo findUserByToken(String token);
+
+    UserPO queryById(Integer id);
+
 }
