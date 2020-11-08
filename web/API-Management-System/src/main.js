@@ -26,6 +26,10 @@ import {
   Table,
   TableColumn,
   Pagination,
+  Tag,
+  Popover,
+  Checkbox,
+  CheckboxGroup
 } from 'element-ui';
 
 Vue.config.productionTip = false
@@ -53,6 +57,10 @@ Vue.use(Row)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
+Vue.use(Tag)
+Vue.use(Popover)
+Vue.use(Checkbox)
+Vue.use(CheckboxGroup)
 
 new Vue({
   el: '#app',
