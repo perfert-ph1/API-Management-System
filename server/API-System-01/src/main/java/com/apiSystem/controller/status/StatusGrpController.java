@@ -1,4 +1,4 @@
-package com.apiSystem.controller.user;
+package com.apiSystem.controller.status;
 
 import com.apiSystem.entity.dto.ResultEntity;
 import com.apiSystem.entity.po.StatusGrp;
@@ -17,20 +17,13 @@ public class StatusGrpController {
     @Autowired
     private StatusGrpService service;
 
-    @GetMapping("/cookie")
-    public ResultEntity getCookie(HttpServletResponse response){
-        Cookie cookie = new Cookie("token", "123456");
-        response.addCookie(cookie);
-        return ResultEntity.successWithoutData();
-    }
-
     /**
      * 前端发送的参数应包括：
      * pid 状态码分组对应的项目id
      * grpName 分组名
      */
     @PostMapping("/addGroup")
-    public ResultEntity addStatusGrp(StatusGrp grp, @CookieValue String token){
+    public ResultEntity addStatusGrp(StatusGrp grp, @RequestHeader String token){
         if(service.addNewStatusGrp(grp, token)) {
             return ResultEntity.successWithData(grp);
         }
@@ -40,7 +33,7 @@ public class StatusGrpController {
     }
 
     @PostMapping("/deleteGroup")
-    public ResultEntity deleteById(@RequestParam Integer groupId, @CookieValue String token){
+    public ResultEntity deleteById(@RequestParam Integer groupId, @RequestHeader String token){
         if(groupId==null){
             return ResultEntity.failed(null, "参数错误");
         }
@@ -77,7 +70,7 @@ public class StatusGrpController {
     }
 
     @PostMapping("/updateGroup")
-    public ResultEntity updateStatusGrp(StatusGrpVo grpVo, @CookieValue String token){
+    public ResultEntity updateStatusGrp(StatusGrpVo grpVo, @RequestHeader String token){
         if(service.updateStatusGrp(grpVo, token)){
             return ResultEntity.successWithoutData();
         }

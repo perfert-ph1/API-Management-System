@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class StatusVO {
-    private int statusCode;
+    private String  statusCode;
 
     private String description;
 

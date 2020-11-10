@@ -3,13 +3,13 @@ package com.apiSystem.entity.po;
 public class Status {
     private Integer id;
 
-    private Integer statusCode;
+    private String statusCode;
 
     private String description;
 
     private Integer gid;
 
-    public Status(Integer id, Integer statusCode, String description, Integer gid) {
+    public Status(Integer id, String statusCode, String description, Integer gid) {
         this.id = id;
         this.statusCode = statusCode;
         this.description = description;
@@ -28,11 +28,11 @@ public class Status {
         this.id = id;
     }
 
-    public Integer getStatusCode() {
+    public String getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(Integer statusCode) {
+    public void setStatusCode(String statusCode) {
         this.statusCode = statusCode;
     }
 

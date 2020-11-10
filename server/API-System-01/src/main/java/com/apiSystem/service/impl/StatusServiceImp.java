@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@ProjectAlterLog
+// @ProjectAlterLog
 public class StatusServiceImp implements StatusService {
 
     @Autowired
@@ -72,16 +72,9 @@ public class StatusServiceImp implements StatusService {
     public List<Status> searchStatus(String keyword) {
         StatusExample example = new StatusExample();
         String keyStr = "%" + keyword + "%";
-        Integer code = null;
 
-        try {
-            code = Integer.parseInt(keyword);
-        }catch (NumberFormatException e){}//咳咳...
-
-        if(code!=null) {
-            example.or().andStatusCodeEqualTo(code);
-        }
         example.or().andDescriptionLike(keyStr);
+        example.or().andStatusCodeLike(keyStr);
 
         return mapper.selectByExample(example);
     }
@@ -89,5 +82,10 @@ public class StatusServiceImp implements StatusService {
     @Override
     public boolean updateStatus(Status status, String token) {
         return mapper.updateByPrimaryKeySelective(status) > 0;
+    }
+
+    @Override
+    public boolean removeStatus(List<Integer> ids, Integer groupId) {
+        return mapper.updateGidByIds(ids, groupId)>0;
     }
 }

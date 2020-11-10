@@ -5,7 +5,6 @@ import com.apiSystem.entity.bo.UserBo;
 import com.apiSystem.entity.dto.ResultEntity;
 import com.apiSystem.entity.vo.UserVo;
 import com.apiSystem.service.api.UserService;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

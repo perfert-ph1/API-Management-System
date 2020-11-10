@@ -35,4 +35,9 @@ public interface StatusService {
     List<Status> searchStatus(String keyword);
 
     boolean updateStatus(Status status, String token);
+
+    /**
+     * 移动指定状态码到指定分组
+     */
+    boolean removeStatus(List<Integer> ids, Integer groupId);
 }
