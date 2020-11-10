@@ -110,7 +110,7 @@ public class StatusController {
             return ResultEntity.failed(null, "参数错误");
         }
 
-        if(service.removeStatus(ids, groupId)){
+        if(service.updateStatusBatch(ids, groupId, token)){
             return ResultEntity.successWithoutData();
         }
         else {

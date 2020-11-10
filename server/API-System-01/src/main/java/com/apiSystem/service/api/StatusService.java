@@ -39,5 +39,5 @@ public interface StatusService {
     /**
      * 移动指定状态码到指定分组
      */
-    boolean removeStatus(List<Integer> ids, Integer groupId);
+    boolean updateStatusBatch(List<Integer> ids, Integer groupId, String token);
 }

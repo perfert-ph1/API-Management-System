@@ -119,12 +119,20 @@ public class StatusProjectLogger {
         //若执行成功
         if ((boolean) returnValue) {
             username = getUserNameInArgs(args);
-
-            if(type != LOG_DELETE) {
+            //批量修改，不用指定操作数据
+            if(type==LOG_UPDATE && methodName.contains("Batch")){
+                op = "批量修改";
                 projectId = getOpDataAndProjectId(opData, type, args);
+                opInfo = op + opTarget;
+            }
+            else if(type != LOG_DELETE ) {
+                projectId = getOpDataAndProjectId(opData, type, args);
+                opInfo = op + opTarget + ": " + opData.toString();
+            }
+            else {
+                opInfo = op + opTarget + ": " + opData.toString();
             }
 
-            opInfo = op + opTarget + ": " + opData.toString();
             //增加项目动态记录
             ProjectLog log = new ProjectLog();
             log.setOperationInfo(opInfo);
@@ -187,6 +195,19 @@ public class StatusProjectLogger {
                     opData.append(vo.getGrpName());
                     projectId = grpService.queryProjectIdById(vo.getId());
 
+                    return projectId;
+                }
+
+                //针对批量修改（移动状态码）的情况
+                if(args[0] instanceof List){
+                    Integer gid = null;
+                    for (Object arg : args) {
+                        if(arg instanceof Integer){
+                            gid = (Integer)arg;
+                        }
+                    }
+                    StatusGrp grp = grpService.queryById(gid);
+                    projectId = grp.getPid();
                     return projectId;
                 }
                 break;

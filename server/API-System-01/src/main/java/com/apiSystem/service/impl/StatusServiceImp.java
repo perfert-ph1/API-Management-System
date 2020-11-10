@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-// @ProjectAlterLog
+@ProjectAlterLog
 public class StatusServiceImp implements StatusService {
 
     @Autowired
@@ -85,7 +85,7 @@ public class StatusServiceImp implements StatusService {
     }
 
     @Override
-    public boolean removeStatus(List<Integer> ids, Integer groupId) {
+    public boolean updateStatusBatch(List<Integer> ids, Integer groupId, String token) {
         return mapper.updateGidByIds(ids, groupId)>0;
     }
 }
