@@ -69,19 +69,20 @@ public class StatusServiceImp implements StatusService {
     }
 
     @Override
-    public List<Status> searchStatus(String keyword) {
+    public List<Status> searchStatus(String keyword, Integer pid, Integer groupId) {
         StatusExample example = new StatusExample();
         String keyStr = "%" + keyword + "%";
-        Integer code = null;
-
-        try {
-            code = Integer.parseInt(keyword);
-        }catch (NumberFormatException e){}//咳咳...
-
-        if(code!=null) {
-            example.or().andStatusCodeEqualTo(code);
+        //若没有指定分组id，则是对项目下所有状态码搜索
+        if(groupId==null) {
+            List<Integer> ids = grpService.queryIdsByPid(pid);
+            example.or().andDescriptionLike(keyStr).andGidIn(ids);
+            example.or().andStatusCodeLike(keyStr).andGidIn(ids);
         }
-        example.or().andDescriptionLike(keyStr);
+        //否则只是在指定分组下搜索
+        else{
+            example.or().andDescriptionLike(keyStr).andGidEqualTo(groupId);
+            example.or().andStatusCodeLike(keyStr).andGidEqualTo(groupId);
+        }
 
         return mapper.selectByExample(example);
     }
@@ -89,5 +90,10 @@ public class StatusServiceImp implements StatusService {
     @Override
     public boolean updateStatus(Status status, String token) {
         return mapper.updateByPrimaryKeySelective(status) > 0;
+    }
+
+    @Override
+    public boolean updateStatusBatch(List<Integer> ids, Integer groupId, String token) {
+        return mapper.updateGidByIds(ids, groupId)>0;
     }
 }

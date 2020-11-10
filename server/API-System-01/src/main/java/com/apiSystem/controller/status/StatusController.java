@@ -1,4 +1,4 @@
-package com.apiSystem.controller.user;
+package com.apiSystem.controller.status;
 
 import com.apiSystem.entity.dto.ResultEntity;
 import com.apiSystem.entity.po.Status;
@@ -9,8 +9,6 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +19,6 @@ public class StatusController {
     @Autowired
     private StatusService service;
 
-    @GetMapping("/cookie")
-    public ResultEntity getCookie(HttpServletResponse response){
-        Cookie cookie = new Cookie("token", "123456");
-        response.addCookie(cookie);
-        return ResultEntity.successWithoutData();
-    }
-
     /**
      * 批量插入
      * 请求体数据示例：
@@ -36,7 +27,7 @@ public class StatusController {
      * gid: 3
      */
     @PostMapping("/addStatus")
-    public ResultEntity addBatch(@RequestParam String statuses,@RequestParam Integer gid, @CookieValue String token){
+    public ResultEntity addBatch(@RequestParam String statuses,@RequestParam Integer gid, @RequestHeader String token){
         List<StatusVO> statusVOS = new ArrayList<>();
         //将前端发送的json数组字符串转换为json数组
         JSONArray jsonArray = JSONArray.fromObject(statuses);
@@ -57,7 +48,7 @@ public class StatusController {
     }
 
     @PostMapping("/deleteStatus")
-    public ResultEntity deleteBatch(@RequestParam("ids") String statusIds, @CookieValue String token){
+    public ResultEntity deleteBatch(@RequestParam("ids") String statusIds, @RequestHeader String token){
         String[] idsStr = statusIds.split(",");
         List<Integer> ids = new ArrayList<>();
         for (String idStr : idsStr) {
@@ -74,10 +65,6 @@ public class StatusController {
 
     @GetMapping("/queryByGroupId")
     public ResultEntity queryByGid(@RequestParam("groupId") Integer groupId){
-        if(groupId==null){
-            return ResultEntity.failed(null, "参数为空");
-        }
-
         List<Status> statuses = service.queryByGroupId(groupId);
         return ResultEntity.successWithData(statuses);
     }
@@ -96,16 +83,39 @@ public class StatusController {
     }
 
     @GetMapping("/searchStatus")
-    public ResultEntity searchStatus(@RequestParam("keyword")String keyword){
-        return ResultEntity.successWithData(service.searchStatus(keyword));
+    public ResultEntity searchStatus(@RequestParam("keyword")String keyword, @RequestParam Integer pid
+            , @RequestParam(required = false) Integer groupId){
+        return ResultEntity.successWithData(service.searchStatus(keyword, pid, groupId));
     }
 
     @PostMapping("/updateStatus")
-    public ResultEntity updateStatus(Status status, @CookieValue String token){
+    public ResultEntity updateStatus(Status status, @RequestHeader String token){
         if(service.updateStatus(status, token)){
             return ResultEntity.successWithoutData();
         }
 
         return ResultEntity.failed(null, "更新失败");
+    }
+
+    @PostMapping("/removeStatus")
+    public ResultEntity updateStatusBatch(@RequestParam("ids") String idsStr, @RequestParam Integer groupId
+            , @RequestHeader String token){
+        List<Integer> ids = new ArrayList<>();
+        String[] idsStrArray = idsStr.split(",");
+
+        try {
+            for (String idStr : idsStrArray) {
+                ids.add(Integer.parseInt(idStr));
+            }
+        }catch (NumberFormatException e){
+            return ResultEntity.failed(null, "参数错误");
+        }
+
+        if(service.updateStatusBatch(ids, groupId, token)){
+            return ResultEntity.successWithoutData();
+        }
+        else {
+            return ResultEntity.failed(null, "服务器错误");
+        }
     }
 }
