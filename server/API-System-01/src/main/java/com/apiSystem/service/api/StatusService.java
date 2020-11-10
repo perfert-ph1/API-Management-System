@@ -32,7 +32,7 @@ public interface StatusService {
     /**
      * 根据关键字对状态码和 状态码描述 进行模糊查询
      */
-    List<Status> searchStatus(String keyword);
+    List<Status> searchStatus(String keyword, Integer pid, Integer groupId);
 
     boolean updateStatus(Status status, String token);
 

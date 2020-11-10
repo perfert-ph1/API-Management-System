@@ -83,8 +83,9 @@ public class StatusController {
     }
 
     @GetMapping("/searchStatus")
-    public ResultEntity searchStatus(@RequestParam("keyword")String keyword){
-        return ResultEntity.successWithData(service.searchStatus(keyword));
+    public ResultEntity searchStatus(@RequestParam("keyword")String keyword, @RequestParam Integer pid
+            , @RequestParam(required = false) Integer groupId){
+        return ResultEntity.successWithData(service.searchStatus(keyword, pid, groupId));
     }
 
     @PostMapping("/updateStatus")
