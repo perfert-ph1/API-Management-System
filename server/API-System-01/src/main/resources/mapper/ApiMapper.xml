@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apiSystem.mapper.ApiMapper" >
+  <resultMap id="BaseResultMap" type="com.apiSystem.entity.po.api.Api" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="gid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="api_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="req_protocol" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="req_method" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="flag" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="creator_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="manager_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="updater_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gid, api_name, req_protocol, req_method, flag, status, url, creator_id, manager_id, 
+    updater_id, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.apiSystem.entity.po.api.ApiExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from api
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from api
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from api
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.apiSystem.entity.po.api.ApiExample" >
+    delete from api
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.apiSystem.entity.po.api.Api" >
+    insert into api (id, gid, api_name, 
+      req_protocol, req_method, flag, 
+      status, url, creator_id, 
+      manager_id, updater_id, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, #{apiName,jdbcType=VARCHAR}, 
+      #{reqProtocol,jdbcType=VARCHAR}, #{reqMethod,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{creatorId,jdbcType=INTEGER}, 
+      #{managerId,jdbcType=INTEGER}, #{updaterId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.apiSystem.entity.po.api.Api" >
+    insert into api
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="apiName != null" >
+        api_name,
+      </if>
+      <if test="reqProtocol != null" >
+        req_protocol,
+      </if>
+      <if test="reqMethod != null" >
+        req_method,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="managerId != null" >
+        manager_id,
+      </if>
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="apiName != null" >
+        #{apiName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqProtocol != null" >
+        #{reqProtocol,jdbcType=VARCHAR},
+      </if>
+      <if test="reqMethod != null" >
+        #{reqMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="managerId != null" >
+        #{managerId,jdbcType=INTEGER},
+      </if>
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.apiSystem.entity.po.api.ApiExample" resultType="java.lang.Integer" >
+    select count(*) from api
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update api
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.gid != null" >
+        gid = #{record.gid,jdbcType=INTEGER},
+      </if>
+      <if test="record.apiName != null" >
+        api_name = #{record.apiName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqProtocol != null" >
+        req_protocol = #{record.reqProtocol,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqMethod != null" >
+        req_method = #{record.reqMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flag != null" >
+        flag = #{record.flag,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatorId != null" >
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.managerId != null" >
+        manager_id = #{record.managerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updaterId != null" >
+        updater_id = #{record.updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update api
+    set id = #{record.id,jdbcType=INTEGER},
+      gid = #{record.gid,jdbcType=INTEGER},
+      api_name = #{record.apiName,jdbcType=VARCHAR},
+      req_protocol = #{record.reqProtocol,jdbcType=VARCHAR},
+      req_method = #{record.reqMethod,jdbcType=VARCHAR},
+      flag = #{record.flag,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      url = #{record.url,jdbcType=VARCHAR},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      manager_id = #{record.managerId,jdbcType=INTEGER},
+      updater_id = #{record.updaterId,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apiSystem.entity.po.api.Api" >
+    update api
+    <set >
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="apiName != null" >
+        api_name = #{apiName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqProtocol != null" >
+        req_protocol = #{reqProtocol,jdbcType=VARCHAR},
+      </if>
+      <if test="reqMethod != null" >
+        req_method = #{reqMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="managerId != null" >
+        manager_id = #{managerId,jdbcType=INTEGER},
+      </if>
+      <if test="updaterId != null" >
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.api.Api" >
+    update api
+    set gid = #{gid,jdbcType=INTEGER},
+      api_name = #{apiName,jdbcType=VARCHAR},
+      req_protocol = #{reqProtocol,jdbcType=VARCHAR},
+      req_method = #{reqMethod,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      manager_id = #{managerId,jdbcType=INTEGER},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apiSystem.mapper.ReqBodyMapper" >
+  <resultMap id="BaseResultMap" type="com.apiSystem.entity.po.api.ReqBody" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="req_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="param_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="data_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="required" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="example" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="explanation" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="len_constraint" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="other_constraint" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, req_id, param_name, data_type, required, example, explanation, remarks, len_constraint, 
+    other_constraint
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.apiSystem.entity.po.api.ReqBodyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from req_body
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from req_body
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from req_body
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.apiSystem.entity.po.api.ReqBodyExample" >
+    delete from req_body
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.apiSystem.entity.po.api.ReqBody" >
+    insert into req_body (id, req_id, param_name, 
+      data_type, required, example, 
+      explanation, remarks, len_constraint, 
+      other_constraint)
+    values (#{id,jdbcType=INTEGER}, #{reqId,jdbcType=INTEGER}, #{paramName,jdbcType=VARCHAR}, 
+      #{dataType,jdbcType=VARCHAR}, #{required,jdbcType=INTEGER}, #{example,jdbcType=VARCHAR}, 
+      #{explanation,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{lenConstraint,jdbcType=INTEGER}, 
+      #{otherConstraint,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.apiSystem.entity.po.api.ReqBody" >
+    insert into req_body
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="reqId != null" >
+        req_id,
+      </if>
+      <if test="paramName != null" >
+        param_name,
+      </if>
+      <if test="dataType != null" >
+        data_type,
+      </if>
+      <if test="required != null" >
+        required,
+      </if>
+      <if test="example != null" >
+        example,
+      </if>
+      <if test="explanation != null" >
+        explanation,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="lenConstraint != null" >
+        len_constraint,
+      </if>
+      <if test="otherConstraint != null" >
+        other_constraint,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="reqId != null" >
+        #{reqId,jdbcType=INTEGER},
+      </if>
+      <if test="paramName != null" >
+        #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="required != null" >
+        #{required,jdbcType=INTEGER},
+      </if>
+      <if test="example != null" >
+        #{example,jdbcType=VARCHAR},
+      </if>
+      <if test="explanation != null" >
+        #{explanation,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="lenConstraint != null" >
+        #{lenConstraint,jdbcType=INTEGER},
+      </if>
+      <if test="otherConstraint != null" >
+        #{otherConstraint,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.apiSystem.entity.po.api.ReqBodyExample" resultType="java.lang.Integer" >
+    select count(*) from req_body
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update req_body
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.reqId != null" >
+        req_id = #{record.reqId,jdbcType=INTEGER},
+      </if>
+      <if test="record.paramName != null" >
+        param_name = #{record.paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataType != null" >
+        data_type = #{record.dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.required != null" >
+        required = #{record.required,jdbcType=INTEGER},
+      </if>
+      <if test="record.example != null" >
+        example = #{record.example,jdbcType=VARCHAR},
+      </if>
+      <if test="record.explanation != null" >
+        explanation = #{record.explanation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lenConstraint != null" >
+        len_constraint = #{record.lenConstraint,jdbcType=INTEGER},
+      </if>
+      <if test="record.otherConstraint != null" >
+        other_constraint = #{record.otherConstraint,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update req_body
+    set id = #{record.id,jdbcType=INTEGER},
+      req_id = #{record.reqId,jdbcType=INTEGER},
+      param_name = #{record.paramName,jdbcType=VARCHAR},
+      data_type = #{record.dataType,jdbcType=VARCHAR},
+      required = #{record.required,jdbcType=INTEGER},
+      example = #{record.example,jdbcType=VARCHAR},
+      explanation = #{record.explanation,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      len_constraint = #{record.lenConstraint,jdbcType=INTEGER},
+      other_constraint = #{record.otherConstraint,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apiSystem.entity.po.api.ReqBody" >
+    update req_body
+    <set >
+      <if test="reqId != null" >
+        req_id = #{reqId,jdbcType=INTEGER},
+      </if>
+      <if test="paramName != null" >
+        param_name = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        data_type = #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="required != null" >
+        required = #{required,jdbcType=INTEGER},
+      </if>
+      <if test="example != null" >
+        example = #{example,jdbcType=VARCHAR},
+      </if>
+      <if test="explanation != null" >
+        explanation = #{explanation,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="lenConstraint != null" >
+        len_constraint = #{lenConstraint,jdbcType=INTEGER},
+      </if>
+      <if test="otherConstraint != null" >
+        other_constraint = #{otherConstraint,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.api.ReqBody" >
+    update req_body
+    set req_id = #{reqId,jdbcType=INTEGER},
+      param_name = #{paramName,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      required = #{required,jdbcType=INTEGER},
+      example = #{example,jdbcType=VARCHAR},
+      explanation = #{explanation,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      len_constraint = #{lenConstraint,jdbcType=INTEGER},
+      other_constraint = #{otherConstraint,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apiSystem.mapper.ApiRtnExampleMapper" >
+  <resultMap id="BaseResultMap" type="com.apiSystem.entity.po.api.ApiRtnExample" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="api_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="example_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="status_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="content_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="details_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.apiSystem.entity.po.api.ApiRtnExample" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="api_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="example_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="status_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="content_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="details_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="details" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, api_id, example_type, status_code, content_type, details_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    details
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.apiSystem.entity.po.api.ApiRtnExampleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from api_return_example
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.apiSystem.entity.po.api.ApiRtnExampleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from api_return_example
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from api_return_example
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from api_return_example
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.apiSystem.entity.po.api.ApiRtnExampleExample" >
+    delete from api_return_example
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.apiSystem.entity.po.api.ApiRtnExample" >
+    insert into api_return_example (id, api_id, example_type, 
+      status_code, content_type, details_type, 
+      details)
+    values (#{id,jdbcType=INTEGER}, #{apiId,jdbcType=INTEGER}, #{exampleType,jdbcType=INTEGER}, 
+      #{statusCode,jdbcType=VARCHAR}, #{contentType,jdbcType=INTEGER}, #{detailsType,jdbcType=INTEGER}, 
+      #{details,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.apiSystem.entity.po.api.ApiRtnExample" >
+    insert into api_return_example
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="apiId != null" >
+        api_id,
+      </if>
+      <if test="exampleType != null" >
+        example_type,
+      </if>
+      <if test="statusCode != null" >
+        status_code,
+      </if>
+      <if test="contentType != null" >
+        content_type,
+      </if>
+      <if test="detailsType != null" >
+        details_type,
+      </if>
+      <if test="details != null" >
+        details,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="apiId != null" >
+        #{apiId,jdbcType=INTEGER},
+      </if>
+      <if test="exampleType != null" >
+        #{exampleType,jdbcType=INTEGER},
+      </if>
+      <if test="statusCode != null" >
+        #{statusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contentType != null" >
+        #{contentType,jdbcType=INTEGER},
+      </if>
+      <if test="detailsType != null" >
+        #{detailsType,jdbcType=INTEGER},
+      </if>
+      <if test="details != null" >
+        #{details,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.apiSystem.entity.po.api.ApiRtnExampleExample" resultType="java.lang.Integer" >
+    select count(*) from api_return_example
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update api_return_example
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.apiId != null" >
+        api_id = #{record.apiId,jdbcType=INTEGER},
+      </if>
+      <if test="record.exampleType != null" >
+        example_type = #{record.exampleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCode != null" >
+        status_code = #{record.statusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contentType != null" >
+        content_type = #{record.contentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.detailsType != null" >
+        details_type = #{record.detailsType,jdbcType=INTEGER},
+      </if>
+      <if test="record.details != null" >
+        details = #{record.details,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update api_return_example
+    set id = #{record.id,jdbcType=INTEGER},
+      api_id = #{record.apiId,jdbcType=INTEGER},
+      example_type = #{record.exampleType,jdbcType=INTEGER},
+      status_code = #{record.statusCode,jdbcType=VARCHAR},
+      content_type = #{record.contentType,jdbcType=INTEGER},
+      details_type = #{record.detailsType,jdbcType=INTEGER},
+      details = #{record.details,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update api_return_example
+    set id = #{record.id,jdbcType=INTEGER},
+      api_id = #{record.apiId,jdbcType=INTEGER},
+      example_type = #{record.exampleType,jdbcType=INTEGER},
+      status_code = #{record.statusCode,jdbcType=VARCHAR},
+      content_type = #{record.contentType,jdbcType=INTEGER},
+      details_type = #{record.detailsType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apiSystem.entity.po.api.ApiRtnExample" >
+    update api_return_example
+    <set >
+      <if test="apiId != null" >
+        api_id = #{apiId,jdbcType=INTEGER},
+      </if>
+      <if test="exampleType != null" >
+        example_type = #{exampleType,jdbcType=INTEGER},
+      </if>
+      <if test="statusCode != null" >
+        status_code = #{statusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contentType != null" >
+        content_type = #{contentType,jdbcType=INTEGER},
+      </if>
+      <if test="detailsType != null" >
+        details_type = #{detailsType,jdbcType=INTEGER},
+      </if>
+      <if test="details != null" >
+        details = #{details,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.apiSystem.entity.po.api.ApiRtnExample" >
+    update api_return_example
+    set api_id = #{apiId,jdbcType=INTEGER},
+      example_type = #{exampleType,jdbcType=INTEGER},
+      status_code = #{statusCode,jdbcType=VARCHAR},
+      content_type = #{contentType,jdbcType=INTEGER},
+      details_type = #{detailsType,jdbcType=INTEGER},
+      details = #{details,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.api.ApiRtnExample" >
+    update api_return_example
+    set api_id = #{apiId,jdbcType=INTEGER},
+      example_type = #{exampleType,jdbcType=INTEGER},
+      status_code = #{statusCode,jdbcType=VARCHAR},
+      content_type = #{contentType,jdbcType=INTEGER},
+      details_type = #{detailsType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
