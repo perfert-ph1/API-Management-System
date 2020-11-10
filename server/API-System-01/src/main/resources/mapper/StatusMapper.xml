@@ -134,6 +134,12 @@
             </if>
         </trim>
     </insert>
+    <select id="countByExample" parameterType="com.apiSystem.entity.po.StatusExample" resultType="java.lang.Integer" >
+        select count(*) from status
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
         update status
         <set>

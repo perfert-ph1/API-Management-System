@@ -5,7 +5,6 @@ import com.apiSystem.entity.bo.UserBo;
 import com.apiSystem.entity.po.LoginTokenPO;
 import com.apiSystem.entity.vo.UserVo;
 import com.apiSystem.entity.po.UserPO;
-import com.apiSystem.entity.vo.User;
 
 import java.util.Map;
 

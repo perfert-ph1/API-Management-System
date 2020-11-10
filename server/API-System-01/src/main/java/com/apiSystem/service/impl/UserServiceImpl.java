@@ -172,7 +172,7 @@ public class UserServiceImpl implements UserService {
         user.setHeaderUrl(userPO.getHeaderUrl());
         user.setUsername(userPO.getUsername());
         return user;
-
+    }
     @Override
     public UserPO queryById(Integer id) {
         return userPOMapper.selectByPrimaryKey(id);
