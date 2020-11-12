@@ -166,16 +166,44 @@ public class UserServiceImpl implements UserService {
         LoginTokenPO loginTokenPO = loginTokenPOS.get(0);
         Integer userId = loginTokenPO.getUserId();
         UserPO userPO = userPOMapper.selectByPrimaryKey(userId);
-        UserVo user = new UserVo();
-        user.setId(userPO.getId());
-        user.setCreateTime(userPO.getCreateTime());
-        user.setHeaderUrl(userPO.getHeaderUrl());
-        user.setUsername(userPO.getUsername());
-        return user;
+        UserVo userVo = UserPO2UserVO(userPO);
+        return userVo;
     }
     @Override
     public UserPO queryById(Integer id) {
         return userPOMapper.selectByPrimaryKey(id);
 
+    }
+
+    /**
+     * 通过username查找User
+     * @param username
+     * @return
+     */
+    @Override
+    public UserVo findUserByUsername(String username) {
+        UserPOExample userPOExample = new UserPOExample();
+        userPOExample.createCriteria().andUsernameEqualTo(username);
+        List<UserPO> userPOS = userPOMapper.selectByExample(userPOExample);
+        if(userPOS.size() == 0){
+            return null;
+        }
+        UserPO userPO = userPOS.get(0);
+        UserVo userVo = UserPO2UserVO(userPO);
+        return userVo;
+    }
+
+    /**
+     * 将PO转化为PO
+     * @param userPO
+     * @return
+     */
+    private UserVo UserPO2UserVO(UserPO userPO){
+        UserVo user = new UserVo();
+        user.setId(userPO.getId());
+        user.setCreateTime(userPO.getCreateTime().getTime());
+        user.setHeaderUrl(userPO.getHeaderUrl());
+        user.setUsername(userPO.getUsername());
+        return user;
     }
 }

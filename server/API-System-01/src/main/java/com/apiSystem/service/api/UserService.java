@@ -54,4 +54,10 @@ public interface UserService {
 
     UserPO queryById(Integer id);
 
+    /**
+     * 通过username查找user
+     * @param username
+     * @return
+     */
+    UserVo findUserByUsername(String username);
 }

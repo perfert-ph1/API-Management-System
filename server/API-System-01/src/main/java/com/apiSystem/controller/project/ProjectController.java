@@ -2,6 +2,8 @@ package com.apiSystem.controller.project;
 
 import com.apiSystem.entity.bo.ProjectBO;
 import com.apiSystem.entity.dto.ResultEntity;
+import com.apiSystem.entity.po.LoginTokenPO;
+import com.apiSystem.entity.po.api.Request;
 import com.apiSystem.entity.vo.ProjectSituationVO;
 import com.apiSystem.entity.vo.ProjectVO;
 import com.apiSystem.entity.vo.UserVo;
@@ -27,13 +29,16 @@ public class ProjectController {
     private ProjectService projectService;
 
     @PostMapping("/addProject")
-    public ResultEntity<String> addProject(ProjectBO projectBO){
+    public ResultEntity<String> addProject(HttpServletRequest request,ProjectBO projectBO){
         if(projectBO == null){
             ResultEntity.failed(null,"服务器出错");
         }
         if(projectBO.getProjectName() == null || projectBO.getProjectName().trim().equals("")){
             ResultEntity.failed(null,"项目名不能为空");
         }
+        String token = request.getHeader("token");
+        LoginTokenPO loginToken = userService.findLoginToken(token);
+        projectBO.setCreatorId(loginToken.getUserId());
         projectService.addProject(projectBO);
         return ResultEntity.successWithoutData();
     }
