@@ -3,7 +3,7 @@ package com.apiSystem.entity.po.api;
 public class ReqHeader {
     private Integer id;
 
-    private Integer reqId;
+    private Integer apiId;
 
     private String tagName;
 
@@ -21,9 +21,9 @@ public class ReqHeader {
 
     private String otherConstraint;
 
-    public ReqHeader(Integer id, Integer reqId, String tagName, String dataType, Integer required, String example, String explanation, String remarks, Integer lenConstraint, String otherConstraint) {
+    public ReqHeader(Integer id, Integer apiId, String tagName, String dataType, Integer required, String example, String explanation, String remarks, Integer lenConstraint, String otherConstraint) {
         this.id = id;
-        this.reqId = reqId;
+        this.apiId = apiId;
         this.tagName = tagName;
         this.dataType = dataType;
         this.required = required;
@@ -46,12 +46,12 @@ public class ReqHeader {
         this.id = id;
     }
 
-    public Integer getReqId() {
-        return reqId;
+    public Integer getApiId() {
+        return apiId;
     }
 
-    public void setReqId(Integer reqId) {
-        this.reqId = reqId;
+    public void setApiId(Integer apiId) {
+        this.apiId = apiId;
     }
 
     public String getTagName() {

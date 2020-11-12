@@ -2,10 +2,12 @@ package com.apiSystem.mapper;
 
 import com.apiSystem.entity.po.api.ApiRtnExample;
 import com.apiSystem.entity.po.api.ApiRtnExampleExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface ApiRtnExampleMapper {
     int countByExample(ApiRtnExampleExample example);
 

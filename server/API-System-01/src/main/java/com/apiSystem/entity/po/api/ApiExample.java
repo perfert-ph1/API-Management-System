@@ -305,62 +305,52 @@ public class ApiExample {
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolEqualTo(String value) {
+        public Criteria andReqProtocolEqualTo(Integer value) {
             addCriterion("req_protocol =", value, "reqProtocol");
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolNotEqualTo(String value) {
+        public Criteria andReqProtocolNotEqualTo(Integer value) {
             addCriterion("req_protocol <>", value, "reqProtocol");
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolGreaterThan(String value) {
+        public Criteria andReqProtocolGreaterThan(Integer value) {
             addCriterion("req_protocol >", value, "reqProtocol");
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolGreaterThanOrEqualTo(String value) {
+        public Criteria andReqProtocolGreaterThanOrEqualTo(Integer value) {
             addCriterion("req_protocol >=", value, "reqProtocol");
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolLessThan(String value) {
+        public Criteria andReqProtocolLessThan(Integer value) {
             addCriterion("req_protocol <", value, "reqProtocol");
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolLessThanOrEqualTo(String value) {
+        public Criteria andReqProtocolLessThanOrEqualTo(Integer value) {
             addCriterion("req_protocol <=", value, "reqProtocol");
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolLike(String value) {
-            addCriterion("req_protocol like", value, "reqProtocol");
-            return (Criteria) this;
-        }
-
-        public Criteria andReqProtocolNotLike(String value) {
-            addCriterion("req_protocol not like", value, "reqProtocol");
-            return (Criteria) this;
-        }
-
-        public Criteria andReqProtocolIn(List<String> values) {
+        public Criteria andReqProtocolIn(List<Integer> values) {
             addCriterion("req_protocol in", values, "reqProtocol");
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolNotIn(List<String> values) {
+        public Criteria andReqProtocolNotIn(List<Integer> values) {
             addCriterion("req_protocol not in", values, "reqProtocol");
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolBetween(String value1, String value2) {
+        public Criteria andReqProtocolBetween(Integer value1, Integer value2) {
             addCriterion("req_protocol between", value1, value2, "reqProtocol");
             return (Criteria) this;
         }
 
-        public Criteria andReqProtocolNotBetween(String value1, String value2) {
+        public Criteria andReqProtocolNotBetween(Integer value1, Integer value2) {
             addCriterion("req_protocol not between", value1, value2, "reqProtocol");
             return (Criteria) this;
         }
@@ -375,62 +365,52 @@ public class ApiExample {
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodEqualTo(String value) {
+        public Criteria andReqMethodEqualTo(Integer value) {
             addCriterion("req_method =", value, "reqMethod");
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodNotEqualTo(String value) {
+        public Criteria andReqMethodNotEqualTo(Integer value) {
             addCriterion("req_method <>", value, "reqMethod");
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodGreaterThan(String value) {
+        public Criteria andReqMethodGreaterThan(Integer value) {
             addCriterion("req_method >", value, "reqMethod");
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodGreaterThanOrEqualTo(String value) {
+        public Criteria andReqMethodGreaterThanOrEqualTo(Integer value) {
             addCriterion("req_method >=", value, "reqMethod");
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodLessThan(String value) {
+        public Criteria andReqMethodLessThan(Integer value) {
             addCriterion("req_method <", value, "reqMethod");
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodLessThanOrEqualTo(String value) {
+        public Criteria andReqMethodLessThanOrEqualTo(Integer value) {
             addCriterion("req_method <=", value, "reqMethod");
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodLike(String value) {
-            addCriterion("req_method like", value, "reqMethod");
-            return (Criteria) this;
-        }
-
-        public Criteria andReqMethodNotLike(String value) {
-            addCriterion("req_method not like", value, "reqMethod");
-            return (Criteria) this;
-        }
-
-        public Criteria andReqMethodIn(List<String> values) {
+        public Criteria andReqMethodIn(List<Integer> values) {
             addCriterion("req_method in", values, "reqMethod");
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodNotIn(List<String> values) {
+        public Criteria andReqMethodNotIn(List<Integer> values) {
             addCriterion("req_method not in", values, "reqMethod");
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodBetween(String value1, String value2) {
+        public Criteria andReqMethodBetween(Integer value1, Integer value2) {
             addCriterion("req_method between", value1, value2, "reqMethod");
             return (Criteria) this;
         }
 
-        public Criteria andReqMethodNotBetween(String value1, String value2) {
+        public Criteria andReqMethodNotBetween(Integer value1, Integer value2) {
             addCriterion("req_method not between", value1, value2, "reqMethod");
             return (Criteria) this;
         }
@@ -622,6 +602,126 @@ public class ApiExample {
 
         public Criteria andUrlNotBetween(String value1, String value2) {
             addCriterion("url not between", value1, value2, "url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeIsNull() {
+            addCriterion("resp_json_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeIsNotNull() {
+            addCriterion("resp_json_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeEqualTo(Integer value) {
+            addCriterion("resp_json_type =", value, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeNotEqualTo(Integer value) {
+            addCriterion("resp_json_type <>", value, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeGreaterThan(Integer value) {
+            addCriterion("resp_json_type >", value, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("resp_json_type >=", value, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeLessThan(Integer value) {
+            addCriterion("resp_json_type <", value, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("resp_json_type <=", value, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeIn(List<Integer> values) {
+            addCriterion("resp_json_type in", values, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeNotIn(List<Integer> values) {
+            addCriterion("resp_json_type not in", values, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeBetween(Integer value1, Integer value2) {
+            addCriterion("resp_json_type between", value1, value2, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRespJsonTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("resp_json_type not between", value1, value2, "respJsonType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeIsNull() {
+            addCriterion("req_body_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeIsNotNull() {
+            addCriterion("req_body_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeEqualTo(Integer value) {
+            addCriterion("req_body_type =", value, "reqBodyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeNotEqualTo(Integer value) {
+            addCriterion("req_body_type <>", value, "reqBodyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeGreaterThan(Integer value) {
+            addCriterion("req_body_type >", value, "reqBodyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("req_body_type >=", value, "reqBodyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeLessThan(Integer value) {
+            addCriterion("req_body_type <", value, "reqBodyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("req_body_type <=", value, "reqBodyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeIn(List<Integer> values) {
+            addCriterion("req_body_type in", values, "reqBodyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeNotIn(List<Integer> values) {
+            addCriterion("req_body_type not in", values, "reqBodyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeBetween(Integer value1, Integer value2) {
+            addCriterion("req_body_type between", value1, value2, "reqBodyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andReqBodyTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("req_body_type not between", value1, value2, "reqBodyType");
             return (Criteria) this;
         }
 

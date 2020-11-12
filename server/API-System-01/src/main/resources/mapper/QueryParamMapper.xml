@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.apiSystem.mapper.ReqBodyMapper" >
-  <resultMap id="BaseResultMap" type="com.apiSystem.entity.po.api.ReqBody" >
+<mapper namespace="com.apiSystem.mapper.QueryParamMapper" >
+  <resultMap id="BaseResultMap" type="com.apiSystem.entity.po.api.QueryParam" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="api_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -13,21 +13,6 @@
       <arg column="remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="len_constraint" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="other_constraint" jdbcType="VARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.apiSystem.entity.po.api.ReqBody" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="api_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="param_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="data_type" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="required" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="example" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="explanation" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="len_constraint" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="other_constraint" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="sub_field" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -92,19 +77,14 @@
     id, api_id, param_name, data_type, required, example, explanation, remarks, len_constraint, 
     other_constraint
   </sql>
-  <sql id="Blob_Column_List" >
-    sub_field
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.apiSystem.entity.po.api.ReqBodyExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.apiSystem.entity.po.api.QueryParamExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from req_body
+    from query_param
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -112,51 +92,34 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.apiSystem.entity.po.api.ReqBodyExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'false' as QUERYID,
-    <include refid="Base_Column_List" />
-    from req_body
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from req_body
+    from query_param
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from req_body
+    delete from query_param
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.apiSystem.entity.po.api.ReqBodyExample" >
-    delete from req_body
+  <delete id="deleteByExample" parameterType="com.apiSystem.entity.po.api.QueryParamExample" >
+    delete from query_param
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.apiSystem.entity.po.api.ReqBody" >
-    insert into req_body (id, api_id, param_name, 
+  <insert id="insert" parameterType="com.apiSystem.entity.po.api.QueryParam" >
+    insert into query_param (id, api_id, param_name, 
       data_type, required, example, 
       explanation, remarks, len_constraint, 
-      other_constraint, sub_field)
+      other_constraint)
     values (#{id,jdbcType=INTEGER}, #{apiId,jdbcType=INTEGER}, #{paramName,jdbcType=VARCHAR}, 
       #{dataType,jdbcType=VARCHAR}, #{required,jdbcType=INTEGER}, #{example,jdbcType=VARCHAR}, 
       #{explanation,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{lenConstraint,jdbcType=INTEGER}, 
-      #{otherConstraint,jdbcType=VARCHAR}, #{subField,jdbcType=LONGVARCHAR})
+      #{otherConstraint,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.apiSystem.entity.po.api.ReqBody" >
-    insert into req_body
+  <insert id="insertSelective" parameterType="com.apiSystem.entity.po.api.QueryParam" >
+    insert into query_param
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -187,9 +150,6 @@
       </if>
       <if test="otherConstraint != null" >
         other_constraint,
-      </if>
-      <if test="subField != null" >
-          sub_field,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -223,19 +183,16 @@
       <if test="otherConstraint != null" >
         #{otherConstraint,jdbcType=VARCHAR},
       </if>
-      <if test="subField != null" >
-        #{subField,jdbcType=LONGVARCHAR},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.apiSystem.entity.po.api.ReqBodyExample" resultType="java.lang.Integer" >
-    select count(*) from req_body
+  <select id="countByExample" parameterType="com.apiSystem.entity.po.api.QueryParamExample" resultType="java.lang.Integer" >
+    select count(*) from query_param
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update req_body
+    update query_param
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
@@ -267,33 +224,13 @@
       <if test="record.otherConstraint != null" >
         other_constraint = #{record.otherConstraint,jdbcType=VARCHAR},
       </if>
-      <if test="record.subField != null" >
-          sub_field = #{record.subField,jdbcType=LONGVARCHAR},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update req_body
-    set id = #{record.id,jdbcType=INTEGER},
-      api_id = #{record.apiId,jdbcType=INTEGER},
-      param_name = #{record.paramName,jdbcType=VARCHAR},
-      data_type = #{record.dataType,jdbcType=VARCHAR},
-      required = #{record.required,jdbcType=INTEGER},
-      example = #{record.example,jdbcType=VARCHAR},
-      explanation = #{record.explanation,jdbcType=VARCHAR},
-      remarks = #{record.remarks,jdbcType=VARCHAR},
-      len_constraint = #{record.lenConstraint,jdbcType=INTEGER},
-      other_constraint = #{record.otherConstraint,jdbcType=VARCHAR},
-      sub_field = #{record.subField,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByExample" parameterType="map" >
-    update req_body
+    update query_param
     set id = #{record.id,jdbcType=INTEGER},
       api_id = #{record.apiId,jdbcType=INTEGER},
       param_name = #{record.paramName,jdbcType=VARCHAR},
@@ -308,8 +245,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.apiSystem.entity.po.api.ReqBody" >
-    update req_body
+  <update id="updateByPrimaryKeySelective" parameterType="com.apiSystem.entity.po.api.QueryParam" >
+    update query_param
     <set >
       <if test="apiId != null" >
         api_id = #{apiId,jdbcType=INTEGER},
@@ -338,28 +275,11 @@
       <if test="otherConstraint != null" >
         other_constraint = #{otherConstraint,jdbcType=VARCHAR},
       </if>
-      <if test="subField != null" >
-          sub_field = #{subField,jdbcType=LONGVARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.apiSystem.entity.po.api.ReqBody" >
-    update req_body
-    set api_id = #{apiId,jdbcType=INTEGER},
-      param_name = #{paramName,jdbcType=VARCHAR},
-      data_type = #{dataType,jdbcType=VARCHAR},
-      required = #{required,jdbcType=INTEGER},
-      example = #{example,jdbcType=VARCHAR},
-      explanation = #{explanation,jdbcType=VARCHAR},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      len_constraint = #{lenConstraint,jdbcType=INTEGER},
-      other_constraint = #{otherConstraint,jdbcType=VARCHAR},
-      sub_field = #{subField,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.api.ReqBody" >
-    update req_body
+  <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.api.QueryParam" >
+    update query_param
     set api_id = #{apiId,jdbcType=INTEGER},
       param_name = #{paramName,jdbcType=VARCHAR},
       data_type = #{dataType,jdbcType=VARCHAR},

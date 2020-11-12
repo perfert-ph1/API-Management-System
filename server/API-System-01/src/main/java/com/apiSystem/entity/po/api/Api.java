@@ -9,15 +9,19 @@ public class Api {
 
     private String apiName;
 
-    private String reqProtocol;
+    private Integer reqProtocol;
 
-    private String reqMethod;
+    private Integer reqMethod;
 
     private Integer flag;
 
     private Integer status;
 
     private String url;
+
+    private Integer respJsonType;
+
+    private Integer reqBodyType;
 
     private Integer creatorId;
 
@@ -27,7 +31,7 @@ public class Api {
 
     private Date updateTime;
 
-    public Api(Integer id, Integer gid, String apiName, String reqProtocol, String reqMethod, Integer flag, Integer status, String url, Integer creatorId, Integer managerId, Integer updaterId, Date updateTime) {
+    public Api(Integer id, Integer gid, String apiName, Integer reqProtocol, Integer reqMethod, Integer flag, Integer status, String url, Integer respJsonType, Integer reqBodyType, Integer creatorId, Integer managerId, Integer updaterId, Date updateTime) {
         this.id = id;
         this.gid = gid;
         this.apiName = apiName;
@@ -36,6 +40,8 @@ public class Api {
         this.flag = flag;
         this.status = status;
         this.url = url;
+        this.respJsonType = respJsonType;
+        this.reqBodyType = reqBodyType;
         this.creatorId = creatorId;
         this.managerId = managerId;
         this.updaterId = updaterId;
@@ -70,19 +76,19 @@ public class Api {
         this.apiName = apiName;
     }
 
-    public String getReqProtocol() {
+    public Integer getReqProtocol() {
         return reqProtocol;
     }
 
-    public void setReqProtocol(String reqProtocol) {
+    public void setReqProtocol(Integer reqProtocol) {
         this.reqProtocol = reqProtocol;
     }
 
-    public String getReqMethod() {
+    public Integer getReqMethod() {
         return reqMethod;
     }
 
-    public void setReqMethod(String reqMethod) {
+    public void setReqMethod(Integer reqMethod) {
         this.reqMethod = reqMethod;
     }
 
@@ -108,6 +114,22 @@ public class Api {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Integer getRespJsonType() {
+        return respJsonType;
+    }
+
+    public void setRespJsonType(Integer respJsonType) {
+        this.respJsonType = respJsonType;
+    }
+
+    public Integer getReqBodyType() {
+        return reqBodyType;
+    }
+
+    public void setReqBodyType(Integer reqBodyType) {
+        this.reqBodyType = reqBodyType;
     }
 
     public Integer getCreatorId() {

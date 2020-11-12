@@ -3,7 +3,7 @@ package com.apiSystem.entity.po.api;
 public class ReqBody {
     private Integer id;
 
-    private Integer reqId;
+    private Integer apiId;
 
     private String paramName;
 
@@ -21,9 +21,11 @@ public class ReqBody {
 
     private String otherConstraint;
 
-    public ReqBody(Integer id, Integer reqId, String paramName, String dataType, Integer required, String example, String explanation, String remarks, Integer lenConstraint, String otherConstraint) {
+    private String subField;
+
+    public ReqBody(Integer id, Integer apiId, String paramName, String dataType, Integer required, String example, String explanation, String remarks, Integer lenConstraint, String otherConstraint, String subField) {
         this.id = id;
-        this.reqId = reqId;
+        this.apiId = apiId;
         this.paramName = paramName;
         this.dataType = dataType;
         this.required = required;
@@ -32,6 +34,7 @@ public class ReqBody {
         this.remarks = remarks;
         this.lenConstraint = lenConstraint;
         this.otherConstraint = otherConstraint;
+        this.subField = subField;
     }
 
     public ReqBody() {
@@ -46,12 +49,12 @@ public class ReqBody {
         this.id = id;
     }
 
-    public Integer getReqId() {
-        return reqId;
+    public Integer getApiId() {
+        return apiId;
     }
 
-    public void setReqId(Integer reqId) {
-        this.reqId = reqId;
+    public void setApiId(Integer apiId) {
+        this.apiId = apiId;
     }
 
     public String getParamName() {
@@ -116,5 +119,13 @@ public class ReqBody {
 
     public void setOtherConstraint(String otherConstraint) {
         this.otherConstraint = otherConstraint;
+    }
+
+    public String getSubFirld() {
+        return subField;
+    }
+
+    public void setSubFirld(String subFirld) {
+        this.subField = subFirld;
     }
 }

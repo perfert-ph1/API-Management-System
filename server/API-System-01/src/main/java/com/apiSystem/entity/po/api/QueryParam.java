@@ -1,11 +1,11 @@
 package com.apiSystem.entity.po.api;
 
-public class RespHeader {
+public class QueryParam {
     private Integer id;
 
     private Integer apiId;
 
-    private String tagName;
+    private String paramName;
 
     private String dataType;
 
@@ -21,10 +21,10 @@ public class RespHeader {
 
     private String otherConstraint;
 
-    public RespHeader(Integer id, Integer apiId, String tagName, String dataType, Integer required, String example, String explanation, String remarks, Integer lenConstraint, String otherConstraint) {
+    public QueryParam(Integer id, Integer apiId, String paramName, String dataType, Integer required, String example, String explanation, String remarks, Integer lenConstraint, String otherConstraint) {
         this.id = id;
         this.apiId = apiId;
-        this.tagName = tagName;
+        this.paramName = paramName;
         this.dataType = dataType;
         this.required = required;
         this.example = example;
@@ -34,7 +34,7 @@ public class RespHeader {
         this.otherConstraint = otherConstraint;
     }
 
-    public RespHeader() {
+    public QueryParam() {
         super();
     }
 
@@ -54,12 +54,12 @@ public class RespHeader {
         this.apiId = apiId;
     }
 
-    public String getTagName() {
-        return tagName;
+    public String getParamName() {
+        return paramName;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setParamName(String paramName) {
+        this.paramName = paramName;
     }
 
     public String getDataType() {

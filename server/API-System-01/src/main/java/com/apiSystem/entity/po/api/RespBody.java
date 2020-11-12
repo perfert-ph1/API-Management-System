@@ -5,7 +5,7 @@ public class RespBody {
 
     private String fieldName;
 
-    private Integer respId;
+    private Integer apiId;
 
     private Integer required;
 
@@ -21,10 +21,12 @@ public class RespBody {
 
     private String dataType;
 
-    public RespBody(Integer id, String fieldName, Integer respId, Integer required, String example, String explanation, String remarks, Integer lenConstraint, String otherConstraint, String dataType) {
+    private String subField;
+
+    public RespBody(Integer id, String fieldName, Integer apiId, Integer required, String example, String explanation, String remarks, Integer lenConstraint, String otherConstraint, String dataType, String subField) {
         this.id = id;
         this.fieldName = fieldName;
-        this.respId = respId;
+        this.apiId = apiId;
         this.required = required;
         this.example = example;
         this.explanation = explanation;
@@ -32,6 +34,7 @@ public class RespBody {
         this.lenConstraint = lenConstraint;
         this.otherConstraint = otherConstraint;
         this.dataType = dataType;
+        this.subField = subField;
     }
 
     public RespBody() {
@@ -54,12 +57,12 @@ public class RespBody {
         this.fieldName = fieldName;
     }
 
-    public Integer getRespId() {
-        return respId;
+    public Integer getApiId() {
+        return apiId;
     }
 
-    public void setRespId(Integer respId) {
-        this.respId = respId;
+    public void setApiId(Integer apiId) {
+        this.apiId = apiId;
     }
 
     public Integer getRequired() {
@@ -116,5 +119,13 @@ public class RespBody {
 
     public void setDataType(String dataType) {
         this.dataType = dataType;
+    }
+
+    public String getSubFirld() {
+        return subField;
+    }
+
+    public void setSubFirld(String subFirld) {
+        this.subField = subFirld;
     }
 }

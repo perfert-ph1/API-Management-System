@@ -164,63 +164,63 @@ public class RespHeaderExample {
             return (Criteria) this;
         }
 
-        public Criteria andRespIdIsNull() {
-            addCriterion("resp_id is null");
+        public Criteria andApiIdIsNull() {
+            addCriterion("api_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdIsNotNull() {
-            addCriterion("resp_id is not null");
+        public Criteria andApiIdIsNotNull() {
+            addCriterion("api_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdEqualTo(Integer value) {
-            addCriterion("resp_id =", value, "respId");
+        public Criteria andApiIdEqualTo(Integer value) {
+            addCriterion("api_id =", value, "apiId");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdNotEqualTo(Integer value) {
-            addCriterion("resp_id <>", value, "respId");
+        public Criteria andApiIdNotEqualTo(Integer value) {
+            addCriterion("api_id <>", value, "apiId");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdGreaterThan(Integer value) {
-            addCriterion("resp_id >", value, "respId");
+        public Criteria andApiIdGreaterThan(Integer value) {
+            addCriterion("api_id >", value, "apiId");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("resp_id >=", value, "respId");
+        public Criteria andApiIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("api_id >=", value, "apiId");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdLessThan(Integer value) {
-            addCriterion("resp_id <", value, "respId");
+        public Criteria andApiIdLessThan(Integer value) {
+            addCriterion("api_id <", value, "apiId");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdLessThanOrEqualTo(Integer value) {
-            addCriterion("resp_id <=", value, "respId");
+        public Criteria andApiIdLessThanOrEqualTo(Integer value) {
+            addCriterion("api_id <=", value, "apiId");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdIn(List<Integer> values) {
-            addCriterion("resp_id in", values, "respId");
+        public Criteria andApiIdIn(List<Integer> values) {
+            addCriterion("api_id in", values, "apiId");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdNotIn(List<Integer> values) {
-            addCriterion("resp_id not in", values, "respId");
+        public Criteria andApiIdNotIn(List<Integer> values) {
+            addCriterion("api_id not in", values, "apiId");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdBetween(Integer value1, Integer value2) {
-            addCriterion("resp_id between", value1, value2, "respId");
+        public Criteria andApiIdBetween(Integer value1, Integer value2) {
+            addCriterion("api_id between", value1, value2, "apiId");
             return (Criteria) this;
         }
 
-        public Criteria andRespIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("resp_id not between", value1, value2, "respId");
+        public Criteria andApiIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("api_id not between", value1, value2, "apiId");
             return (Criteria) this;
         }
 

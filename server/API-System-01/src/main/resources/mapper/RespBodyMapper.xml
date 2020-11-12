@@ -5,7 +5,7 @@
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="field_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="resp_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="api_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="required" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="example" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="explanation" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -13,6 +13,21 @@
       <arg column="len_constraint" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="other_constraint" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="data_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.apiSystem.entity.po.api.RespBody" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="field_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="api_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="required" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="example" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="explanation" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="len_constraint" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="other_constraint" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="data_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sub_field" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -74,9 +89,29 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, field_name, resp_id, required, example, explanation, remarks, len_constraint, 
+    id, field_name, api_id, required, example, explanation, remarks, len_constraint, 
     other_constraint, data_type
   </sql>
+  <sql id="Blob_Column_List" >
+    sub_field
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.apiSystem.entity.po.api.RespBodyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from resp_body
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.apiSystem.entity.po.api.RespBodyExample" >
     select
     <if test="distinct" >
@@ -92,9 +127,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from resp_body
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -109,14 +146,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.apiSystem.entity.po.api.RespBody" >
-    insert into resp_body (id, field_name, resp_id, 
+    insert into resp_body (id, field_name, api_id, 
       required, example, explanation, 
       remarks, len_constraint, other_constraint, 
-      data_type)
-    values (#{id,jdbcType=INTEGER}, #{fieldName,jdbcType=VARCHAR}, #{respId,jdbcType=INTEGER}, 
+      data_type, sub_field)
+    values (#{id,jdbcType=INTEGER}, #{fieldName,jdbcType=VARCHAR}, #{apiId,jdbcType=INTEGER}, 
       #{required,jdbcType=INTEGER}, #{example,jdbcType=VARCHAR}, #{explanation,jdbcType=VARCHAR}, 
       #{remarks,jdbcType=VARCHAR}, #{lenConstraint,jdbcType=INTEGER}, #{otherConstraint,jdbcType=VARCHAR}, 
-      #{dataType,jdbcType=VARCHAR})
+      #{dataType,jdbcType=VARCHAR}, #{subField,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.apiSystem.entity.po.api.RespBody" >
     insert into resp_body
@@ -127,8 +164,8 @@
       <if test="fieldName != null" >
         field_name,
       </if>
-      <if test="respId != null" >
-        resp_id,
+      <if test="apiId != null" >
+        api_id,
       </if>
       <if test="required != null" >
         required,
@@ -151,6 +188,9 @@
       <if test="dataType != null" >
         data_type,
       </if>
+      <if test="subField != null" >
+          sub_field,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -159,8 +199,8 @@
       <if test="fieldName != null" >
         #{fieldName,jdbcType=VARCHAR},
       </if>
-      <if test="respId != null" >
-        #{respId,jdbcType=INTEGER},
+      <if test="apiId != null" >
+        #{apiId,jdbcType=INTEGER},
       </if>
       <if test="required != null" >
         #{required,jdbcType=INTEGER},
@@ -183,6 +223,9 @@
       <if test="dataType != null" >
         #{dataType,jdbcType=VARCHAR},
       </if>
+      <if test="subField != null" >
+        #{subField,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.apiSystem.entity.po.api.RespBodyExample" resultType="java.lang.Integer" >
@@ -200,8 +243,8 @@
       <if test="record.fieldName != null" >
         field_name = #{record.fieldName,jdbcType=VARCHAR},
       </if>
-      <if test="record.respId != null" >
-        resp_id = #{record.respId,jdbcType=INTEGER},
+      <if test="record.apiId != null" >
+        api_id = #{record.apiId,jdbcType=INTEGER},
       </if>
       <if test="record.required != null" >
         required = #{record.required,jdbcType=INTEGER},
@@ -224,7 +267,27 @@
       <if test="record.dataType != null" >
         data_type = #{record.dataType,jdbcType=VARCHAR},
       </if>
+      <if test="record.subField != null" >
+          sub_field = #{record.subField,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update resp_body
+    set id = #{record.id,jdbcType=INTEGER},
+      field_name = #{record.fieldName,jdbcType=VARCHAR},
+      api_id = #{record.apiId,jdbcType=INTEGER},
+      required = #{record.required,jdbcType=INTEGER},
+      example = #{record.example,jdbcType=VARCHAR},
+      explanation = #{record.explanation,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      len_constraint = #{record.lenConstraint,jdbcType=INTEGER},
+      other_constraint = #{record.otherConstraint,jdbcType=VARCHAR},
+      data_type = #{record.dataType,jdbcType=VARCHAR},
+      sub_field = #{record.subField,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -233,7 +296,7 @@
     update resp_body
     set id = #{record.id,jdbcType=INTEGER},
       field_name = #{record.fieldName,jdbcType=VARCHAR},
-      resp_id = #{record.respId,jdbcType=INTEGER},
+      api_id = #{record.apiId,jdbcType=INTEGER},
       required = #{record.required,jdbcType=INTEGER},
       example = #{record.example,jdbcType=VARCHAR},
       explanation = #{record.explanation,jdbcType=VARCHAR},
@@ -251,8 +314,8 @@
       <if test="fieldName != null" >
         field_name = #{fieldName,jdbcType=VARCHAR},
       </if>
-      <if test="respId != null" >
-        resp_id = #{respId,jdbcType=INTEGER},
+      <if test="apiId != null" >
+        api_id = #{apiId,jdbcType=INTEGER},
       </if>
       <if test="required != null" >
         required = #{required,jdbcType=INTEGER},
@@ -275,13 +338,30 @@
       <if test="dataType != null" >
         data_type = #{dataType,jdbcType=VARCHAR},
       </if>
+      <if test="subField != null" >
+          sub_field = #{subField,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.apiSystem.entity.po.api.RespBody" >
+    update resp_body
+    set field_name = #{fieldName,jdbcType=VARCHAR},
+      api_id = #{apiId,jdbcType=INTEGER},
+      required = #{required,jdbcType=INTEGER},
+      example = #{example,jdbcType=VARCHAR},
+      explanation = #{explanation,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      len_constraint = #{lenConstraint,jdbcType=INTEGER},
+      other_constraint = #{otherConstraint,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      sub_field = #{subField,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.api.RespBody" >
     update resp_body
     set field_name = #{fieldName,jdbcType=VARCHAR},
-      resp_id = #{respId,jdbcType=INTEGER},
+      api_id = #{apiId,jdbcType=INTEGER},
       required = #{required,jdbcType=INTEGER},
       example = #{example,jdbcType=VARCHAR},
       explanation = #{explanation,jdbcType=VARCHAR},

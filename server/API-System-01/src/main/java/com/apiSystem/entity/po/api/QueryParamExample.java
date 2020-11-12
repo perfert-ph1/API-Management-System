@@ -3,14 +3,14 @@ package com.apiSystem.entity.po.api;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RespBodyExample {
+public class QueryParamExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public RespBodyExample() {
+    public QueryParamExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -164,76 +164,6 @@ public class RespBodyExample {
             return (Criteria) this;
         }
 
-        public Criteria andFieldNameIsNull() {
-            addCriterion("field_name is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameIsNotNull() {
-            addCriterion("field_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameEqualTo(String value) {
-            addCriterion("field_name =", value, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameNotEqualTo(String value) {
-            addCriterion("field_name <>", value, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameGreaterThan(String value) {
-            addCriterion("field_name >", value, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameGreaterThanOrEqualTo(String value) {
-            addCriterion("field_name >=", value, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameLessThan(String value) {
-            addCriterion("field_name <", value, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameLessThanOrEqualTo(String value) {
-            addCriterion("field_name <=", value, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameLike(String value) {
-            addCriterion("field_name like", value, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameNotLike(String value) {
-            addCriterion("field_name not like", value, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameIn(List<String> values) {
-            addCriterion("field_name in", values, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameNotIn(List<String> values) {
-            addCriterion("field_name not in", values, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameBetween(String value1, String value2) {
-            addCriterion("field_name between", value1, value2, "fieldName");
-            return (Criteria) this;
-        }
-
-        public Criteria andFieldNameNotBetween(String value1, String value2) {
-            addCriterion("field_name not between", value1, value2, "fieldName");
-            return (Criteria) this;
-        }
-
         public Criteria andApiIdIsNull() {
             addCriterion("api_id is null");
             return (Criteria) this;
@@ -291,6 +221,146 @@ public class RespBodyExample {
 
         public Criteria andApiIdNotBetween(Integer value1, Integer value2) {
             addCriterion("api_id not between", value1, value2, "apiId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameIsNull() {
+            addCriterion("param_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameIsNotNull() {
+            addCriterion("param_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameEqualTo(String value) {
+            addCriterion("param_name =", value, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameNotEqualTo(String value) {
+            addCriterion("param_name <>", value, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameGreaterThan(String value) {
+            addCriterion("param_name >", value, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameGreaterThanOrEqualTo(String value) {
+            addCriterion("param_name >=", value, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameLessThan(String value) {
+            addCriterion("param_name <", value, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameLessThanOrEqualTo(String value) {
+            addCriterion("param_name <=", value, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameLike(String value) {
+            addCriterion("param_name like", value, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameNotLike(String value) {
+            addCriterion("param_name not like", value, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameIn(List<String> values) {
+            addCriterion("param_name in", values, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameNotIn(List<String> values) {
+            addCriterion("param_name not in", values, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameBetween(String value1, String value2) {
+            addCriterion("param_name between", value1, value2, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andParamNameNotBetween(String value1, String value2) {
+            addCriterion("param_name not between", value1, value2, "paramName");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeIsNull() {
+            addCriterion("data_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeIsNotNull() {
+            addCriterion("data_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeEqualTo(String value) {
+            addCriterion("data_type =", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeNotEqualTo(String value) {
+            addCriterion("data_type <>", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeGreaterThan(String value) {
+            addCriterion("data_type >", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("data_type >=", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeLessThan(String value) {
+            addCriterion("data_type <", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeLessThanOrEqualTo(String value) {
+            addCriterion("data_type <=", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeLike(String value) {
+            addCriterion("data_type like", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeNotLike(String value) {
+            addCriterion("data_type not like", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeIn(List<String> values) {
+            addCriterion("data_type in", values, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeNotIn(List<String> values) {
+            addCriterion("data_type not in", values, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeBetween(String value1, String value2) {
+            addCriterion("data_type between", value1, value2, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeNotBetween(String value1, String value2) {
+            addCriterion("data_type not between", value1, value2, "dataType");
             return (Criteria) this;
         }
 
@@ -691,76 +761,6 @@ public class RespBodyExample {
 
         public Criteria andOtherConstraintNotBetween(String value1, String value2) {
             addCriterion("other_constraint not between", value1, value2, "otherConstraint");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeIsNull() {
-            addCriterion("data_type is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeIsNotNull() {
-            addCriterion("data_type is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeEqualTo(String value) {
-            addCriterion("data_type =", value, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeNotEqualTo(String value) {
-            addCriterion("data_type <>", value, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeGreaterThan(String value) {
-            addCriterion("data_type >", value, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("data_type >=", value, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeLessThan(String value) {
-            addCriterion("data_type <", value, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeLessThanOrEqualTo(String value) {
-            addCriterion("data_type <=", value, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeLike(String value) {
-            addCriterion("data_type like", value, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeNotLike(String value) {
-            addCriterion("data_type not like", value, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeIn(List<String> values) {
-            addCriterion("data_type in", values, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeNotIn(List<String> values) {
-            addCriterion("data_type not in", values, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeBetween(String value1, String value2) {
-            addCriterion("data_type between", value1, value2, "dataType");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataTypeNotBetween(String value1, String value2) {
-            addCriterion("data_type not between", value1, value2, "dataType");
             return (Criteria) this;
         }
     }
