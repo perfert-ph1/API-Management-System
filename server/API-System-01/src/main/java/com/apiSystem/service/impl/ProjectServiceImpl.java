@@ -2,13 +2,14 @@ package com.apiSystem.service.impl;
 
 import com.apiSystem.entity.bo.ProjectBO;
 import com.apiSystem.entity.po.*;
+import com.apiSystem.entity.po.api.ApiExample;
+import com.apiSystem.entity.po.api.ApiGrp;
+import com.apiSystem.entity.po.api.ApiGrpExample;
 import com.apiSystem.entity.vo.ProjectSituationVO;
 import com.apiSystem.entity.vo.ProjectVO;
-import com.apiSystem.mapper.ProjectPOMapper;
-import com.apiSystem.mapper.StatusGrpMapper;
-import com.apiSystem.mapper.StatusMapper;
-import com.apiSystem.mapper.UserInnerProjectPOMapper;
+import com.apiSystem.mapper.*;
 import com.apiSystem.service.api.ProjectService;
+import com.apiSystem.service.api.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,18 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private StatusGrpMapper statusGrpMapper;
+
+    @Autowired
+    private ApiMapper apiMapper;
+
+    @Autowired
+    private ApiGrpMapper apiGrpMapper;
+
+    @Autowired
+    private RolePOMapper rolePOMapper;
+
+    @Autowired
+    private UserInnerRolePOMapper userInnerRolePOMapper;
 
 
 
@@ -66,6 +79,25 @@ public class ProjectServiceImpl implements ProjectService {
         userInnerProjectPO.setPid(pid);
         userInnerProjectPO.setUid(projectPO.getCreatorId());
         userInnerProjectPOMapper.insert(userInnerProjectPO);
+        //分配角色
+        //插入Role角色表
+        RolePO rolePO = new RolePO();
+        rolePO.setRoleName("最高权限管理员");
+        rolePO.setPid(pid);
+        rolePOMapper.insert(rolePO);
+        //插入inner_role_user
+        RolePOExample rolePOExample = new RolePOExample();
+        rolePOExample.createCriteria().andRoleNameEqualTo("最高权限管理员").andPidEqualTo(pid);
+        List<RolePO> rolePOList = rolePOMapper.selectByExample(rolePOExample);
+        if(rolePOList.size() > 0){
+            RolePO rolePO1 = rolePOList.get(0);
+            UserInnerRolePO userInnerRolePO = new UserInnerRolePO();
+            userInnerRolePO.setRid(rolePO1.getId());
+            userInnerRolePO.setUid(projectPO.getCreatorId());
+            userInnerRolePO.setPid(pid);
+            userInnerRolePOMapper.insert(userInnerRolePO);
+        }
+
     }
 
     /**
@@ -194,6 +226,7 @@ public class ProjectServiceImpl implements ProjectService {
         int count = userInnerProjectPOMapper.countByExample(example);
         projectSituationVO.setMemberNum(count);
 
+        //设置状态码数量
         StatusGrpExample statusGrpExample = new StatusGrpExample();
         statusGrpExample.createCriteria().andPidEqualTo(pid);
         List<StatusGrp> statusGrps = statusGrpMapper.selectByExample(statusGrpExample);
@@ -204,9 +237,20 @@ public class ProjectServiceImpl implements ProjectService {
         StatusExample statusExample = new StatusExample();
         statusExample.createCriteria().andGidIn(gids);
         int statusNum = statusMapper.countByExample(statusExample);
-        //设置状态码数量和API数量
         projectSituationVO.setStatusCodeNum(statusNum);
-        projectSituationVO.setApiNum(0);
+
+        //设置API数量
+        ApiGrpExample apiGrpExample = new ApiGrpExample();
+        apiGrpExample.createCriteria().andPidEqualTo(pid);
+        List<ApiGrp> apiGrps = apiGrpMapper.selectByExample(apiGrpExample);
+        List<Integer> apiGids = new ArrayList<>();
+        for (ApiGrp apiGrp: apiGrps) {
+            apiGids.add(apiGrp.getId());
+        }
+        ApiExample apiExample = new ApiExample();
+        apiExample.createCriteria().andGidIn(apiGids);
+        int apiNums = apiMapper.countByExample(apiExample);
+        projectSituationVO.setApiNum(apiNums);
         return projectSituationVO;
     }
 }

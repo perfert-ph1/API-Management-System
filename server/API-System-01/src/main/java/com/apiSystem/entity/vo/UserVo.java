@@ -12,5 +12,5 @@ public class UserVo {
 
     private String headerUrl;
 
-    private Date createTime;
+    private long createTime;
 }

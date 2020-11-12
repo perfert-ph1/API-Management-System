@@ -2,10 +2,12 @@ package com.apiSystem.mapper;
 
 import com.apiSystem.entity.po.api.ApiGrp;
 import com.apiSystem.entity.po.api.ApiGrpExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface ApiGrpMapper {
     int countByExample(ApiGrpExample example);
 
