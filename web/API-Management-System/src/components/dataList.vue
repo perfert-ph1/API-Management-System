@@ -25,6 +25,7 @@
     </div>
     <div class="table">
       <slot name="table"></slot>
+      <div class="statisticsBox">共加载 {{ totalNum }} 条记录</div>
     </div>
   </div>
 </template>
@@ -33,7 +34,9 @@
 export default {
   name: "dataList",
   components: {},
-  props: {},
+  props: {
+    totalNum: Number,
+  },
   data() {
     return {
       apiKeyWord: "", // 搜索 api 的关键词
@@ -103,5 +106,15 @@ export default {
   background-color: #f7f7f7;
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #d9d9d9;
+}
+.statisticsBox {
+  height: 40px;
+  width: 100%;
+  border-top: 1px solid #d9d9d9;
+  box-sizing: border-box;
+  line-height: 39px;
+  color: #333333;
+  font-size: 13px;
+  padding-left: 15px;
 }
 </style>

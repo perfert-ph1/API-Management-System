@@ -48,31 +48,35 @@ export default new Router({
           path: 'projectOverview',
           name: 'projectOverview',
           component: () => import('@/views/projectOverview/projectOverview')
-        },{
+        }, {
           path: 'APIList',
           name: 'APIList',
           component: () => import('@/views/APIList/APIList')
-        },{
+        }, {
+          path: 'newAPI',
+          name: 'newAPI',
+          component: () => import('@/views/newAPI/newAPI')
+        }, {
           path: 'APIQuickTest',
           name: 'APIQuickTest',
           component: () => import('@/views/APIQuickTest/APIQuickTest')
-        },{
+        }, {
           path: 'statusCodeList',
           name: 'statusCodeList',
           component: () => import('@/views/statusCodeList/statusCodeList')
-        },{
+        }, {
           path: 'projectDocumentList',
           name: 'projectDocumentList',
           component: () => import('@/views/projectDocumentList/projectDocumentList')
-        },{
+        }, {
           path: 'authorityManagement',
           name: 'authorityManagement',
           component: () => import('@/views/authorityManagement/authorityManagement')
-        },{
+        }, {
           path: 'projectSetting',
           name: 'projectSetting',
           component: () => import('@/views/projectSetting/projectSetting')
-        },{
+        }, {
           path: 'operationLog',
           name: 'operationLog',
           component: () => import('@/views/operationLog/operationLog')

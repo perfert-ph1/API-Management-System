@@ -10,7 +10,11 @@
     >
       <span slot="title">所有 API</span>
     </navigation-box>
-    <data-list @search="search" @newSth="toNewAPIPage">
+    <data-list
+      @search="search"
+      @newSth="toNewAPIPage"
+      :totalNum="APIInfoList.length"
+    >
       <template v-slot:buttonName>新建 HTTP API</template>
       <template v-slot:filterButton>
         <el-popover trigger="click">
@@ -269,7 +273,6 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="statisticsBox">共加载 {{ APIInfoList.length }} 条记录</div>
       </template>
     </data-list>
     <!-- 删除 api 的弹窗 -->
@@ -655,8 +658,10 @@ export default {
      * 跳转到新建 api 的界面
      */
     toNewAPIPage() {
-      // todo 跳转到新建 api 的界面
-      console.log("跳转到新建 api 的界面");
+      this.$router.push({
+        path: "newAPI",
+        query: this.$route.query,
+      });
     },
     /**
      * 获取 api 数据
@@ -875,15 +880,5 @@ export default {
 }
 .el-checkbox__input is-checked {
   display: inline-block;
-}
-.statisticsBox {
-  height: 40px;
-  width: 100%;
-  border-top: 1px solid #d9d9d9;
-  box-sizing: border-box;
-  line-height: 39px;
-  color: #333333;
-  font-size: 13px;
-  padding-left: 15px;
 }
 </style>
