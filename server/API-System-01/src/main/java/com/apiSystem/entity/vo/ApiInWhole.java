@@ -38,4 +38,5 @@ public class ApiInWhole {
     private String reqBodies;
     private String respHeaders;
     private String respBodies;
+    private String extraExplain;
 }

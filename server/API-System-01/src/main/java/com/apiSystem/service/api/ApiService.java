@@ -1,6 +1,5 @@
 package com.apiSystem.service.api;
 
-import com.apiSystem.entity.po.api.ApiWithBLOBs;
 import com.apiSystem.entity.vo.ApiDisplayVo;
 import com.apiSystem.entity.vo.ApiInWhole;
 import com.apiSystem.entity.vo.ApiToEdit;

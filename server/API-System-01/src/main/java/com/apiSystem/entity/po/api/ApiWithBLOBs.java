@@ -17,7 +17,9 @@ public class ApiWithBLOBs extends Api {
 
     private String respBody;
 
-    public ApiWithBLOBs(Integer id, Integer gid, String apiName, Integer reqProtocol, Integer reqMethod, Integer flag, Integer status, String url, Integer respJsonType, Integer reqBodyType, Integer creatorId, Integer managerId, Integer updaterId, Date updateTime, String returnExample, String apiTags, String queryParam, String reqHeader, String reqBody, String respHeader, String respBody) {
+    private String extraExplain;
+
+    public ApiWithBLOBs(Integer id, Integer gid, String apiName, Integer reqProtocol, Integer reqMethod, Integer flag, Integer status, String url, Integer respJsonType, Integer reqBodyType, Integer creatorId, Integer managerId, Integer updaterId, Date updateTime, String returnExample, String apiTags, String queryParam, String reqHeader, String reqBody, String respHeader, String respBody, String extraExplain) {
         super(id, gid, apiName, reqProtocol, reqMethod, flag, status, url, respJsonType, reqBodyType, creatorId, managerId, updaterId, updateTime);
         this.returnExample = returnExample;
         this.apiTags = apiTags;
@@ -26,9 +28,8 @@ public class ApiWithBLOBs extends Api {
         this.reqBody = reqBody;
         this.respHeader = respHeader;
         this.respBody = respBody;
+        this.extraExplain = extraExplain;
     }
-
-
 
     public ApiWithBLOBs() {
         super();
@@ -88,5 +89,13 @@ public class ApiWithBLOBs extends Api {
 
     public void setRespBody(String respBody) {
         this.respBody = respBody;
+    }
+
+    public String getExtraExplain() {
+        return extraExplain;
+    }
+
+    public void setExtraExplain(String extraExplain) {
+        this.extraExplain = extraExplain;
     }
 }

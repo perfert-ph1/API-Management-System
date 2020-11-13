@@ -23,6 +23,7 @@ public class ApiToEdit {
     private Integer reqBodyType;
     private Integer creatorId;
     private Integer managerId;
+    private String extraExplain;
 
     @NotNull(message = "必需指定编辑者id")
     private Integer updaterId;
@@ -78,7 +79,7 @@ public class ApiToEdit {
         apiWithBLOBs = new ApiWithBLOBs(id,gid, apiName, reqProtocol, reqMethod, flag, status, url, respJsonType,
                     reqBodyType,creatorId, managerId, updaterId, null, rtnStr, tagsStr,
                     queryParamStr, reqHeaderStr, reqBodyStr,
-                    respHeaderStr, respBodyStr)
+                    respHeaderStr, respBodyStr, extraExplain)
         ;
 
         return apiWithBLOBs;

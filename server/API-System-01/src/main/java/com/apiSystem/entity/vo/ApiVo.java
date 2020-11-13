@@ -42,6 +42,8 @@ public class ApiVo {
 
     private Integer respJsonType;
 
+    private String extraExplain;
+
     private List<String> apiTags;
 
     private List<ApiRtnExampleVo> apiRtnExample;

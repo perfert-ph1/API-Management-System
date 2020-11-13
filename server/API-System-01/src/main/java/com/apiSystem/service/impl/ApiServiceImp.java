@@ -1,7 +1,14 @@
 package com.apiSystem.service.impl;
 
-import com.apiSystem.entity.po.api.*;
-import com.apiSystem.entity.vo.*;
+
+import com.apiSystem.entity.po.api.Api;
+import com.apiSystem.entity.po.api.ApiExample;
+import com.apiSystem.entity.po.api.ApiGrp;
+import com.apiSystem.entity.po.api.ApiWithBLOBs;
+import com.apiSystem.entity.vo.ApiDisplayVo;
+import com.apiSystem.entity.vo.ApiInWhole;
+import com.apiSystem.entity.vo.ApiToEdit;
+import com.apiSystem.entity.vo.ApiVo;
 import com.apiSystem.mapper.*;
 import com.apiSystem.service.api.ApiGrpService;
 import com.apiSystem.service.api.ApiService;
@@ -189,6 +196,7 @@ public class ApiServiceImp implements ApiService {
         api.setReqBody(reqBody);
         api.setRespHeader(respHeader);
         api.setRespBody(respBody);
+        api.setExtraExplain(apiVo.getExtraExplain());
     }
 
     //po转换为vo
@@ -247,6 +255,7 @@ public class ApiServiceImp implements ApiService {
         wholeApi.setReqBodies(apiWithBLOBs.getReqBody());
         wholeApi.setRespHeaders(apiWithBLOBs.getRespHeader());
         wholeApi.setRespBodies(apiWithBLOBs.getRespBody());
+        wholeApi.setExtraExplain(apiWithBLOBs.getExtraExplain());
 
         return wholeApi;
     }
