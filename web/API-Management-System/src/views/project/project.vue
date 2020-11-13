@@ -8,6 +8,9 @@
         API 管理
       </el-breadcrumb-item>
       <el-breadcrumb-item>{{ projectName }}</el-breadcrumb-item>
+      <el-breadcrumb-item v-show="this.$route.name == 'newAPI'"
+        >新建 API</el-breadcrumb-item
+      >
     </el-breadcrumb>
     <router-view></router-view>
   </div>

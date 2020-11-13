@@ -48,7 +48,9 @@ export default {
       isProjectList: true,
     };
   },
-  mounted() {},
+  mounted() {
+    this.userInfo.userName = this.$store.getters.getUserName;
+  },
   methods: {
     /**
      * 控制功能列表的显示与隐藏
