@@ -1,7 +1,9 @@
 package com.apiSystem.service.api;
 
+import com.apiSystem.entity.po.api.ApiWithBLOBs;
 import com.apiSystem.entity.vo.ApiDisplayVo;
 import com.apiSystem.entity.vo.ApiInWhole;
+import com.apiSystem.entity.vo.ApiToEdit;
 import com.apiSystem.entity.vo.ApiVo;
 
 import java.util.List;
@@ -59,5 +61,5 @@ public interface ApiService {
      */
     void markApiBatch(List<Integer> ids, Integer isMark, String token);
 
-    void updateApi(ApiInWhole api, String token);
+    void updateApi(ApiToEdit api, String token);
 }

@@ -48,4 +48,9 @@ public class ApiGrpServiceImp implements ApiGrpService {
 
         return mapper.selectByExample(example);
     }
+
+    @Override
+    public ApiGrp queryById(Integer grpId) {
+        return mapper.selectByPrimaryKey(grpId);
+    }
 }

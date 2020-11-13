@@ -4,12 +4,12 @@ import com.apiSystem.entity.dto.ResultEntity;
 import com.apiSystem.entity.po.Status;
 import com.apiSystem.entity.vo.StatusVO;
 import com.apiSystem.service.api.StatusService;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,52 +19,49 @@ public class StatusController {
     @Autowired
     private StatusService service;
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     /**
      * 批量插入
      * 请求体数据示例：
-     * statuses:
-     *  [{"statusCode":"1" , "description":"a"},{"statusCode":"2" , "description":"b"},{"statusCode":"3" , "description":"c"}]
-     * gid: 3
      */
     @PostMapping("/addStatus")
-    public ResultEntity addBatch(@RequestParam String statuses,@RequestParam Integer gid, @RequestHeader String token){
-        List<StatusVO> statusVOS = new ArrayList<>();
-        //将前端发送的json数组字符串转换为json数组
-        JSONArray jsonArray = JSONArray.fromObject(statuses);
-        for (int i = 0; i < jsonArray.size(); i++) {
-            //依次从jsonArray中获取JSONObject对象
-            JSONObject jsonOjb = JSONObject.fromObject(jsonArray.get(i));
-            //将JSONObject对象转换为StatusVO
-            StatusVO vo = (StatusVO) JSONObject.toBean(jsonOjb, StatusVO.class);
-            statusVOS.add(vo);
+    public ResultEntity addBatch(String statuses,Integer gid, @RequestHeader String token){
+        List<StatusVO> statusVOS;
+
+        if(gid==null || gid<=0){
+            return ResultEntity.failed(null, "参数错误");
         }
 
-        if(service.addStatusBatch(statusVOS, gid, token)) {
-            return ResultEntity.successWithoutData();
+        try {
+            statusVOS = objectMapper.readValue(statuses, new TypeReference<List<StatusVO>>() {});
+        } catch (JsonProcessingException e) {
+            return ResultEntity.failed(null, "参数错误");
         }
-        else {
-            return ResultEntity.failed(null, "添加状态码时出错");
-        }
+
+        service.addStatusBatch(statusVOS, gid, token);
+        return ResultEntity.successWithoutData();
     }
 
     @PostMapping("/deleteStatus")
     public ResultEntity deleteBatch(@RequestParam("ids") String statusIds, @RequestHeader String token){
-        String[] idsStr = statusIds.split(",");
-        List<Integer> ids = new ArrayList<>();
-        for (String idStr : idsStr) {
-            ids.add(Integer.parseInt(idStr));
+        List<Integer> ids;
+
+        try {
+            ids = objectMapper.readValue(statusIds, new TypeReference<List<Integer>>() {});
+        } catch (JsonProcessingException e) {
+            return ResultEntity.failed(null, "参数错误");
         }
 
-        if(service.deleteStatusBatch(ids, token)){
-            return ResultEntity.successWithoutData();
-        }
-        else {
-            return ResultEntity.failed(null, "删除出错");
-        }
+        service.deleteStatusBatch(ids, token);
+        return ResultEntity.successWithoutData();
     }
 
     @GetMapping("/queryByGroupId")
-    public ResultEntity queryByGid(@RequestParam("groupId") Integer groupId){
+    public ResultEntity queryByGid(Integer groupId){
+        if(groupId==null || groupId<=0){
+            return ResultEntity.failed(null, "参数错误");
+        }
         List<Status> statuses = service.queryByGroupId(groupId);
         return ResultEntity.successWithData(statuses);
     }
@@ -73,8 +70,8 @@ public class StatusController {
      * 获取一个项目下所有的状态码
      */
     @GetMapping("/queryAllInPrj")
-    public ResultEntity queryAllInPrj(@RequestParam Integer projectId){
-        if(projectId==null){
+    public ResultEntity queryAllInPrj(Integer projectId){
+        if(projectId==null || projectId<=0){
             return ResultEntity.failed(null, "参数错误");
         }
 
@@ -83,39 +80,41 @@ public class StatusController {
     }
 
     @GetMapping("/searchStatus")
-    public ResultEntity searchStatus(@RequestParam("keyword")String keyword, @RequestParam Integer pid
+    public ResultEntity searchStatus(String keyword, Integer pid
             , @RequestParam(required = false) Integer groupId){
+        if(pid==null || pid<=0){
+            return ResultEntity.failed(null, "参数错误");
+        }
+
         return ResultEntity.successWithData(service.searchStatus(keyword, pid, groupId));
     }
 
     @PostMapping("/updateStatus")
     public ResultEntity updateStatus(Status status, @RequestHeader String token){
-        if(service.updateStatus(status, token)){
-            return ResultEntity.successWithoutData();
-        }
-
-        return ResultEntity.failed(null, "更新失败");
-    }
-
-    @PostMapping("/removeStatus")
-    public ResultEntity updateStatusBatch(@RequestParam("ids") String idsStr, @RequestParam Integer groupId
-            , @RequestHeader String token){
-        List<Integer> ids = new ArrayList<>();
-        String[] idsStrArray = idsStr.split(",");
-
-        try {
-            for (String idStr : idsStrArray) {
-                ids.add(Integer.parseInt(idStr));
-            }
-        }catch (NumberFormatException e){
+        if(status.getId()==null || status.getId()<=0){
             return ResultEntity.failed(null, "参数错误");
         }
 
-        if(service.updateStatusBatch(ids, groupId, token)){
-            return ResultEntity.successWithoutData();
+        service.updateStatus(status, token);
+        return ResultEntity.successWithoutData();
+    }
+
+    @PostMapping("/moveStatus")
+    public ResultEntity updateStatusBatch(@RequestParam("ids") String idsStr, Integer groupId
+            , @RequestHeader String token){
+        List<Integer> ids;
+
+        if(groupId==null || groupId<=0){
+            return ResultEntity.failed(null, "参数错误");
         }
-        else {
-            return ResultEntity.failed(null, "服务器错误");
+
+        try {
+            ids = objectMapper.readValue(idsStr, new TypeReference<List<Integer>>() {});
+        }catch (JsonProcessingException e){
+            return ResultEntity.failed(null, "参数错误");
         }
+
+        service.updateStatusBatch(ids, groupId, token);
+        return ResultEntity.successWithoutData();
     }
 }

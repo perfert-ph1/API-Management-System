@@ -4,8 +4,6 @@ import lombok.Data;
 
 @Data
 public class ApiRtnExampleVo {
-    // private Integer id;
-    // private Integer apiId;
 
     private Integer exampleType;
 

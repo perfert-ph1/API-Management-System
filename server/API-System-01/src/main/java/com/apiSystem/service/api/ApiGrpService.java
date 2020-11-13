@@ -21,4 +21,6 @@ public interface ApiGrpService {
     List<ApiGrp> queryAllInProject(Integer pid);
 
     List<ApiGrp> searchInProject(String keyword, Integer pid);
+
+    ApiGrp queryById(Integer grpId);
 }

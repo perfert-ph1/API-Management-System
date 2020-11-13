@@ -1,10 +1,16 @@
 package com.apiSystem.entity.po.api;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class ApiGrp {
     private Integer id;
 
+    @NotEmpty(message = "分组名称不能为空")
+    @NotNull(message = "分组名称不能为空")
     private String grpName;
 
+    @NotNull(message = "必需指定分组所属项目id")
     private Integer pid;
 
     public ApiGrp(Integer id, String grpName, Integer pid) {

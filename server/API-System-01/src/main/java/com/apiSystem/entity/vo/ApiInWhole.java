@@ -16,12 +16,26 @@ import java.util.List;
  */
 @Data
 public class ApiInWhole {
-    private Api api;
-    private List<ApiRtnExample> rtnExamples;
-    private List<ApiTag> apiTags;
-    private List<QueryParam> queryParams;
-    private List<ReqHeader> reqHeaders;
-    private List<ReqBody> reqBodies;
-    private List<RespHeader> respHeaders;
-    private List<RespBody> respBodies;
+    private Integer id;
+    private ApiGrp grp;///
+    private String apiName;
+    private Integer reqProtocol;
+    private Integer reqMethod;
+    private Integer flag;
+    private Integer status;
+    private String url;
+    private Integer respJsonType;
+    private Integer reqBodyType;
+    private String creator;///
+    private String manager;///
+    private String updater;///
+    private long updateTime;///
+
+    private String rtnExamples;
+    private String apiTags;
+    private String queryParams;
+    private String reqHeaders;
+    private String reqBodies;
+    private String respHeaders;
+    private String respBodies;
 }

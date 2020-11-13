@@ -24,17 +24,16 @@ public class StatusGrpController {
      */
     @PostMapping("/addGroup")
     public ResultEntity addStatusGrp(StatusGrp grp, @RequestHeader String token){
-        if(service.addNewStatusGrp(grp, token)) {
-            return ResultEntity.successWithData(grp);
+        if(grp.getGrpName()==null || grp.getGrpName().trim().equals("") || grp.getPid()==null || grp.getPid()<=0) {
+            return ResultEntity.failed(null, "参数错误");
         }
-        else {
-            return ResultEntity.failed(null, "添加分组错误");
-        }
+        service.addNewStatusGrp(grp, token);
+        return ResultEntity.successWithData(grp);
     }
 
     @PostMapping("/deleteGroup")
-    public ResultEntity deleteById(@RequestParam Integer groupId, @RequestHeader String token){
-        if(groupId==null){
+    public ResultEntity deleteById(Integer groupId, @RequestHeader String token){
+        if(groupId==null || groupId<=0){
             return ResultEntity.failed(null, "参数错误");
         }
 
@@ -47,18 +46,18 @@ public class StatusGrpController {
     }
 
     @GetMapping("/getAllByPid")
-    public ResultEntity queryAllByPid(@RequestParam(value = "pid") Integer pid){
-        if(pid==null){
-            return ResultEntity.failed(null, "获取分组出错");
+    public ResultEntity queryAllByPid(Integer pid){
+        if(pid==null || pid<=0){
+            return ResultEntity.failed(null, "参数错误");
         }
 
         return ResultEntity.successWithData(service.queryByPid(pid));
     }
 
     @GetMapping("/search")
-    public ResultEntity searchByGName(@RequestParam Integer pid, @RequestParam String keyword){
-        if(pid==null || keyword==null){
-            return ResultEntity.failed(null, "获取分组出错");
+    public ResultEntity searchByGName(Integer pid, String keyword){
+        if(pid==null || pid<=0){
+            return ResultEntity.failed(null, "参数出错");
         }
 
         return ResultEntity.successWithData(service.queryByGNameAndPid(keyword, pid));
@@ -71,11 +70,11 @@ public class StatusGrpController {
 
     @PostMapping("/updateGroup")
     public ResultEntity updateStatusGrp(StatusGrpVo grpVo, @RequestHeader String token){
-        if(service.updateStatusGrp(grpVo, token)){
-            return ResultEntity.successWithoutData();
+        if(grpVo.getId()==null || grpVo.getId()<=0 || grpVo.getGrpName()==null || grpVo.getGrpName().trim().equals("")){
+            return ResultEntity.failed(null, "参数错误");
         }
-        else {
-            return ResultEntity.failed(null, "修改出现错误");
-        }
+
+        service.updateStatusGrp(grpVo, token);
+        return ResultEntity.successWithoutData();
     }
 }

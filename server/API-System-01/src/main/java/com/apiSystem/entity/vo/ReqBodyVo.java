@@ -4,8 +4,6 @@ import lombok.Data;
 
 @Data
 public class ReqBodyVo {
-    // private Integer id;
-    // private Integer reqId;
 
     private String paramName;
 
