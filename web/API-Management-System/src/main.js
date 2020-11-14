@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/store';
+import VueCodemirror from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
 import {
   Menu,
   Submenu,
@@ -29,11 +31,20 @@ import {
   Tag,
   Popover,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  RadioGroup,
+  Radio,
+  Tabs,
+  TabPane,
+  Switch
 } from 'element-ui';
 
 Vue.config.productionTip = false
 
+Vue.use(VueCodemirror, /* {
+  options: { theme: 'base16-dark', ... },
+  events: ['scroll', ...]
+} */)
 Vue.use(Menu)
 Vue.use(Submenu)
 Vue.use(MenuItem)
@@ -61,6 +72,11 @@ Vue.use(Tag)
 Vue.use(Popover)
 Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
+Vue.use(RadioGroup)
+Vue.use(Radio)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Switch)
 
 new Vue({
   el: '#app',

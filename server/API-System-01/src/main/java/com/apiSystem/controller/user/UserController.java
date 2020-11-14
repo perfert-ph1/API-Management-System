@@ -8,16 +8,15 @@ import com.apiSystem.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-@Controller
+@RequestMapping("/user")
+@RestController
 public class UserController {
 
     @Autowired
@@ -72,7 +71,12 @@ public class UserController {
         return ResultEntity.successWithoutData();
     }
 
-    @GetMapping("/user/getUserInfo")
+    /**
+     * 获取用户信息
+     * @param request
+     * @return
+     */
+    @GetMapping("/getUserInfo")
     @ResponseBody
     public ResultEntity<UserVo> getUserInfo(HttpServletRequest request){
         String token = request.getHeader("token");
@@ -80,11 +84,28 @@ public class UserController {
         return ResultEntity.successWithData(user);
     }
 
-    @GetMapping("/user/logout")
+    /**
+     * 登出
+     * @param request
+     * @return
+     */
+    @GetMapping("/logout")
     public ResultEntity<String> logout(HttpServletRequest request){
         String token = request.getHeader("token");
         userService.logout(token);
         return ResultEntity.successWithoutData();
+    }
+
+    @GetMapping("/findUser")
+    public ResultEntity<UserVo> findUser(@RequestParam(name = "username",required = true) String username){
+        if(username == null || username.trim().equals("")){
+            ResultEntity.failed(null,"用户名不能为空");
+        }
+        UserVo userVo = userService.findUserByUsername(username);
+        if(userVo == null){
+            ResultEntity.failed(null,"用户名不存在");
+        }
+        return ResultEntity.successWithData(userVo);
     }
 
 

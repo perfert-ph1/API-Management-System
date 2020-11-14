@@ -9,6 +9,8 @@ import java.util.List;
 
 @Mapper
 public interface StatusMapper {
+    int countByExample(StatusExample example);
+
     int insertBatch(List<Status> statuses);
 
     int deleteByPrimaryKey(Integer id);
