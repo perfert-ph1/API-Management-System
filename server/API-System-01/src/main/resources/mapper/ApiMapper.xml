@@ -42,6 +42,7 @@
       <arg column="req_body" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
       <arg column="resp_header" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
       <arg column="resp_body" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="extra_explain" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -107,7 +108,8 @@
     creator_id, manager_id, updater_id, update_time
   </sql>
   <sql id="Blob_Column_List" >
-    return_example, api_tags, query_param, req_header, req_body, resp_header, resp_body
+    return_example, api_tags, query_param, req_header, req_body, resp_header, resp_body, 
+    extra_explain
   </sql>
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.apiSystem.entity.po.api.ApiExample" >
     select
@@ -166,16 +168,16 @@
       req_body_type, creator_id, manager_id, 
       updater_id, update_time, return_example, 
       api_tags, query_param, req_header, 
-      req_body, resp_header, resp_body
-      )
+      req_body, resp_header, resp_body, 
+      extra_explain)
     values (#{id,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, #{apiName,jdbcType=VARCHAR}, 
       #{reqProtocol,jdbcType=INTEGER}, #{reqMethod,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{respJsonType,jdbcType=INTEGER}, 
       #{reqBodyType,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER}, #{managerId,jdbcType=INTEGER}, 
       #{updaterId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{returnExample,jdbcType=LONGVARCHAR}, 
       #{apiTags,jdbcType=LONGVARCHAR}, #{queryParam,jdbcType=LONGVARCHAR}, #{reqHeader,jdbcType=LONGVARCHAR}, 
-      #{reqBody,jdbcType=LONGVARCHAR}, #{respHeader,jdbcType=LONGVARCHAR}, #{respBody,jdbcType=LONGVARCHAR}
-      )
+      #{reqBody,jdbcType=LONGVARCHAR}, #{respHeader,jdbcType=LONGVARCHAR}, #{respBody,jdbcType=LONGVARCHAR}, 
+      #{extraExplain,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.apiSystem.entity.po.api.ApiWithBLOBs" >
     insert into api
@@ -243,6 +245,9 @@
       <if test="respBody != null" >
         resp_body,
       </if>
+      <if test="extraExplain != null" >
+        extra_explain,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -307,6 +312,9 @@
       </if>
       <if test="respBody != null" >
         #{respBody,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="extraExplain != null" >
+        #{extraExplain,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -382,6 +390,9 @@
       <if test="record.respBody != null" >
         resp_body = #{record.respBody,jdbcType=LONGVARCHAR},
       </if>
+      <if test="record.extraExplain != null" >
+        extra_explain = #{record.extraExplain,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -409,7 +420,8 @@
       req_header = #{record.reqHeader,jdbcType=LONGVARCHAR},
       req_body = #{record.reqBody,jdbcType=LONGVARCHAR},
       resp_header = #{record.respHeader,jdbcType=LONGVARCHAR},
-      resp_body = #{record.respBody,jdbcType=LONGVARCHAR}
+      resp_body = #{record.respBody,jdbcType=LONGVARCHAR},
+      extra_explain = #{record.extraExplain,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -497,6 +509,9 @@
       <if test="respBody != null" >
         resp_body = #{respBody,jdbcType=LONGVARCHAR},
       </if>
+      <if test="extraExplain != null" >
+        extra_explain = #{extraExplain,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -521,7 +536,8 @@
       req_header = #{reqHeader,jdbcType=LONGVARCHAR},
       req_body = #{reqBody,jdbcType=LONGVARCHAR},
       resp_header = #{respHeader,jdbcType=LONGVARCHAR},
-      resp_body = #{respBody,jdbcType=LONGVARCHAR}
+      resp_body = #{respBody,jdbcType=LONGVARCHAR},
+      extra_explain = #{extraExplain,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.api.Api" >

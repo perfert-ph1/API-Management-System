@@ -82,7 +82,7 @@ public class StatusController {
     @GetMapping("/searchStatus")
     public ResultEntity searchStatus(String keyword, Integer pid
             , @RequestParam(required = false) Integer groupId){
-        if(pid==null || pid<=0){
+        if(pid==null || pid<=0 || keyword==null){
             return ResultEntity.failed(null, "参数错误");
         }
 

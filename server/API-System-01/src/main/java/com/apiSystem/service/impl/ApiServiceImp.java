@@ -1,6 +1,5 @@
 package com.apiSystem.service.impl;
 
-
 import com.apiSystem.entity.po.api.Api;
 import com.apiSystem.entity.po.api.ApiExample;
 import com.apiSystem.entity.po.api.ApiGrp;
@@ -226,7 +225,7 @@ public class ApiServiceImp implements ApiService {
 
     private ApiInWhole getWholeApiByBlobs(ApiWithBLOBs apiWithBLOBs){
         ApiInWhole wholeApi = new ApiInWhole();
-        ApiGrp grp = grpService.queryById(apiWithBLOBs.getId());
+        ApiGrp grp = grpService.queryById(apiWithBLOBs.getGid());
         String creator = userService.queryById(apiWithBLOBs.getCreatorId()).getUsername();
         String manager = userService.queryById(apiWithBLOBs.getManagerId()).getUsername();
         String updator = userService.queryById(apiWithBLOBs.getUpdaterId()).getUsername();

@@ -47,7 +47,6 @@ public class ApiController {
             return ResultEntity.failed(null, "参数错误");
         }
 
-
         service.deleteApiBatch(ids, token);
         return ResultEntity.successWithoutData();
     }
@@ -115,7 +114,7 @@ public class ApiController {
 
     @PostMapping("/markApi")
     public ResultEntity markApiById(Integer apiId, Integer isMark, @RequestHeader String token) {
-        if(apiId==null || apiId<=0 || isMark==null){
+        if(apiId==null || apiId<=0 || isMark==null || isMark>1){
             return ResultEntity.failed(null, "参数错误");
         }
 

@@ -28,7 +28,7 @@ public class ApiGrpServiceImp implements ApiGrpService {
     @Override
     public boolean updateApiGrp(ApiGrp grp, String token) {
 
-        return mapper.updateByPrimaryKey(grp)>0;
+        return mapper.updateByPrimaryKeySelective(grp)>0;
 
     }
 

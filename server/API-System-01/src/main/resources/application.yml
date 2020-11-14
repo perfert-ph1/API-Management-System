@@ -23,7 +23,7 @@ spring:
 
 #mybatis配置
 mybatis:
-  mapper-locations: classpath*:/mapper/*Mapper.xml
+  mapper-locations: classpath:/mapper/*Mapper.xml
   type-aliases-package: com.apiSystem.entity
   configuration:
     use-generated-keys: true

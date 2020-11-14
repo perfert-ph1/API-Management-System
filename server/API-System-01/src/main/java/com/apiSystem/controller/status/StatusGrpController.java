@@ -28,7 +28,7 @@ public class StatusGrpController {
             return ResultEntity.failed(null, "参数错误");
         }
         service.addNewStatusGrp(grp, token);
-        return ResultEntity.successWithData(grp);
+        return ResultEntity.successWithoutData();
     }
 
     @PostMapping("/deleteGroup")
