@@ -9,8 +9,10 @@
     <div class="userBox"></div>
     <el-menu-item class="menuItem" index="overview">总览</el-menu-item>
     <el-menu-item class="menuItem" index="APImanagement">API 管理</el-menu-item>
-    <el-menu-item class="menuItem" index="APItest">API 测试</el-menu-item>
-    <el-menu-item class="menuItem" index="analysisReport"
+    <el-menu-item class="menuItem" index="APItest" disabled
+      >API 测试</el-menu-item
+    >
+    <el-menu-item class="menuItem" index="analysisReport" disabled
       >分析报表</el-menu-item
     >
   </el-menu>

@@ -3,11 +3,11 @@
     <div class="logoBox">
       <div class="logo"></div>
     </div>
-    <el-menu-item class="sideBarItem" index="1">
+    <el-menu-item class="sideBarItem" index="1" disabled>
       <i class="el-icon-menu"></i>
       <span slot="title">主题颜色</span>
     </el-menu-item>
-    <el-menu-item class="sideBarItem" index="2">
+    <el-menu-item class="sideBarItem" index="2" disabled>
       <i class="el-icon-setting"></i>
       <span slot="title">设置</span>
     </el-menu-item>
