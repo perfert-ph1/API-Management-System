@@ -235,7 +235,7 @@ public class ProjectServiceImpl implements ProjectService {
             gids.add(statusGrp.getId());
         }
         StatusExample statusExample = new StatusExample();
-        statusExample.createCriteria().andGidIn(gids);
+        statusExample.createCriteria().andGidEqualTo(pid);
         int statusNum = statusMapper.countByExample(statusExample);
         projectSituationVO.setStatusCodeNum(statusNum);
 
@@ -248,7 +248,7 @@ public class ProjectServiceImpl implements ProjectService {
             apiGids.add(apiGrp.getId());
         }
         ApiExample apiExample = new ApiExample();
-        apiExample.createCriteria().andGidIn(apiGids);
+        apiExample.createCriteria().andGidEqualTo(pid);
         int apiNums = apiMapper.countByExample(apiExample);
         projectSituationVO.setApiNum(apiNums);
         return projectSituationVO;
