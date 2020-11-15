@@ -27,13 +27,16 @@ public class ProjectController {
     private ProjectService projectService;
 
     @PostMapping("/addProject")
-    public ResultEntity<String> addProject(ProjectBO projectBO){
+    public ResultEntity<String> addProject(HttpServletRequest request,ProjectBO projectBO){
         if(projectBO == null){
             ResultEntity.failed(null,"服务器出错");
         }
         if(projectBO.getProjectName() == null || projectBO.getProjectName().trim().equals("")){
             ResultEntity.failed(null,"项目名不能为空");
         }
+        String token = request.getHeader("token");
+        UserVo userByToken = userService.findUserByToken(token);
+        projectBO.setCreatorId(userByToken.getId());
         projectService.addProject(projectBO);
         return ResultEntity.successWithoutData();
     }
@@ -98,6 +101,12 @@ public class ProjectController {
     public ResultEntity<String> batchDeleteProject(@RequestParam("deleteListStr") String deleteListStr,@RequestParam("uid") Integer uid){
         if(deleteListStr == null){
             ResultEntity.failed(null,"服务器出错");
+        }
+        if(!deleteListStr.contains(",")){
+            Integer status = projectService.deleteProject(uid, Integer.parseInt(deleteListStr));
+            if(status == 0){
+                return ResultEntity.failed(null,"删除失败");
+            }
         }
         String[] split = deleteListStr.split(",");
         List<Integer> deleteList = new ArrayList<>();
