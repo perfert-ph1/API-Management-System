@@ -133,6 +133,7 @@ export default {
 }
 .form /deep/ .el-form-item__label {
   line-height: 16px;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
+  font-weight: bold;
 }
 </style>
