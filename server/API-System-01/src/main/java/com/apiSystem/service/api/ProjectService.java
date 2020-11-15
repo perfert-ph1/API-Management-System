@@ -53,4 +53,6 @@ public interface ProjectService {
      * @return
      */
     ProjectSituationVO getProjectSituation(Integer pid);
+
+    void updateTime(Integer pid);
 }

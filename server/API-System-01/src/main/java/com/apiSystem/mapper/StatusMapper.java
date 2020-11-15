@@ -32,6 +32,4 @@ public interface StatusMapper {
     int updateByPrimaryKeySelective(Status record);
 
     int updateByPrimaryKey(Status record);
-
-    int updateGidByIds(@Param("collection") List<Integer> ids, @Param("gid") Integer gid);
 }

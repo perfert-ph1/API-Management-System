@@ -12,7 +12,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     # 123
-    password: 123
+    password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: mydb
     hikari:

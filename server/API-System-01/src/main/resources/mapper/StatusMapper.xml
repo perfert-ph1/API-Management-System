@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.apiSystem.entity.po.Status">
         <constructor>
             <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-            <arg column="status_code" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="status_code" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="description" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="gid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
         </constructor>
@@ -100,7 +100,7 @@
     <insert id="insert" parameterType="com.apiSystem.entity.po.Status">
     insert into status (id, status_code, description, 
       gid)
-    values (#{id,jdbcType=INTEGER}, #{statusCode,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{statusCode,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
       #{gid,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.apiSystem.entity.po.Status">
@@ -147,7 +147,7 @@
                 id = #{record.id,jdbcType=INTEGER},
             </if>
             <if test="record.statusCode != null">
-                status_code = #{record.statusCode,jdbcType=INTEGER},
+                status_code = #{record.statusCode,jdbcType=VARCHAR},
             </if>
             <if test="record.description != null">
                 description = #{record.description,jdbcType=VARCHAR},
@@ -163,7 +163,7 @@
     <update id="updateByExample" parameterType="map">
         update status
         set id = #{record.id,jdbcType=INTEGER},
-        status_code = #{record.statusCode,jdbcType=INTEGER},
+        status_code = #{record.statusCode,jdbcType=VARCHAR},
         description = #{record.description,jdbcType=VARCHAR},
         gid = #{record.gid,jdbcType=INTEGER}
         <if test="_parameter != null">
@@ -174,7 +174,7 @@
         update status
         <set>
             <if test="statusCode != null">
-                status_code = #{statusCode,jdbcType=INTEGER},
+                status_code = #{statusCode,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
@@ -187,7 +187,7 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.Status">
     update status
-    set status_code = #{statusCode,jdbcType=INTEGER},
+    set status_code = #{statusCode,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       gid = #{gid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}

@@ -2,11 +2,11 @@ package com.apiSystem.service.impl;
 
 import com.apiSystem.entity.po.Status;
 import com.apiSystem.entity.po.StatusExample;
+import com.apiSystem.entity.po.StatusGrpExample;
 import com.apiSystem.entity.vo.StatusVO;
 import com.apiSystem.mapper.StatusMapper;
 import com.apiSystem.service.api.StatusGrpService;
 import com.apiSystem.service.api.StatusService;
-import com.apiSystem.util.ProjectAlterLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@ProjectAlterLog
 public class StatusServiceImp implements StatusService {
 
     @Autowired
@@ -69,6 +68,11 @@ public class StatusServiceImp implements StatusService {
     }
 
     @Override
+    public Status queryById(Integer id) {
+        return mapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public List<Status> searchStatus(String keyword, Integer pid, Integer groupId) {
         StatusExample example = new StatusExample();
         String keyStr = "%" + keyword + "%";
@@ -94,6 +98,13 @@ public class StatusServiceImp implements StatusService {
 
     @Override
     public boolean updateStatusBatch(List<Integer> ids, Integer groupId, String token) {
-        return mapper.updateGidByIds(ids, groupId)>0;
+        Status status = new Status();
+        status.setGid(groupId);
+
+        for (Integer id : ids) {
+            status.setId(id);
+            mapper.updateByPrimaryKeySelective(status);
+        }
+        return true;
     }
 }

@@ -253,4 +253,12 @@ public class ProjectServiceImpl implements ProjectService {
         projectSituationVO.setApiNum(apiNums);
         return projectSituationVO;
     }
+
+    @Override
+    public void updateTime(Integer pid) {
+        ProjectPO project = new ProjectPO();
+        project.setId(pid);
+        project.setUpdateTime(new Date());
+        projectPOMapper.updateByPrimaryKeySelective(project);
+    }
 }

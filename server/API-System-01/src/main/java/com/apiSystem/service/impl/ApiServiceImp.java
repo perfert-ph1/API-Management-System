@@ -89,6 +89,11 @@ public class ApiServiceImp implements ApiService {
     }
 
     @Override
+    public Api queryById(Integer id) {
+        return mapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public ApiInWhole getWholeApi(Integer id) {
         ApiWithBLOBs apiWithBLOBs = mapper.selectByPrimaryKey(id);
 

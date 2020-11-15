@@ -5,7 +5,6 @@ import com.apiSystem.entity.po.StatusGrpExample;
 import com.apiSystem.entity.vo.StatusGrpVo;
 import com.apiSystem.mapper.StatusGrpMapper;
 import com.apiSystem.service.api.StatusGrpService;
-import com.apiSystem.util.ProjectAlterLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@ProjectAlterLog
 public class StatusGrpServiceImp implements StatusGrpService {
 
     @Autowired

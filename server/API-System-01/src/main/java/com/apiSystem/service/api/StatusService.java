@@ -29,6 +29,8 @@ public interface StatusService {
 
     List<Status> queryByIds(List<Integer> ids);
 
+    Status queryById(Integer id);
+
     /**
      * 根据关键字对状态码和 状态码描述 进行模糊查询
      */

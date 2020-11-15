@@ -1,5 +1,6 @@
 package com.apiSystem.service.api;
 
+import com.apiSystem.entity.po.api.Api;
 import com.apiSystem.entity.vo.ApiDisplayVo;
 import com.apiSystem.entity.vo.ApiInWhole;
 import com.apiSystem.entity.vo.ApiToEdit;
@@ -26,6 +27,8 @@ public interface ApiService {
      * 返回的ApiDisplayVo只包含在api列表中展示所需的属性
      */
     List<ApiDisplayVo> queryAllInGrp(Integer groupId);
+
+    Api queryById(Integer id);
 
     /**
      * 获取整个api，即包含api的返回示例、各类参数等

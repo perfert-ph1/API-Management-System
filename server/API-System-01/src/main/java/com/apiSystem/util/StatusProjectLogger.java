@@ -42,7 +42,6 @@ import java.util.List;
 @Component
 @Aspect
 public class StatusProjectLogger {
-
     private static final int LOG_ADD = 0;
     private static final int LOG_DELETE = 1;
     private static final int LOG_UPDATE = 2;
@@ -60,31 +59,31 @@ public class StatusProjectLogger {
     private UserService userService;
 
     @Autowired
+    private ProjectService prjService;
+
+    @Autowired
     private ProjectLogService projectLogService;
 
-    @Pointcut("@target(ProjectAlterLog)")
-    public void withTargetAnno(){}
-
-    @Pointcut("execution(* com.apiSystem.service.api.*.add*(..))")
+    @Pointcut("execution(* com.apiSystem.service.api.StatusService.add*(..)) || execution(* com.apiSystem.service.api.StatusGrpService.add*(..))")
     public void addPointcut(){}
 
-    @Pointcut("execution(* com.apiSystem.service.api.*.delete*(..))")
+    @Pointcut("execution(* com.apiSystem.service.api.StatusService.delete*(..)) || execution(* com.apiSystem.service.api.StatusGrpService.delete*(..))")
     public void deletePointcut(){}
 
-    @Pointcut("execution(* com.apiSystem.service.api.*.update*(..))")
+    @Pointcut("execution(* com.apiSystem.service.api.StatusService.update*(..)) || execution(* com.apiSystem.service.api.StatusGrpService.update*(..))")
     public void updatePointcut(){}
 
-    @Around("withTargetAnno() && addPointcut()")
+    @Around("addPointcut()")
     public Object logAdd(ProceedingJoinPoint pjp){
         return doLog(LOG_ADD, pjp);
     }
 
-    @Around("withTargetAnno() && updatePointcut()")
+    @Around("updatePointcut()")
     public Object logUpdate(ProceedingJoinPoint pjp){
         return doLog(LOG_UPDATE, pjp);
     }
 
-    @Around("withTargetAnno() && deletePointcut()")
+    @Around("deletePointcut()")
     public Object logDelete(ProceedingJoinPoint pjp){
         return doLog(LOG_DELETE, pjp);
     }
@@ -140,6 +139,7 @@ public class StatusProjectLogger {
             log.setUsername(username);
             log.setTime(new Date());
             projectLogService.insert(log);
+            prjService.updateTime(projectId);
         }
         return returnValue;
     }
@@ -185,7 +185,7 @@ public class StatusProjectLogger {
                     opData.append(status.getStatusCode());
 
                     //获取项目id
-                    projectId = grpService.queryProjectIdById(status.getGid());
+                    projectId = grpService.queryProjectIdById(statusService.queryById(status.getId()).getGid());
                     return projectId;
                 }
 
