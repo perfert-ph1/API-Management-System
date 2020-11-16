@@ -1,10 +1,7 @@
 package com.apiSystem.service.api;
 
 import com.apiSystem.entity.po.api.Api;
-import com.apiSystem.entity.vo.ApiDisplayVo;
-import com.apiSystem.entity.vo.ApiInWhole;
-import com.apiSystem.entity.vo.ApiToEdit;
-import com.apiSystem.entity.vo.ApiVo;
+import com.apiSystem.entity.vo.*;
 
 import java.util.List;
 
@@ -64,4 +61,11 @@ public interface ApiService {
     void markApiBatch(List<Integer> ids, Integer isMark, String token);
 
     void updateApi(ApiToEdit api, String token);
+
+    /**
+     * 获取项目下所有api的统计情况（根据状态）
+     */
+    List<ApiStatistics> getApiStatistics(Integer projectId);
+
+    List<ApiSimple> getApiByStatusInPrj(Integer status, Integer projectId);
 }
