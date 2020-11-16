@@ -24,14 +24,14 @@
             <i class="el-icon-s-management"></i>
             <span>API 研发管理</span></el-menu-item
           >
-          <el-menu-item index="APItest">
+          <el-menu-item index="APItest" disabled>
             <i class="el-icon-s-promotion"></i>
             <span>API 测试</span></el-menu-item
           >
         </el-submenu>
         <el-submenu index="dataAnalysis">
           <template slot="title">数据分析</template>
-          <el-menu-item index="analysisReport">
+          <el-menu-item index="analysisReport" disabled>
             <i class="el-icon-s-data"></i>
             <span>分析报表</span>
           </el-menu-item>
@@ -55,7 +55,7 @@
             <i class="el-icon-s-ticket"></i>
             <span>API</span></el-menu-item
           >
-          <el-menu-item index="APIQuickTest">
+          <el-menu-item index="APIQuickTest" disabled>
             <i class="el-icon-s-check"></i>
             <span>API 快速测试</span></el-menu-item
           >
@@ -63,7 +63,7 @@
             <i class="el-icon-s-order"></i>
             <span>状态码文档</span></el-menu-item
           >
-          <el-menu-item index="projectDocumentList">
+          <el-menu-item index="projectDocumentList" disabled>
             <i class="el-icon-s-claim"></i>
             <span>项目文档</span></el-menu-item
           >
@@ -78,7 +78,7 @@
             <i class="el-icon-s-tools"></i>
             <span>项目设置</span>
           </el-menu-item>
-          <el-menu-item index="operationLog">
+          <el-menu-item index="operationLog" disabled>
             <i class="el-icon-s-platform"></i>
             <span>操作日志</span>
           </el-menu-item>

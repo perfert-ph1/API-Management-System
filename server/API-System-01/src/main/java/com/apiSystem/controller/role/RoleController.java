@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -63,18 +64,33 @@ public class RoleController {
      * @param rid
      * @return
      */
-    @GetMapping("/getUserAndRole")
-    public ResultEntity<List<UserAndRoleVO>> getUserAndRole(@RequestParam(name = "pid",required = true) Integer pid,
-                                                            @RequestParam(name = "rid",required = false,defaultValue = "0") Integer rid){
+    @GetMapping("/getMembers")
+    public ResultEntity<List<UserAndRoleVO>> getMembers(@RequestParam(name = "pid",required = true) Integer pid,
+                                                        @RequestParam(name = "rid",required = false,defaultValue = "0") Integer rid){
         if(pid == null){
             ResultEntity.failed(null,"服务器出错");
         }
         List<UserAndRoleVO> userAndRoleVOS;
         if(rid == 0){
-            userAndRoleVOS = roleService.getUserAndRole(pid);
+            userAndRoleVOS = roleService.getMembers(pid);
         }else {
-            userAndRoleVOS = roleService.getUserAndRole(pid,rid);
+            userAndRoleVOS = roleService.getMembers(pid,rid);
         }
+        return ResultEntity.successWithData(userAndRoleVOS);
+    }
+
+    /**
+     * 获取项目非管理者用户信息以及其对应的角色
+     * @param pid
+     * @return
+     */
+    @GetMapping("/getMembersNotManager")
+    public ResultEntity<List<UserAndRoleVO>> getMembers(@RequestParam(name = "pid",required = true) Integer pid){
+        if(pid == null){
+            ResultEntity.failed(null,"服务器出错");
+        }
+        List<UserAndRoleVO> userAndRoleVOS;
+        userAndRoleVOS = roleService.getMemberNotManager(pid);
         return ResultEntity.successWithData(userAndRoleVOS);
     }
 
@@ -86,11 +102,11 @@ public class RoleController {
      * @param pid
      * @return
      */
-    @GetMapping("/addUserAndRole")
-    public ResultEntity<String> addUserAndRole(@RequestParam(name = "rid")Integer rid,
+    @GetMapping("/addMember")
+    public ResultEntity<String> addMember(@RequestParam(name = "rid")Integer rid,
                                                @RequestParam(name = "uid")Integer uid,
                                                @RequestParam(name = "pid")Integer pid){
-        Integer status = roleService.addUserAndRole(rid,uid,pid);
+        Integer status = roleService.addMember(rid,uid,pid);
         if(status <= 1){
             if(status == -1){
                 return ResultEntity.failed(null,"不可重复添加");
@@ -107,11 +123,11 @@ public class RoleController {
      * @param pid
      * @return
      */
-    @GetMapping("/editRole")
+    @GetMapping("/editMember")
     public ResultEntity<String> editRole(@RequestParam(name = "rid",required = true)Integer rid,
                                          @RequestParam(name = "uid",required = true)Integer uid,
                                          @RequestParam(name = "pid",required = true)Integer pid) {
-        Integer status = roleService.editRole(rid,uid,pid);
+        Integer status = roleService.editMemberRole(rid,uid,pid);
         if(status <= 0){
             return ResultEntity.failed(null,"修改失败");
         }
@@ -120,13 +136,14 @@ public class RoleController {
 
     /**
      * 根据pid和uid删除成员
+     * 待测试
      * @param request
      * @param pid
      * @param uid
      * @return
      */
-    @GetMapping("/deleteUserAndRole")
-    public ResultEntity<String> deleteUserAndRole(HttpServletRequest request,
+    @GetMapping("/deleteMember")
+    public ResultEntity<String> deleteMember(HttpServletRequest request,
                                                   @RequestParam(name = "pid",required = true)Integer pid,
                                                   @RequestParam(name = "uid",required = true)Integer uid){
         if(pid == null || uid == null){
@@ -134,10 +151,10 @@ public class RoleController {
         }
         String token = request.getHeader("token");
         Boolean flag = roleService.checkDeletePower(token, uid);
-        if(flag){
+        if(!flag){
             return ResultEntity.failed(null,"权限不足");
         }
-        Integer status = roleService.deleteUserAndRole(uid,pid);
+        Integer status = roleService.deleteMember(uid,pid);
         if(status <= 1){
             ResultEntity.failed(null,"删除失败");
         }
@@ -146,6 +163,7 @@ public class RoleController {
 
     /**
      * 退出项目
+     * 待测试！！
      * @param pid
      * @param uid
      * @return
@@ -156,10 +174,56 @@ public class RoleController {
         if(pid == null || uid == null){
             ResultEntity.failed(null,"服务器出错");
         }
-        Integer status = roleService.deleteUserAndRole(uid,pid);
+        Integer status = roleService.deleteMember(uid,pid);
         if(status <= 1){
             ResultEntity.failed(null,"退出失败");
         }
         return ResultEntity.successWithoutData();
+    }
+
+    /**
+     * 批量删除项目成员
+     * 待测试
+     * @param uidsStr
+     * @param pid
+     * @return
+     */
+    @GetMapping("/batchDeleteMember")
+    public ResultEntity<String> batchDeleteMember(@RequestParam(name = "uidsStr",required = true)String uidsStr,
+                                                  @RequestParam(name = "pid",required = true)Integer pid){
+        if(pid == null || uidsStr == null || uidsStr.trim().isEmpty()){
+            ResultEntity.failed(null,"服务器出错");
+        }
+        if(!uidsStr.contains(",")){
+            Integer status = roleService.deleteMember(Integer.parseInt(uidsStr), pid);
+            if(status <= 0){
+                return ResultEntity.failed(null,"删除失败");
+            }
+            return ResultEntity.successWithoutData();
+        }
+        String[] split = uidsStr.trim().split(",");
+        List<Integer> uids = new ArrayList<>();
+        for (String uid:split) {
+            uids.add(Integer.parseInt(uid));
+        }
+        Integer status = roleService.batchDeleteMember(uids, pid);
+        if(status<=0){
+            return ResultEntity.failed(null,"删除失败");
+        }
+        return ResultEntity.successWithoutData();
+    }
+
+    @GetMapping("QueryUserAndRole")
+    public ResultEntity<List<UserAndRoleVO>> QueryUserAndRole(@RequestParam(name = "pid",required = true) Integer pid,
+                                                              @RequestParam(name = "username",required = false,defaultValue = "") String username){
+        if(pid == null){
+            ResultEntity.failed(null,"服务器出错");
+        }
+        if(username.equals("")){
+            return ResultEntity.successWithData(roleService.getMembers(pid));
+        }
+        List<UserAndRoleVO> userAndRoleVOS;
+        userAndRoleVOS = roleService.getMemberByUsername(pid,username);
+        return ResultEntity.successWithData(userAndRoleVOS);
     }
 }

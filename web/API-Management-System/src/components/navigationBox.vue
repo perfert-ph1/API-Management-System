@@ -11,8 +11,7 @@
         @click="showNewGroupCard('新建分组')"
         v-show="!foldNavigation"
       >
-        <i class="el-icon-plus"></i>
-        新建分组
+        <i class="el-icon-plus"></i><slot name="buttonName">新建分组</slot>
       </el-button>
       <div
         class="foldButton"
