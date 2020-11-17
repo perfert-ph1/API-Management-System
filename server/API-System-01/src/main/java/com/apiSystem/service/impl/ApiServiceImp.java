@@ -4,10 +4,7 @@ import com.apiSystem.entity.po.api.Api;
 import com.apiSystem.entity.po.api.ApiExample;
 import com.apiSystem.entity.po.api.ApiGrp;
 import com.apiSystem.entity.po.api.ApiWithBLOBs;
-import com.apiSystem.entity.vo.ApiDisplayVo;
-import com.apiSystem.entity.vo.ApiInWhole;
-import com.apiSystem.entity.vo.ApiToEdit;
-import com.apiSystem.entity.vo.ApiVo;
+import com.apiSystem.entity.vo.*;
 import com.apiSystem.mapper.*;
 import com.apiSystem.service.api.ApiGrpService;
 import com.apiSystem.service.api.ApiService;
@@ -170,6 +167,37 @@ public class ApiServiceImp implements ApiService {
         }
 
         mapper.updateByPrimaryKeySelective(apiWithBLOBs);
+    }
+
+    @Override
+    public List<ApiStatistics> getApiStatistics(Integer projectId) {
+        List<ApiGrp> apiGrps = grpService.queryAllInProject(projectId);
+        List<Integer> gids = new ArrayList<>();
+        for (int i = 0; i < apiGrps.size(); i++) {
+            gids.add(apiGrps.get(i).getId());
+        }
+        return mapper.selectStatusCount(gids);
+    }
+
+    @Override
+    public List<ApiSimple> getApiByStatusInPrj(Integer status, Integer projectId) {
+        List<ApiGrp> apiGrps = grpService.queryAllInProject(projectId);
+        List<ApiSimple> result = new ArrayList<>();
+        List<Integer> gids = new ArrayList<>();
+        for (int i = 0; i < apiGrps.size(); i++) {
+            gids.add(apiGrps.get(i).getId());
+        }
+        ApiExample example = new ApiExample();
+        example.or().andGidIn(gids).andStatusEqualTo(status);
+        List<Api> apis = mapper.selectByExample(example);
+        for (Api api : apis) {
+            ApiSimple apiSimple = new ApiSimple();
+            apiSimple.setId(api.getId());
+            apiSimple.setApiName(api.getApiName());
+            apiSimple.setUrl(api.getUrl());
+            result.add(apiSimple);
+        }
+        return result;
     }
 
     //将vo数据转换为po的一组方法

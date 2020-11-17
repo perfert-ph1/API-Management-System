@@ -2,6 +2,8 @@ package com.apiSystem.mapper;
 
 import com.apiSystem.entity.po.api.Api;
 import com.apiSystem.entity.po.api.ApiExample;
+import com.apiSystem.entity.vo.ApiSimple;
+import com.apiSystem.entity.vo.ApiStatistics;
 import com.apiSystem.entity.po.api.ApiWithBLOBs;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -37,4 +39,6 @@ public interface ApiMapper {
     int updateByPrimaryKeyWithBLOBs(ApiWithBLOBs record);
 
     int updateByPrimaryKey(Api record);
+
+    List<ApiStatistics> selectStatusCount(@Param("collection") List<Integer> gids);
 }

@@ -1,167 +1,170 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.apiSystem.mapper.ApiMapper" >
-  <resultMap id="BaseResultMap" type="com.apiSystem.entity.po.api.Api" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="gid" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="api_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="req_protocol" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="req_method" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="flag" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="url" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="resp_json_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="req_body_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="creator_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="manager_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="updater_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.apiSystem.entity.po.api.ApiWithBLOBs" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="gid" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="api_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="req_protocol" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="req_method" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="flag" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="url" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="resp_json_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="req_body_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="creator_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="manager_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="updater_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="return_example" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="api_tags" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="query_param" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="req_header" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="req_body" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="resp_header" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="resp_body" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="extra_explain" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+<mapper namespace="com.apiSystem.mapper.ApiMapper">
+    <resultMap id="BaseResultMap" type="com.apiSystem.entity.po.api.Api">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="gid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="api_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="req_protocol" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="req_method" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="flag" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="url" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="resp_json_type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="req_body_type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="creator_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="manager_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="updater_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.apiSystem.entity.po.api.ApiWithBLOBs">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="gid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="api_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="req_protocol" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="req_method" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="flag" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="url" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="resp_json_type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="req_body_type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="creator_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="manager_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="updater_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="return_example" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="api_tags" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="query_param" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="req_header" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="req_body" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="resp_header" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="resp_body" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="extra_explain" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     id, gid, api_name, req_protocol, req_method, flag, status, url, resp_json_type, req_body_type, 
     creator_id, manager_id, updater_id, update_time
   </sql>
-  <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
     return_example, api_tags, query_param, req_header, req_body, resp_header, resp_body, 
     extra_explain
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.apiSystem.entity.po.api.ApiExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'false' as QUERYID,
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from api
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.apiSystem.entity.po.api.ApiExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'false' as QUERYID,
-    <include refid="Base_Column_List" />
-    from api
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from api
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.apiSystem.entity.po.api.ApiExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'false' as QUERYID,
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from api
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.apiSystem.entity.po.api.ApiExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'false' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from api
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from api
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from api
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.apiSystem.entity.po.api.ApiExample" >
-    delete from api
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.apiSystem.entity.po.api.ApiWithBLOBs" >
+    <delete id="deleteByExample" parameterType="com.apiSystem.entity.po.api.ApiExample">
+        delete from api
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.apiSystem.entity.po.api.ApiWithBLOBs">
     insert into api (id, gid, api_name, 
       req_protocol, req_method, flag, 
       status, url, resp_json_type, 
@@ -179,343 +182,343 @@
       #{reqBody,jdbcType=LONGVARCHAR}, #{respHeader,jdbcType=LONGVARCHAR}, #{respBody,jdbcType=LONGVARCHAR}, 
       #{extraExplain,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.apiSystem.entity.po.api.ApiWithBLOBs" >
-    insert into api
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="gid != null" >
-        gid,
-      </if>
-      <if test="apiName != null" >
-        api_name,
-      </if>
-      <if test="reqProtocol != null" >
-        req_protocol,
-      </if>
-      <if test="reqMethod != null" >
-        req_method,
-      </if>
-      <if test="flag != null" >
-        flag,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="url != null" >
-        url,
-      </if>
-      <if test="respJsonType != null" >
-        resp_json_type,
-      </if>
-      <if test="reqBodyType != null" >
-        req_body_type,
-      </if>
-      <if test="creatorId != null" >
-        creator_id,
-      </if>
-      <if test="managerId != null" >
-        manager_id,
-      </if>
-      <if test="updaterId != null" >
-        updater_id,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="returnExample != null" >
-        return_example,
-      </if>
-      <if test="apiTags != null" >
-        api_tags,
-      </if>
-      <if test="queryParam != null" >
-        query_param,
-      </if>
-      <if test="reqHeader != null" >
-        req_header,
-      </if>
-      <if test="reqBody != null" >
-        req_body,
-      </if>
-      <if test="respHeader != null" >
-        resp_header,
-      </if>
-      <if test="respBody != null" >
-        resp_body,
-      </if>
-      <if test="extraExplain != null" >
-        extra_explain,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="gid != null" >
-        #{gid,jdbcType=INTEGER},
-      </if>
-      <if test="apiName != null" >
-        #{apiName,jdbcType=VARCHAR},
-      </if>
-      <if test="reqProtocol != null" >
-        #{reqProtocol,jdbcType=INTEGER},
-      </if>
-      <if test="reqMethod != null" >
-        #{reqMethod,jdbcType=INTEGER},
-      </if>
-      <if test="flag != null" >
-        #{flag,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="respJsonType != null" >
-        #{respJsonType,jdbcType=INTEGER},
-      </if>
-      <if test="reqBodyType != null" >
-        #{reqBodyType,jdbcType=INTEGER},
-      </if>
-      <if test="creatorId != null" >
-        #{creatorId,jdbcType=INTEGER},
-      </if>
-      <if test="managerId != null" >
-        #{managerId,jdbcType=INTEGER},
-      </if>
-      <if test="updaterId != null" >
-        #{updaterId,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="returnExample != null" >
-        #{returnExample,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="apiTags != null" >
-        #{apiTags,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="queryParam != null" >
-        #{queryParam,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="reqHeader != null" >
-        #{reqHeader,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="reqBody != null" >
-        #{reqBody,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="respHeader != null" >
-        #{respHeader,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="respBody != null" >
-        #{respBody,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="extraExplain != null" >
-        #{extraExplain,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.apiSystem.entity.po.api.ApiExample" resultType="java.lang.Integer" >
-    select count(*) from api
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update api
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.gid != null" >
+    <insert id="insertSelective" parameterType="com.apiSystem.entity.po.api.ApiWithBLOBs">
+        insert into api
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="gid != null">
+                gid,
+            </if>
+            <if test="apiName != null">
+                api_name,
+            </if>
+            <if test="reqProtocol != null">
+                req_protocol,
+            </if>
+            <if test="reqMethod != null">
+                req_method,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="respJsonType != null">
+                resp_json_type,
+            </if>
+            <if test="reqBodyType != null">
+                req_body_type,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="managerId != null">
+                manager_id,
+            </if>
+            <if test="updaterId != null">
+                updater_id,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="returnExample != null">
+                return_example,
+            </if>
+            <if test="apiTags != null">
+                api_tags,
+            </if>
+            <if test="queryParam != null">
+                query_param,
+            </if>
+            <if test="reqHeader != null">
+                req_header,
+            </if>
+            <if test="reqBody != null">
+                req_body,
+            </if>
+            <if test="respHeader != null">
+                resp_header,
+            </if>
+            <if test="respBody != null">
+                resp_body,
+            </if>
+            <if test="extraExplain != null">
+                extra_explain,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="gid != null">
+                #{gid,jdbcType=INTEGER},
+            </if>
+            <if test="apiName != null">
+                #{apiName,jdbcType=VARCHAR},
+            </if>
+            <if test="reqProtocol != null">
+                #{reqProtocol,jdbcType=INTEGER},
+            </if>
+            <if test="reqMethod != null">
+                #{reqMethod,jdbcType=INTEGER},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="respJsonType != null">
+                #{respJsonType,jdbcType=INTEGER},
+            </if>
+            <if test="reqBodyType != null">
+                #{reqBodyType,jdbcType=INTEGER},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=INTEGER},
+            </if>
+            <if test="managerId != null">
+                #{managerId,jdbcType=INTEGER},
+            </if>
+            <if test="updaterId != null">
+                #{updaterId,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="returnExample != null">
+                #{returnExample,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="apiTags != null">
+                #{apiTags,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="queryParam != null">
+                #{queryParam,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="reqHeader != null">
+                #{reqHeader,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="reqBody != null">
+                #{reqBody,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="respHeader != null">
+                #{respHeader,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="respBody != null">
+                #{respBody,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="extraExplain != null">
+                #{extraExplain,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.apiSystem.entity.po.api.ApiExample" resultType="java.lang.Integer">
+        select count(*) from api
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update api
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.gid != null">
+                gid = #{record.gid,jdbcType=INTEGER},
+            </if>
+            <if test="record.apiName != null">
+                api_name = #{record.apiName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reqProtocol != null">
+                req_protocol = #{record.reqProtocol,jdbcType=INTEGER},
+            </if>
+            <if test="record.reqMethod != null">
+                req_method = #{record.reqMethod,jdbcType=INTEGER},
+            </if>
+            <if test="record.flag != null">
+                flag = #{record.flag,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=INTEGER},
+            </if>
+            <if test="record.url != null">
+                url = #{record.url,jdbcType=VARCHAR},
+            </if>
+            <if test="record.respJsonType != null">
+                resp_json_type = #{record.respJsonType,jdbcType=INTEGER},
+            </if>
+            <if test="record.reqBodyType != null">
+                req_body_type = #{record.reqBodyType,jdbcType=INTEGER},
+            </if>
+            <if test="record.creatorId != null">
+                creator_id = #{record.creatorId,jdbcType=INTEGER},
+            </if>
+            <if test="record.managerId != null">
+                manager_id = #{record.managerId,jdbcType=INTEGER},
+            </if>
+            <if test="record.updaterId != null">
+                updater_id = #{record.updaterId,jdbcType=INTEGER},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.returnExample != null">
+                return_example = #{record.returnExample,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.apiTags != null">
+                api_tags = #{record.apiTags,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.queryParam != null">
+                query_param = #{record.queryParam,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.reqHeader != null">
+                req_header = #{record.reqHeader,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.reqBody != null">
+                req_body = #{record.reqBody,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.respHeader != null">
+                resp_header = #{record.respHeader,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.respBody != null">
+                resp_body = #{record.respBody,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.extraExplain != null">
+                extra_explain = #{record.extraExplain,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update api
+        set id = #{record.id,jdbcType=INTEGER},
         gid = #{record.gid,jdbcType=INTEGER},
-      </if>
-      <if test="record.apiName != null" >
         api_name = #{record.apiName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.reqProtocol != null" >
         req_protocol = #{record.reqProtocol,jdbcType=INTEGER},
-      </if>
-      <if test="record.reqMethod != null" >
         req_method = #{record.reqMethod,jdbcType=INTEGER},
-      </if>
-      <if test="record.flag != null" >
         flag = #{record.flag,jdbcType=INTEGER},
-      </if>
-      <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
-      </if>
-      <if test="record.url != null" >
         url = #{record.url,jdbcType=VARCHAR},
-      </if>
-      <if test="record.respJsonType != null" >
         resp_json_type = #{record.respJsonType,jdbcType=INTEGER},
-      </if>
-      <if test="record.reqBodyType != null" >
         req_body_type = #{record.reqBodyType,jdbcType=INTEGER},
-      </if>
-      <if test="record.creatorId != null" >
         creator_id = #{record.creatorId,jdbcType=INTEGER},
-      </if>
-      <if test="record.managerId != null" >
         manager_id = #{record.managerId,jdbcType=INTEGER},
-      </if>
-      <if test="record.updaterId != null" >
         updater_id = #{record.updaterId,jdbcType=INTEGER},
-      </if>
-      <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.returnExample != null" >
         return_example = #{record.returnExample,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.apiTags != null" >
         api_tags = #{record.apiTags,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.queryParam != null" >
         query_param = #{record.queryParam,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.reqHeader != null" >
         req_header = #{record.reqHeader,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.reqBody != null" >
         req_body = #{record.reqBody,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.respHeader != null" >
         resp_header = #{record.respHeader,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.respBody != null" >
         resp_body = #{record.respBody,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.extraExplain != null" >
-        extra_explain = #{record.extraExplain,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update api
-    set id = #{record.id,jdbcType=INTEGER},
-      gid = #{record.gid,jdbcType=INTEGER},
-      api_name = #{record.apiName,jdbcType=VARCHAR},
-      req_protocol = #{record.reqProtocol,jdbcType=INTEGER},
-      req_method = #{record.reqMethod,jdbcType=INTEGER},
-      flag = #{record.flag,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
-      url = #{record.url,jdbcType=VARCHAR},
-      resp_json_type = #{record.respJsonType,jdbcType=INTEGER},
-      req_body_type = #{record.reqBodyType,jdbcType=INTEGER},
-      creator_id = #{record.creatorId,jdbcType=INTEGER},
-      manager_id = #{record.managerId,jdbcType=INTEGER},
-      updater_id = #{record.updaterId,jdbcType=INTEGER},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      return_example = #{record.returnExample,jdbcType=LONGVARCHAR},
-      api_tags = #{record.apiTags,jdbcType=LONGVARCHAR},
-      query_param = #{record.queryParam,jdbcType=LONGVARCHAR},
-      req_header = #{record.reqHeader,jdbcType=LONGVARCHAR},
-      req_body = #{record.reqBody,jdbcType=LONGVARCHAR},
-      resp_header = #{record.respHeader,jdbcType=LONGVARCHAR},
-      resp_body = #{record.respBody,jdbcType=LONGVARCHAR},
-      extra_explain = #{record.extraExplain,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update api
-    set id = #{record.id,jdbcType=INTEGER},
-      gid = #{record.gid,jdbcType=INTEGER},
-      api_name = #{record.apiName,jdbcType=VARCHAR},
-      req_protocol = #{record.reqProtocol,jdbcType=INTEGER},
-      req_method = #{record.reqMethod,jdbcType=INTEGER},
-      flag = #{record.flag,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
-      url = #{record.url,jdbcType=VARCHAR},
-      resp_json_type = #{record.respJsonType,jdbcType=INTEGER},
-      req_body_type = #{record.reqBodyType,jdbcType=INTEGER},
-      creator_id = #{record.creatorId,jdbcType=INTEGER},
-      manager_id = #{record.managerId,jdbcType=INTEGER},
-      updater_id = #{record.updaterId,jdbcType=INTEGER},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.apiSystem.entity.po.api.ApiWithBLOBs" >
-    update api
-    <set >
-      <if test="gid != null" >
-        gid = #{gid,jdbcType=INTEGER},
-      </if>
-      <if test="apiName != null" >
-        api_name = #{apiName,jdbcType=VARCHAR},
-      </if>
-      <if test="reqProtocol != null" >
-        req_protocol = #{reqProtocol,jdbcType=INTEGER},
-      </if>
-      <if test="reqMethod != null" >
-        req_method = #{reqMethod,jdbcType=INTEGER},
-      </if>
-      <if test="flag != null" >
-        flag = #{flag,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="respJsonType != null" >
-        resp_json_type = #{respJsonType,jdbcType=INTEGER},
-      </if>
-      <if test="reqBodyType != null" >
-        req_body_type = #{reqBodyType,jdbcType=INTEGER},
-      </if>
-      <if test="creatorId != null" >
-        creator_id = #{creatorId,jdbcType=INTEGER},
-      </if>
-      <if test="managerId != null" >
-        manager_id = #{managerId,jdbcType=INTEGER},
-      </if>
-      <if test="updaterId != null" >
-        updater_id = #{updaterId,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="returnExample != null" >
-        return_example = #{returnExample,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="apiTags != null" >
-        api_tags = #{apiTags,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="queryParam != null" >
-        query_param = #{queryParam,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="reqHeader != null" >
-        req_header = #{reqHeader,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="reqBody != null" >
-        req_body = #{reqBody,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="respHeader != null" >
-        resp_header = #{respHeader,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="respBody != null" >
-        resp_body = #{respBody,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="extraExplain != null" >
-        extra_explain = #{extraExplain,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.apiSystem.entity.po.api.ApiWithBLOBs" >
+        extra_explain = #{record.extraExplain,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update api
+        set id = #{record.id,jdbcType=INTEGER},
+        gid = #{record.gid,jdbcType=INTEGER},
+        api_name = #{record.apiName,jdbcType=VARCHAR},
+        req_protocol = #{record.reqProtocol,jdbcType=INTEGER},
+        req_method = #{record.reqMethod,jdbcType=INTEGER},
+        flag = #{record.flag,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=INTEGER},
+        url = #{record.url,jdbcType=VARCHAR},
+        resp_json_type = #{record.respJsonType,jdbcType=INTEGER},
+        req_body_type = #{record.reqBodyType,jdbcType=INTEGER},
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+        manager_id = #{record.managerId,jdbcType=INTEGER},
+        updater_id = #{record.updaterId,jdbcType=INTEGER},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.apiSystem.entity.po.api.ApiWithBLOBs">
+        update api
+        <set>
+            <if test="gid != null">
+                gid = #{gid,jdbcType=INTEGER},
+            </if>
+            <if test="apiName != null">
+                api_name = #{apiName,jdbcType=VARCHAR},
+            </if>
+            <if test="reqProtocol != null">
+                req_protocol = #{reqProtocol,jdbcType=INTEGER},
+            </if>
+            <if test="reqMethod != null">
+                req_method = #{reqMethod,jdbcType=INTEGER},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="respJsonType != null">
+                resp_json_type = #{respJsonType,jdbcType=INTEGER},
+            </if>
+            <if test="reqBodyType != null">
+                req_body_type = #{reqBodyType,jdbcType=INTEGER},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=INTEGER},
+            </if>
+            <if test="managerId != null">
+                manager_id = #{managerId,jdbcType=INTEGER},
+            </if>
+            <if test="updaterId != null">
+                updater_id = #{updaterId,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="returnExample != null">
+                return_example = #{returnExample,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="apiTags != null">
+                api_tags = #{apiTags,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="queryParam != null">
+                query_param = #{queryParam,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="reqHeader != null">
+                req_header = #{reqHeader,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="reqBody != null">
+                req_body = #{reqBody,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="respHeader != null">
+                resp_header = #{respHeader,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="respBody != null">
+                resp_body = #{respBody,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="extraExplain != null">
+                extra_explain = #{extraExplain,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.apiSystem.entity.po.api.ApiWithBLOBs">
     update api
     set gid = #{gid,jdbcType=INTEGER},
       api_name = #{apiName,jdbcType=VARCHAR},
@@ -540,7 +543,7 @@
       extra_explain = #{extraExplain,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.api.Api" >
+    <update id="updateByPrimaryKey" parameterType="com.apiSystem.entity.po.api.Api">
     update api
     set gid = #{gid,jdbcType=INTEGER},
       api_name = #{apiName,jdbcType=VARCHAR},
@@ -557,4 +560,16 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+    <select id="selectStatusCount" resultType="com.apiSystem.entity.vo.ApiStatistics" parameterType="java.util.List">
+        SELECT status,COUNT(*) count
+        FROM api
+        WHERE gid in
+        <foreach collection="collection" index="index" item="id"
+                 open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        GROUP BY STATUS;
+    </select>
 </mapper>
