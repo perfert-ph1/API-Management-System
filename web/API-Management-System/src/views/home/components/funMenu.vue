@@ -5,8 +5,9 @@
       <div class="userInfo">
         <el-avatar
           class="profilePhoto"
-          size="large"
+          size="small"
           :src="userInfo.profilePhoto"
+          fit="cover"
         ></el-avatar>
         <span class="userName">{{ userInfo.userName }}</span>
       </div>
@@ -157,16 +158,21 @@ export default {
   line-height: 50px;
   border-bottom: 1px solid #e6e6e6;
   padding-left: 12px;
+  box-sizing: border-box;
 }
 .profilePhoto {
   vertical-align: middle;
 }
 .userName {
+  display: inline-block;
   line-height: 50px;
   color: #333333;
-  font-size: 30px;
+  font-size: 22px;
   vertical-align: middle;
   margin-left: 5px;
+  width: calc(100% - 38px);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .menu {
   /* width: auto !important; */

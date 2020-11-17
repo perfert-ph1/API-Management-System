@@ -975,6 +975,74 @@ export default {
       }
       // 由于对象数据类型是引用地址，不必手动再修改值
     },
+    /**
+     * 将请求的相关信息返回
+     */
+    submitRequestInfo() {
+      // 转化为后台规定的传参格式
+      // let queryData = [];
+      // this.queryData.forEach((query) => {
+      //   queryData.push({
+      //     dataId: query.dataId, // todo 待测试是否可以传这个字段
+      //     paramName: query.name,
+      //     dataType: query.type,
+      //     required: query.required ? 1 : 0,
+      //     example: query.example,
+      //     explanation: query.explain,
+      //     lenConstraint: query.lengthLimit,
+      //     otherConstraint: query.otherLimit,
+      //   });
+      // });
+
+      // let headerData = [];
+      // this.requestHeaderData.forEach((header) => {
+      //   queryData.push({
+      //     dataId: header.dataId, // todo 待测试是否可以传这个字段
+      //     paramName: header.name,
+      //     dataType: header.type,
+      //     required: header.required ? 1 : 0,
+      //     example: header.example,
+      //     explanation: header.explain,
+      //     lenConstraint: header.lengthLimit,
+      //     otherConstraint: header.otherLimit,
+      //   });
+      // });
+
+      // let bodyData = [];
+      // this.requestBodyData[this.requestBodyData.type].forEach((body) => {
+      //   queryData.push({
+      //     dataId: body.dataId, // todo 待测试是否可以传这个字段
+      //     paramName: body.name,
+      //     dataType: body.type,
+      //     required: body.required ? 1 : 0,
+      //     example: body.example,
+      //     explanation: body.explain,
+      //     lenConstraint: body.lengthLimit,
+      //     otherConstraint: body.otherLimit,
+      //     subField: body.subfield ? {} : body.subfield,
+      //   });
+      // });
+
+      const requestInfo = {
+        header: JSON.parse(JSON.stringify(this.requestHeaderData)),
+        body: JSON.parse(JSON.stringify(this.requestBodyData)),
+        query: JSON.parse(JSON.stringify(this.queryData)),
+        rest: JSON.parse(JSON.stringify(this.restData)),
+      };
+
+      return requestInfo;
+    },
+    /**
+     * 将响应的相关信息返回
+     */
+    submitResponseInfo() {
+      const responseInfo = {
+        header: JSON.parse(JSON.stringify(this.responseHeaderData)),
+        body: JSON.parse(JSON.stringify(this.responseBodyData)),
+      };
+
+      return responseInfo;
+    },
   },
 };
 </script>

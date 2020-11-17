@@ -1,5 +1,5 @@
 <template>
-  <div class="overview">
+  <div class="overview" v-loading="loading">
     <div class="massage">{{ massage }}</div>
     <el-collapse class="menu" v-model="activeNames">
       <el-collapse-item class="item" title="应用" name="fun">
@@ -36,10 +36,12 @@
 <script>
 export default {
   name: "overview",
+  props: {
+    userName: String,
+  },
   data() {
     return {
-      userName: "",
-      massage: "",
+      loading: true,
       activeNames: ["fun", "project"],
       projectList: [
         {
@@ -58,10 +60,35 @@ export default {
     };
   },
   mounted() {
-    this.userName = this.$store.getters.getUserName;
-    this.getMassage();
+    this.getAllProject();
   },
   methods: {
+    /**
+     * 获取所有项目
+     */
+    getAllProject() {
+      this.$axios
+        .get({
+          url: "/api_management/project/getAllProject",
+        })
+        .then((res) => {
+          console.log(res);
+          this.projectList = [];
+          if (res.result == "200") {
+            if (res.data == null) {
+              res.data = [];
+            }
+            res.data.forEach((project) => {
+              this.projectList.push({
+                id: project.id,
+                name: project.projectName,
+              });
+            });
+
+            this.loading = false;
+          }
+        });
+    },
     /**
      * 进入项目详情页面
      * @param {Number} projectId 项目的 id
@@ -75,9 +102,18 @@ export default {
       });
     },
     /**
+     * 跳转到对应功能的页面
+     * @param {String} funName 功能名称（与路由同名）
+     */
+    changeFunModule(funName) {
+      this.$router.push(funName);
+    },
+  },
+  computed: {
+    /**
      * 根据当前时间展示不同的欢迎语
      */
-    getMassage() {
+    massage() {
       let time = new Date().toString().split(" ")[4].split(":")[0];
       let msg = "";
       if (time < 5 || time >= 22) {
@@ -93,14 +129,7 @@ export default {
       } else {
         msg = "晚上好，记得适当休息哦~";
       }
-      this.massage = `${this.userName}，${msg}`;
-    },
-    /**
-     * 跳转到对应功能的页面
-     * @param {String} funName 功能名称（与路由同名）
-     */
-    changeFunModule(funName) {
-      this.$router.replace(funName);
+      return `${this.userName}，${msg}`;
     },
   },
 };

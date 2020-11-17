@@ -20,7 +20,7 @@
     ></top-bar>
     <!-- 内容 -->
     <div class="content" :class="{ content_actived: !hideFunMenu }">
-      <router-view></router-view>
+      <router-view :userName="userInfo.userName"></router-view>
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@ import sideBar from "./components/sideBar.vue";
 import topBar from "./components/topBar.vue";
 
 export default {
-  name: "name",
+  name: "home",
   components: {
     topBar,
     sideBar,
@@ -40,7 +40,8 @@ export default {
   data() {
     return {
       userInfo: {
-        userName: "Lee",
+        id: "",
+        userName: "",
         profilePhoto: require("@/assets/images/profilePhoto.png"),
       },
       hideFunMenu: true,
@@ -49,9 +50,36 @@ export default {
     };
   },
   mounted() {
-    this.userInfo.userName = this.$store.getters.getUserName;
+    this.getUserInfo();
   },
   methods: {
+    /**
+     * 获取用户的相关信息
+     */
+    getUserInfo() {
+      this.$axios
+        .get({
+          url: "/api_management/user/getUserInfo",
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            const data = res.data;
+            this.userInfo = {
+              id: data.id,
+              userName: data.username,
+              profilePhoto: data.headerUrl,
+            };
+
+            this.$store.commit("setUserName", {
+              userName: this.userInfo.username,
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     /**
      * 控制功能列表的显示与隐藏
      */

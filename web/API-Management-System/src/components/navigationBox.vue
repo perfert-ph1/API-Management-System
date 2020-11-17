@@ -39,7 +39,7 @@
       </el-input>
     </div>
     <!-- 分组列表 -->
-    <div class="groupBox" v-show="!foldNavigation">
+    <div class="groupBox" v-show="!foldNavigation" v-loading="groupLoading">
       <el-menu
         default-active="all"
         @select="selectGroup"
@@ -66,6 +66,7 @@
                 icon="el-icon-setting"
                 :command="{
                   operation: 'edit',
+                  id: item.id,
                   name: item.name,
                 }"
                 >编辑</el-dropdown-item
@@ -74,6 +75,7 @@
                 icon="el-icon-delete"
                 :command="{
                   operation: 'delete',
+                  id: item.id,
                   name: item.name,
                 }"
                 >删除</el-dropdown-item
@@ -99,6 +101,7 @@ export default {
   },
   props: {
     groupList: Array,
+    groupLoading: Boolean,
   },
   data() {
     return {
@@ -110,11 +113,7 @@ export default {
       operatedGroupName: null, // 正在进行操作的分组的索引值
     };
   },
-  mounted() {
-    this.groupList.forEach((group) => {
-      this.groupList_show.push(group);
-    });
-  },
+  mounted() {},
   methods: {
     /**
      * 拖动时改变宽度
@@ -155,8 +154,8 @@ export default {
         }
         this.$emit("addGroup", groupInfo.groupName);
       } else if (groupInfo.operation == "编辑分组") {
-        this.$emit("editGroup", this.operatedGroupName, groupInfo.groupName);
-        this.operatedGroupName = null;
+        this.$emit("editGroup", this.operatedGroupId, groupInfo.groupName);
+        this.operatedGroupId = null;
       }
       this.$refs.newGroupCard.dialogFormVisible = false;
     },
@@ -169,14 +168,14 @@ export default {
     },
     /**
      * 对分组进行操作
-     * @param {Object} command 要进行的操作（编辑或删除）和对应分组的索引值 {operation:"edit",name:"xxx"}
+     * @param {Object} command 要进行的操作（编辑或删除）和对应分组的索引值 {operation:"edit",id:"x"}
      */
     handleGroup(command) {
       if (command.operation == "edit") {
         this.showNewGroupCard("编辑分组", command.name);
-        this.operatedGroupName = command.name;
+        this.operatedGroupId = command.id;
       } else if (command.operation == "delete") {
-        this.$emit("deleteGroup", command.name);
+        this.$emit("deleteGroup", command.id);
       }
     },
     /**

@@ -49,8 +49,8 @@
     <div class="body">
       <!-- api 描述 -->
       <div class="apiDesc" v-show="moduleActived.apiDesc">
-        <basic-info></basic-info>
-        <info-format></info-format>
+        <basic-info ref="basicInfo"></basic-info>
+        <info-format ref="infoFormat"></info-format>
       </div>
       <!-- 返回示例 -->
       <div class="returnExample" v-show="moduleActived.returnExample">
@@ -63,9 +63,7 @@
           <div class="icon"><i class="el-icon-edit"></i> 编辑</div>
         </div>
       </div>
-      <return-example
-        ref="exampleForm"
-      ></return-example>
+      <return-example ref="exampleForm"></return-example>
       <!-- 额外说明 -->
       <div class="additionalDesc" v-show="moduleActived.additionalDesc">
         additionalDesc
@@ -120,7 +118,44 @@ export default {
      * 保存 api 信息并返回列表
      */
     submitAPIInfo() {
-      // todo
+      // 获取基础信息组件里的数据
+      const basicInfo = this.$refs.basicInfo.submitBasicInfo();
+      // 获取请求参数的相关信息
+      const requestInfo = this.$refs.infoFormat.submitRequestInfo();
+      // 获取响应参数的相关信息
+      const responseInfo = this.$refs.infoFormat.submitResponseInfo();
+      console.log(basicInfo, requestInfo, responseInfo);
+      // todo 网络请求 此处参数值不完善
+      this.$axios
+        .post({
+          url: "/api_management/apis/addApi",
+          params: {
+            gid: basicInfo.groupId,
+            apiName: basicInfo.apiName,
+            reqProtocol: basicInfo.transferProtocol,
+            reqMethod: basicInfo.requestMethod,
+            status: basicInfo.status,
+            url: basicInfo.path,
+            creatorId: basicInfo.creatorId,
+            managerId: basicInfo.leaderId,
+            // reqBodyType: ["Form-data", "JSON"].indexOf(requestInfo.body.type),
+            // respJsonType: ["Object", "Array"].indexOf(requestInfo.body.rootType),
+            // apiTags: basicInfo.tags,
+            // apiRtnExample: [], // 返回示例
+            // queryParam: requestInfo.query,
+            // reqHeader: requestInfo.header,
+            // reqBody: requestInfo.body,
+            // respHeader: responseInfo.header,
+            // respBody: responseInfo.body,
+            // extraExplain: "",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.$router.go(-1);
+          }
+        });
     },
     /**
      * 改变当前显示的模块
