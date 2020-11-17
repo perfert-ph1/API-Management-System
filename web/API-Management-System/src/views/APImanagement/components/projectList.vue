@@ -1,5 +1,5 @@
 <template>
-  <div class="projectList">
+  <div class="projectList" v-loading="loading">
     <div class="header">
       <div class="name">名称</div>
       <div class="moreInfo">
@@ -22,12 +22,14 @@
         {{ projectInfo.name }}
       </div>
       <div class="moreInfo">
-        <div class="version">{{ projectInfo.version }}</div>
+        <div class="version">
+          {{ projectInfo.version == "" ? "" : "V " + projectInfo.version }}
+        </div>
         <div class="remarks">{{ projectInfo.remarks }}</div>
         <div class="type">{{ projectInfo.type }}</div>
         <div class="lastUpdateTime">{{ projectInfo.lastUpdateTime }}</div>
         <div class="operationBox">
-          <div class="operation">编辑</div>
+          <div class="operation" @click="editProject(projectInfo)">编辑</div>
           <el-dropdown
             class="dropdown"
             @command="operateProject"
@@ -40,12 +42,14 @@
               <el-dropdown-item
                 :command="{ operation: 'copy', id: projectInfo.id }"
                 icon="el-icon-document-copy"
+                disabled
               >
                 复制
               </el-dropdown-item>
               <el-dropdown-item
                 :command="{ operation: 'file', id: projectInfo.id }"
                 icon="el-icon-document-checked"
+                disabled
               >
                 归档
               </el-dropdown-item>
@@ -82,6 +86,7 @@ export default {
         ];
       },
     },
+    loading: Boolean,
   },
   data() {
     return {};
@@ -99,24 +104,56 @@ export default {
       });
     },
     /**
-     * 对项目进行操作
+     * 通知父组件编辑项目
+     * @param {Object} projectInfo 项目信息
+     */
+    editProject(projectInfo) {
+      this.$emit("editProject", projectInfo);
+    },
+    /**
+     * 对项目进行更多操作
      * @param {Object} command 选中的选项名和此项目的id { operation: 'copy', id: 0 }
      */
     operateProject(command) {
       console.log(command);
       switch (command.operation) {
         case "copy":
-          {
-          }
           break;
 
         case "file":
-          {
-          }
           break;
 
         case "delete":
           {
+            // todo 待测试
+            this.$confirm("该操作不可撤销，是否继续？", "删除项目", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning",
+            })
+              .then(() => {
+                this.$axios
+                  .get({
+                    url: "/api_management/project/deleteProject",
+                    params: {
+                      deleteListStr: command.id.toString(),
+                    },
+                  })
+                  .then((res) => {
+                    if (res.result == "200") {
+                      this.$emit("refreshPage");
+                    }
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                  });
+              })
+              .catch(() => {
+                this.$message({
+                  type: "info",
+                  message: "已取消删除",
+                });
+              });
           }
           break;
 

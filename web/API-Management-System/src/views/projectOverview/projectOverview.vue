@@ -1,5 +1,5 @@
 <template>
-  <div class="projectOverview">
+  <div class="projectOverview" v-loading="loading">
     <!-- 基本信息 -->
     <div class="projectInfoBox">
       <div class="projectName">
@@ -14,11 +14,12 @@
         </ul>
         <ul>
           <li>API 数量：{{ projectInfo.APINum }}</li>
-          <li>测试用例数量：{{ projectInfo.testNum }}</li>
+          <!-- <li>测试用例数量：{{ projectInfo.testNum }}</li> -->
           <li>状态码数量：{{ projectInfo.statusNum }}</li>
+          <li>版本：{{ projectInfo.version }}</li>
         </ul>
         <ul>
-          <li>项目文档数量：{{ projectInfo.documentNum }}</li>
+          <!-- <li>项目文档数量：{{ projectInfo.documentNum }}</li> -->
         </ul>
       </div>
       <!-- api 状态统计图 -->
@@ -44,11 +45,12 @@
     <!-- 编辑项目信息的弹出框 -->
     <new-project-card
       ref="newProjectCard"
-      title="编辑项目"
       :newProject="false"
       :projectInfo="projectInfo"
+      operation="编辑项目"
       @refreshPage="refreshPage"
-    ></new-project-card>
+      ><span slot="title">编辑项目</span></new-project-card
+    >
   </div>
 </template>
 
@@ -56,6 +58,8 @@
 import statisticalCard from "./components/statisticalCard.vue";
 import statisticalChart from "./components/statisticalChart.vue";
 import newProjectCard from "@/components/newProjectCard.vue";
+import { getTime } from "@/utils/getTime.js";
+import { projectTypeList } from "@/common/constant.js";
 
 export default {
   name: "project",
@@ -78,18 +82,20 @@ export default {
       // maintain: 0, // 维护
       // abandoned: 1, // 废弃
       // },
+      loading: true,
       projectInfo: {
+        id: this.$route.query.projectId,
         name: this.$route.query.projectName,
         type: "Web",
         version: "1.2.1",
         remarks: "",
-        members: [],
+        // members: [],
         updateTime: "2020-10-30 08:57:21",
         peopleNum: "7",
         APINum: "10",
-        testNum: "20",
+        // testNum: "20",
         statusNum: "35",
-        documentNum: "3",
+        // documentNum: "3",
       },
       statusInfo: {
         已发布: 5,
@@ -132,13 +138,61 @@ export default {
       ],
     };
   },
-  mounted() {},
+  mounted() {
+    this.getProjectInfo();
+    this.getAPIStatistic();
+  },
   methods: {
+    /**
+     * 获取项目基本信息
+     */
+    getProjectInfo() {
+      this.loading = true;
+      this.$axios
+        .get({
+          url: "/api_management/project/getProjectSituation",
+          params: {
+            pid: this.$route.query.projectId,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          const data = res.data;
+          this.projectInfo = {
+            id: data.id,
+            name: data.projectName,
+            type: projectTypeList[data.projType - 1],
+            version: data.version,
+            remarks: data.remarks,
+            // members: [],
+            updateTime: getTime(data.updateTime),
+            peopleNum: data.memberNum,
+            APINum: data.apiNum,
+            // testNum: "20",
+            statusNum: data.statusCodeNum,
+            // documentNum: "3",
+          };
+          this.loading = false;
+        });
+    },
+    /**
+     * 获取 api 统计
+     */
+    getAPIStatistic() {
+      // todo
+    },
     /**
      * 修改项目基本信息（名称、类型等）
      */
     editProjectInfo() {
       this.$refs.newProjectCard.showNewProjectCard();
+      this.$refs.newProjectInfo = {
+        id: this.projectInfo.id,
+        name: this.projectInfo.name,
+        type: this.projectInfo.type,
+        version: this.projectInfo.version,
+        remarks: this.projectInfo.remarks,
+      };
     },
     /**
      * 显示 API 统计信息
@@ -150,7 +204,7 @@ export default {
      * 重新获取数据
      */
     refreshPage() {
-      // todo
+      this.getProjectInfo();
     },
   },
 };

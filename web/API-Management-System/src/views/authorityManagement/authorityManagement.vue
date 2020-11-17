@@ -167,6 +167,18 @@ export default {
      */
     selectGroup(groupName) {
       this.nowGroup = groupName;
+      if (groupName == "all") {
+        this.memberList = this.memberList_backup;
+        return;
+      }
+      // 保留当前选中分组的 api
+      let filteredList = [];
+      this.memberList_backup.forEach((memberInfo) => {
+        if (memberInfo.group == groupName) {
+          filteredList.push(memberInfo);
+        }
+      });
+      this.memberList = filteredList;
     },
     /**
      * 新增一个分组

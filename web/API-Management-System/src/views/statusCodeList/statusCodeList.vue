@@ -92,9 +92,9 @@
           >
             <el-option
               v-for="item in groupList"
-              :key="item.name"
+              :key="item.id"
               :label="item.name"
-              :value="item.name"
+              :value="item.id"
             >
             </el-option>
           </el-select>
@@ -216,6 +216,7 @@ export default {
     };
   },
   mounted() {
+    this.getGroupList();
     this.getStatusCodeInfo();
   },
   methods: {
@@ -225,57 +226,94 @@ export default {
      */
     selectGroup(groupName) {
       this.nowGroup = groupName;
+      if (groupName == "all") {
+        this.statusCodeList = this.statusCodeList_backup;
+        return;
+      }
+      // 保留当前选中分组的状态码
+      let filteredList = [];
+      this.statusCodeList_backup.forEach((statusCode) => {
+        if (statusCode.group == groupName) {
+          filteredList.push(statusCode);
+        }
+      });
+      this.statusCodeList = filteredList;
     },
     /**
      * 新增一个分组
      * @param {String} groupName 分组名称
      */
     addGroup(groupName) {
-      // todo：发起请求，增加分组
-      this.groupList.push({
-        name: groupName,
-      });
-      this.$refs.navigationBox.groupList_show.push({
-        name: groupName,
-      });
+      this.$axios
+        .post({
+          url: "/api_management/statusGrps/addGroup",
+          params: {
+            grpName: groupName,
+            pid: this.$route.query.projectId,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.getGroupList();
+          }
+        });
     },
     /**
      * 编辑分组
-     * @param {String} oldName 此分组原来的名字
+     * @param {String} groupId 此分组原来的名字
      * @param {String} groupName 分组名称
      */
-    editGroup(oldName, groupName) {
-      // todo：发起请求，更改分组名
-      // 成功后：
-      this.groupList.forEach((group) => {
-        if (group.name == oldName) {
-          group.name = groupName;
-        }
-      });
-      this.$refs.navigationBox.groupList_show = JSON.parse(
-        JSON.stringify(this.groupList)
-      );
+    editGroup(groupId, groupName) {
+      this.$axios
+        .post({
+          url: "/api_management/statusGrps/updateGroup",
+          params: {
+            id: groupId,
+            grpName: groupName,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.getGroupList();
+          }
+        });
     },
     /**
      * 删除分组
-     * @param {String} groupName 分组名称
+     * @param {String} groupId 分组名称
      */
-    deleteGroup(groupName) {
-      // todo：发起请求，删除分组
-      let index = null;
-      this.groupList.forEach((group, i) => {
-        if (group.name == groupName) {
-          index = i;
-        }
-      });
-      this.groupList.splice(index, 1);
+    deleteGroup(groupId) {
+      this.$axios
+        .post({
+          url: "/api_management/statusGrps/deleteGroup",
+          params: {
+            groupId: groupId,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            let index = null;
+            this.groupList.forEach((group, i) => {
+              if (group.id == groupId) {
+                index = i;
+              }
+            });
+            this.groupList.splice(index, 1);
 
-      this.$refs.navigationBox.groupList_show.forEach((group, i) => {
-        if (group.name == groupName) {
-          index = i;
-        }
-      });
-      this.$refs.navigationBox.groupList_show.splice(index, 1);
+            this.$refs.navigationBox.groupList_show.forEach((group, i) => {
+              if (group.id == groupId) {
+                index = i;
+              }
+            });
+            this.$refs.navigationBox.groupList_show.splice(index, 1);
+          }
+        });
     },
     /**
      * 点击新建或编辑状态码的回调函数
@@ -292,14 +330,61 @@ export default {
       this.editDialogVisible = true;
     },
     /**
+     * 获取分组
+     */
+    getGroupList() {
+      this.$axios
+        .get({
+          url: "/api_management/statusGrps/getAllByPid",
+          params: {
+            pid: this.$route.query.projectId,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.groupList = [];
+            res.data.forEach((group) => {
+              this.groupList.push({
+                id: group.id,
+                name: group.grpName,
+              });
+            });
+            this.$refs.navigationBox.groupList_show = JSON.parse(
+              JSON.stringify(this.groupList)
+            );
+          }
+        });
+    },
+    /**
      * 获取状态码数据
      */
     getStatusCodeInfo() {
-      // todo 发起网络请求
-      // 获得数据后同时进行进行备份
-      this.statusCodeList_backup = JSON.parse(
-        JSON.stringify(this.statusCodeList)
-      );
+      this.$axios
+        .get({
+          url: "/api_management/status/queryAllInPrj",
+          params: {
+            projectId: this.$route.query.projectId,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.statusCodeList = [];
+            res.data.forEach((status) => {
+              this.statusCodeList.push({
+                id: status.id,
+                code: status.statusCode,
+                msg: status.description,
+              });
+            });
+
+            // 获得数据后同时进行进行备份
+            this.statusCodeList_backup = JSON.parse(
+              JSON.stringify(this.statusCodeList)
+            );
+          }
+        });
     },
     /**
      * 根据关键词筛选状态码
@@ -319,7 +404,13 @@ export default {
      * 修改状态码的信息
      */
     changeStatusCodeInfo() {
-      // todo
+      // this.$axios.post({
+      //   url:"/api_management/status/updateStatus",
+      //   params:{
+      //     id
+      //   },
+      //   formdata:true
+      // })
     },
     /**
      * 点击删除状态码的回调函数
@@ -333,12 +424,23 @@ export default {
      * 删除状态码
      */
     deleteStatusCode() {
-      // todo 发起网络请求 删除
-      // 成功后才进行下面操作
-      this.statusCodeList.splice(this.statusCode_now, 1);
-      this.statusCodeList_backup.splice(this.statusCode_now, 1);
-      this.deleteDialogVisible = false;
-      this.statusCode_now = null;
+      this.$axios
+        .post({
+          url: "/api_management/status/deleteStatus",
+          params: {
+            ids: `[${this.statusCodeList_backup[this.statusCode_now].id}]`,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.statusCodeList.splice(this.statusCode_now, 1);
+            this.statusCodeList_backup.splice(this.statusCode_now, 1);
+            this.deleteDialogVisible = false;
+            this.statusCode_now = null;
+          }
+        });
     },
     /**
      * 删除待新建状态码列表的某一项
@@ -367,13 +469,33 @@ export default {
      * 新增新编辑的状态码
      */
     addStatusCode() {
-      // todo 发起请求，新增状态码
+      let statuses = [];
+      this.newStatusInfo.data.forEach((el) => {
+        statuses.push({
+          statusCode: el.code,
+          description: el.msg,
+        });
+      });
+      statuses.pop(); // 最后一个是空的，要删掉
 
-      // todo 发起请求：重新获取状态码数据
-      this.statusCodeList = [];
-      this.getStatusCodeInfo();
-      this.statusCode_now = null;
-      this.editDialogVisible = false;
+      this.$axios
+        .post({
+          url: "/api_management//status/addStatus",
+          params: {
+            statuses: JSON.stringify(statuses),
+            gid: this.newStatusInfo.group,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.statusCodeList = [];
+            this.getStatusCodeInfo();
+            this.statusCode_now = null;
+            this.editDialogVisible = false;
+          }
+        });
     },
     /**
      * 关闭编辑状态码弹窗的时候清楚输入框的数据

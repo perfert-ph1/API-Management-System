@@ -78,7 +78,19 @@ const requestMethodList = [
   }
 ]
 
+const projectTypeList = [
+  "Web",
+  "App",
+  "PC",
+  "硬件互联网",
+  "其他"
+];
+
+const protocolList = ["HTTP", "HTTPS"];
+
 module.exports = {
   statusList,
-  requestMethodList
+  requestMethodList,
+  projectTypeList,
+  protocolList
 }

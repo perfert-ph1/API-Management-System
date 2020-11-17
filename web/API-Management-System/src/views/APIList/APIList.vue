@@ -6,6 +6,7 @@
       @editGroup="editGroup"
       @deleteGroup="deleteGroup"
       :groupList="groupList"
+      :groupLoading="groupLoading"
       ref="navigationBox"
     >
       <span slot="title">所有 API</span>
@@ -43,7 +44,13 @@
       </template>
       <!-- 表格 -->
       <template v-slot:table>
-        <el-table :data="APIInfoList" border height="100%" max-height="100%">
+        <el-table
+          :data="APIInfoList"
+          border
+          height="100%"
+          max-height="100%"
+          v-loading="tableLoading"
+        >
           <!-- 标记 -->
           <el-table-column
             :show-overflow-tooltip="true"
@@ -64,7 +71,7 @@
                 class="el-icon-s-flag"
                 style="cursor: pointer"
                 :style="{ color: scope.row.flag ? '#f48932' : '#cccccc' }"
-                @click="setFlag(scope.$index)"
+                @click="setFlag(scope.$index, scope.row)"
               ></i>
             </template>
           </el-table-column>
@@ -131,12 +138,17 @@
                 :style="{
                   width: '56px',
                   textAlign: 'center',
-                  borderColor:
-                    requestMethodColor[scope.row.requestMethod].color,
-                  color: requestMethodColor[scope.row.requestMethod].color,
+                  borderColor: requestMethodColor[scope.row.requestMethod]
+                    ? requestMethodColor[scope.row.requestMethod].color
+                    : '',
+                  color: requestMethodColor[scope.row.requestMethod]
+                    ? requestMethodColor[scope.row.requestMethod].color
+                    : '',
                 }"
                 >{{
-                  requestMethodColor[scope.row.requestMethod].abbreviation
+                  requestMethodColor[scope.row.requestMethod]
+                    ? requestMethodColor[scope.row.requestMethod].abbreviation
+                    : ""
                 }}</el-tag
               >
             </template>
@@ -348,6 +360,8 @@ export default {
   },
   data() {
     return {
+      tableLoading: true,
+      groupLoading: true,
       requestMethodList: requestMethodList,
       groupList: [
         // 分组
@@ -520,8 +534,8 @@ export default {
     };
   },
   mounted() {
-    this.setFilters();
     this.getAPIInfo();
+    this.getGroupInfo();
     // 将默认显示的列的钩显示出来
     this.columnVisible.forEach((i) => {
       if (i.visible) {
@@ -597,62 +611,135 @@ export default {
       this.newAPIInfo.projectName = this.$route.query.projectName;
     },
     /**
+     * 获取所有分组
+     */
+    getGroupInfo() {
+      this.groupLoading = true;
+      this.$axios
+        .get({
+          url: "/api_management/apiGrps/queryAllInProject",
+          params: {
+            pid: this.$route.query.projectId,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.groupList = [];
+            res.data.forEach((group) => {
+              this.groupList.push({
+                id: group.id,
+                name: group.grpName,
+              });
+            });
+            this.$refs.navigationBox.groupList_show = JSON.parse(
+              JSON.stringify(this.groupList)
+            );
+            this.groupLoading = false;
+          }
+        });
+    },
+    /**
      * 选择一个分组
      * @param {String} groupName 分组名
      */
     selectGroup(groupName) {
       this.nowGroup = groupName;
+      if (groupName == "all") {
+        this.APIInfoList = this.APIInfoList_backup;
+        return;
+      }
+      // 保留当前选中分组的 api
+      let filteredList = [];
+      this.APIInfoList_backup.forEach((apiInfo) => {
+        if (apiInfo.group == groupName) {
+          filteredList.push(apiInfo);
+        }
+      });
+      this.APIInfoList = filteredList;
     },
     /**
      * 新增一个分组
      * @param {String} groupName 分组名称
      */
     addGroup(groupName) {
-      // todo：发起请求，增加分组
-      this.groupList.push({
-        name: groupName,
-      });
-      this.$refs.navigationBox.groupList_show.push({
-        name: groupName,
-      });
+      this.$axios
+        .post({
+          url: "/api_management/apiGrps/addApiGrp",
+          params: {
+            grpName: groupName,
+            pid: this.$route.query.projectId,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.getGroupInfo();
+          }
+        });
     },
     /**
      * 编辑分组
-     * @param {String} oldName 此分组原来的名字
-     * @param {String} groupName 分组名称
+     * @param {String} groupId 分组的 id
+     * @param {String} groupName 要修改成的名称
      */
-    editGroup(oldName, groupName) {
-      // todo：发起请求，更改分组名
-      // 成功后：
-      this.groupList.forEach((group) => {
-        if (group.name == oldName) {
-          group.name = groupName;
-        }
-      });
-      this.$refs.navigationBox.groupList_show = JSON.parse(
-        JSON.stringify(this.groupList)
-      );
+    editGroup(groupId, groupName) {
+      this.$axios
+        .post({
+          url: "/api_management/apiGrps/updateApiGrp",
+          params: {
+            id: groupId,
+            grpName: groupName,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.groupList.forEach((group) => {
+              if (group.id == groupId) {
+                group.name = groupName;
+              }
+            });
+            this.$refs.navigationBox.groupList_show = JSON.parse(
+              JSON.stringify(this.groupList)
+            );
+          }
+        });
     },
     /**
      * 删除分组
-     * @param {String} groupName 分组名称
+     * @param {String} groupId 分组 id
      */
-    deleteGroup(groupName) {
-      // todo：发起请求，删除分组
-      let index = null;
-      this.groupList.forEach((group, i) => {
-        if (group.name == groupName) {
-          index = i;
-        }
-      });
-      this.groupList.splice(index, 1);
+    deleteGroup(groupId) {
+      this.$axios
+        .post({
+          url: "/api_management/apiGrps/deleteApiGrp",
+          params: {
+            grpId: groupId,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if ((res.result = "200")) {
+            let index = null;
+            this.groupList.forEach((group, i) => {
+              if (group.id == groupId) {
+                index = i;
+              }
+            });
+            this.groupList.splice(index, 1);
 
-      this.$refs.navigationBox.groupList_show.forEach((group, i) => {
-        if (group.name == groupName) {
-          index = i;
-        }
-      });
-      this.$refs.navigationBox.groupList_show.splice(index, 1);
+            this.$refs.navigationBox.groupList_show.forEach((group, i) => {
+              if (group.id == groupId) {
+                index = i;
+              }
+            });
+            this.$refs.navigationBox.groupList_show.splice(index, 1);
+          }
+        });
     },
     /**
      * 跳转到新建 api 的界面
@@ -667,9 +754,47 @@ export default {
      * 获取 api 数据
      */
     getAPIInfo() {
-      // todo 发起网络请求
-      // 获得数据后同时进行进行备份
-      this.APIInfoList_backup = JSON.parse(JSON.stringify(this.APIInfoList));
+      this.tableLoading = true;
+      this.$axios
+        .get({
+          url: "/api_management/apis/queryAllInPrj",
+          params: {
+            projectId: this.$route.query.projectId,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.APIInfoList = [];
+            res.data.forEach((api) => {
+              this.APIInfoList.push({
+                // todo 后台数据不全
+                flag: !!api.flag,
+                ID: api.id,
+                status: statusList[api.status - 1].status,
+                API: api.apiName,
+                requestMethod: requestMethodList[api.reqMethod - 1].method,
+                URL: api.url,
+                group: "利益相关",
+                version: "1.0.0",
+                tag: ["懂得都懂", "不方便多说"],
+                leader: api.manager,
+                creator: api.creator,
+                lastUpdatedUser: api.updater,
+                createdTime: "2020-11-25 20:11:33",
+                lastUpdatedTime: "2020-11-25 20:11:33",
+              });
+            });
+            // 获得数据后同时进行进行备份
+            this.APIInfoList_backup = JSON.parse(
+              JSON.stringify(this.APIInfoList)
+            );
+            if (res.data.length > 0) {
+              this.setFilters();
+            }
+            this.tableLoading = false;
+          }
+        });
     },
     /**
      * 根据关键词筛选 api
@@ -720,12 +845,26 @@ export default {
     },
     /**
      * 标记或取消标记
-     * @param {Number} colIndex 列的索引
+     * @param {Number} rowIndex 行的索引
+     * @param {Number} rowInfo 行的信息
      */
-    setFlag(colIndex) {
-      // todo：发起网络请求，标记或取消标记某一个 api
-      // 请求成功后再改变前端显示
-      this.APIInfoList[colIndex].flag = !this.APIInfoList[colIndex].flag;
+    setFlag(colIndex, rowInfo) {
+      console.log(rowInfo);
+      this.$axios
+        .post({
+          url: "/api_management/apis/markApi",
+          params: {
+            apiId: rowInfo.ID,
+            isMark: rowInfo.flag ? "0" : "1",
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            this.APIInfoList[colIndex].flag = !this.APIInfoList[colIndex].flag;
+          }
+        });
     },
     /**
      * 根据创建时间排序的函数

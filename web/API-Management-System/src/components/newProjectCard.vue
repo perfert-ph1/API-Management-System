@@ -1,5 +1,8 @@
 <template>
-  <el-dialog :title="title" :visible.sync="showNewProjectDialog" width="600px">
+  <el-dialog :visible.sync="showNewProjectDialog" width="600px" @close="init">
+    <template slot="title">
+      <slot name="title"></slot>
+    </template>
     <el-form :model="newProjectInfo" :hide-required-asterisk="true">
       <el-form-item label="项目名称">
         <el-input v-model="newProjectInfo.name" :clearable="true"></el-input>
@@ -57,21 +60,24 @@
 </template>
 
 <script>
+import { projectTypeList } from "@/common/constant.js";
+
 export default {
   name: "newProjectCard",
   props: {
-    title: String,
     newProject: {
       type: Boolean,
       default: true,
     },
     projectInfo: Object,
+    operation: String,
   },
   data() {
     return {
       showNewProjectDialog: false,
       isSearchingUser: false, // 选择成员时，搜索内容时展示加载动画
       newProjectInfo: {
+        id: "",
         name: "",
         type: "",
         version: "",
@@ -108,17 +114,65 @@ export default {
      * 提交项目基本信息，关闭新建项目的弹窗
      */
     submitProjectInfo() {
-      this.showNewProjectDialog = false;
-      // todo：发起请求
-      // 通知父页面重新获取数据
-      this.$emit("refreshPage");
+      if (this.operation == "新建项目") {
+        this.$axios
+          .post({
+            url: "/api_management/project/addProject",
+            params: {
+              projectName: this.newProjectInfo.name,
+              projType: projectTypeList.indexOf(this.newProjectInfo.type) + 1,
+              remarks: this.newProjectInfo.remarks,
+              version: this.newProjectInfo.version,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            if (res.result == "200") {
+              // 通知父组件重新获取数据
+              this.$emit("refreshPage");
+              this.showNewProjectDialog = false;
+            }
+          });
+      } else if (this.operation == "编辑项目") {
+        this.$axios
+          .post({
+            url: "/api_management/project/editProject",
+            params: {
+              id: this.newProjectInfo.id,
+              projectName: this.newProjectInfo.name,
+              projType: projectTypeList.indexOf(this.newProjectInfo.type) + 1,
+              remark: this.newProjectInfo.remarks,
+              version: this.newProjectInfo.version,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            if (res.result == "200") {
+              // 通知父组件重新获取数据
+              this.$emit("refreshPage");
+              this.showNewProjectDialog = false;
+            }
+          });
+      }
+    },
+    /**
+     * 关闭前清空输入框的值
+     */
+    init() {
+      for (const key in this.newProjectInfo) {
+        if (key != "member") {
+          this.newProjectInfo[key] = "";
+        } else {
+          this.newProjectInfo[key] = [];
+        }
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-.el-form-item{
-margin-bottom: 5px;
+.el-form-item {
+  margin-bottom: 5px;
 }
 </style>

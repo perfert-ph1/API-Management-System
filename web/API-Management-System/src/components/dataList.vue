@@ -7,7 +7,7 @@
       </el-button>
       <div class="rightBox">
         <el-input
-          placeholder="搜索 API"
+          placeholder="搜索"
           v-model="apiKeyWord"
           class="apiSearchBox"
           size="small "

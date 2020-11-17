@@ -76,26 +76,96 @@ export default {
      */
     login() {
       console.log("登录");
-      this.$router.push("home/overview")
+      this.$axios
+        .post({
+          url: "/api_management/user/login",
+          params: {
+            username: this.userName,
+            password: this.password,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            // todo 待测试
+            console.log("登陆成功");
+            this.$store.commit("setUserName", {
+              userName: this.userName,
+            });
+
+            this.$router.push("home/overview");
+          } else {
+            // todo 待测试
+            this.$message.error("账号或密码错误");
+            this.userName = "";
+            this.password = "";
+          }
+        })
+        .catch((err) => {
+          console.error("请求失败");
+        });
     },
     /**
      * 注册
      */
     register() {
-      this.showLoginForm = true;
-      console.log("注册");
+      if (this.userName == "") {
+        this.$message({
+          message: "账号不能为空，请检查",
+          type: "warning",
+        });
+        return;
+      } else if (this.password == "") {
+        this.$message({
+          message: "密码不能为空，请检查",
+          type: "warning",
+        });
+        return;
+      }
+
+      this.$axios
+        .post({
+          url: "/api_management/user/register",
+          params: {
+            username: this.userName,
+            password: this.password,
+          },
+          formdata: true,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            // todo
+            this.$message({
+              message: "恭喜你，注册成功，请登录",
+              type: "success",
+            });
+            this.showLoginForm = true;
+          } else {
+            // todo
+            this.$message.error("账号已存在/(ㄒoㄒ)/~~");
+            this.userName = "";
+          }
+        })
+        .catch((err) => {
+          console.error("请求失败");
+        });
     },
     /**
      * 转到注册或登录的页面
      */
     switchPage() {
       this.showLoginForm = !this.showLoginForm;
+      this.userName = "";
+      this.password = "";
     },
     /**
      * 发起请求，判断用户名是否可用
      */
     judgeAvailability() {
       // 在这里发起网络请求
+      // todo 后台无接口
     },
     /**
      * 节流函数，每两秒请求一次

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Axios from './utils/axios'
 import store from './store/store';
 import VueCodemirror from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -36,7 +37,10 @@ import {
   Radio,
   Tabs,
   TabPane,
-  Switch
+  Switch,
+  Message,
+  Loading,
+  MessageBox
 } from 'element-ui';
 
 Vue.config.productionTip = false
@@ -77,6 +81,12 @@ Vue.use(Radio)
 Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(Switch)
+Vue.use(Loading)
+
+Vue.prototype.$axios = Axios;
+Vue.prototype.$message = Message;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
 
 new Vue({
   el: '#app',

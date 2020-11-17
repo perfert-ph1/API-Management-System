@@ -19,19 +19,27 @@
       </div>
       <!-- 新建项目的弹出框 -->
       <new-project-card
-        ref="newProjectCard"
-        title="新建项目"
         @refreshPage="refreshPage"
-      ></new-project-card>
+        ref="newProjectCard"
+        :operation="dialogTitle"
+        ><span slot="title">{{ dialogTitle }}</span>
+      </new-project-card>
     </div>
 
-    <project-list :projectInfoList="projectInfoList"></project-list>
+    <project-list
+      :projectInfoList="projectInfoList"
+      :loading="loading"
+      @editProject="editProject"
+      @refreshPage="refreshPage"
+    ></project-list>
   </div>
 </template>
 
 <script>
 import newProjectCard from "@/components/newProjectCard.vue";
 import projectList from "./components/projectList.vue";
+import { getTime } from "@/utils/getTime.js";
+import { projectTypeList } from "@/common/constant.js";
 
 export default {
   name: "APImanagement",
@@ -41,6 +49,7 @@ export default {
   },
   data() {
     return {
+      dialogTitle: "",
       showTypeCard: false,
       projectInfoList: [
         {
@@ -61,26 +70,79 @@ export default {
           lastUpdateTime: "2020.10.23 08:43",
         },
       ],
+      loading: true,
     };
   },
+  mounted() {
+    this.getAllProject();
+  },
   methods: {
+    /**
+     * 获取所有项目
+     */
+    getAllProject() {
+      this.loading = true;
+      this.$axios
+        .get({
+          url: "/api_management/project/getAllProject",
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.result == "200") {
+            if (res.data == null) {
+              res.data = [];
+            }
+            this.projectInfoList = [];
+            res.data.forEach((project) => {
+              this.projectInfoList.push({
+                id: project.id,
+                name: project.projectName,
+                version: project.version,
+                remarks: project.remarks,
+                type: projectTypeList[project.projType - 1],
+                lastUpdateTime: getTime(project.updateTime),
+              });
+            });
+
+            this.loading = false;
+          }
+        });
+    },
     /**
      * 控制新建类型菜单的显示与隐藏
      */
     controlTypeCard() {
-      this.showTypeCard = !this.showTypeCard;
+      // this.showTypeCard = !this.showTypeCard;
     },
     /**
-     * 关闭新建项目的弹窗
+     * 打开新建项目的弹窗
      */
     showNewProjectDialog() {
+      this.dialogTitle = "新建项目";
       this.$refs.newProjectCard.showNewProjectCard();
+    },
+    /**
+     * 打开编辑项目的弹窗
+     * @param {Object} projectInfo 项目信息
+     */
+    editProject(projectInfo) {
+      console.log(projectInfo);
+      this.dialogTitle = "编辑项目";
+      this.$refs.newProjectCard.showNewProjectDialog = true;
+      this.$refs.newProjectCard.newProjectInfo = JSON.parse(
+        JSON.stringify(projectInfo)
+      );
     },
     /**
      * 重新获取数据
      */
     refreshPage() {
-      // todo
+      this.getAllProject();
+
+      this.$message({
+        message: "操作成功",
+        type: "success",
+      });
     },
   },
 };
@@ -100,7 +162,7 @@ export default {
   color: #333333;
 }
 .createBox {
-  width: 100%;
+  display: inline-block;
   font-size: 0;
 }
 .createButton {
@@ -144,13 +206,14 @@ export default {
   vertical-align: middle;
   transition: all 0.2s;
   position: relative;
+  cursor: no-drop;
 }
-.createOption:hover {
+/* .createOption:hover {
   background-color: #0080ff;
 }
 .createOption:active {
   background-color: #0176eb;
-}
+} */
 .selectList {
   width: 80px;
   position: absolute;

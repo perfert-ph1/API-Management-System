@@ -20,6 +20,7 @@ export default new Router({
     }, {
       path: '/home',
       name: 'home',
+      redirect: '/home/overview',
       component: () => import('@/views/home/home'),
       children: [{
         path: 'overview',
